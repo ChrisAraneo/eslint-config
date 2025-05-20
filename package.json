@@ -22,17 +22,19 @@
     "eslint": "^9.27.0",
     "eslint-plugin-jsonc": "^2.20.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unicorn": "^59.0.1",
     "jsonc-eslint-parser": "^2.4.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.1"
   },
   "peerDependencies": {
     "angular-eslint": "^19.4.0",
-    "eslint": ">= 9",
-    "eslint-plugin-jsonc": "^2.20.0",
-    "eslint-plugin-simple-import-sort": "^12.0.0",
-    "jsonc-eslint-parser": "^2.4.0",
-    "typescript-eslint": ">= 8"
+    "eslint": ">= 9.0.0",
+    "eslint-plugin-jsonc": ">= 2.20.0",
+    "eslint-plugin-simple-import-sort": ">= 12.0.0",
+    "eslint-plugin-unicorn": ">= 59.0.0",
+    "jsonc-eslint-parser": ">= 2.4.0",
+    "typescript-eslint": ">= 8.0.0"
   },
   "publishConfig": {
     "access": "public"
