@@ -5,7 +5,7 @@ import simpleImportSort from "eslint-plugin-simple-import-sort";
 import unicorn from "eslint-plugin-unicorn";
 import jsonc from "eslint-plugin-jsonc";
 
-tseslint.config(
+export default tseslint.config(
   {
     files: ["**/*.json"],
     extends: [...jsonc.configs["flat/recommended-with-jsonc"]],
