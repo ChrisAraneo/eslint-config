@@ -1,16 +1,17 @@
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import angular from "angular-eslint";
-import eslintPluginJsonc from "eslint-plugin-jsonc";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
-import jsoncParser from "jsonc-eslint-parser";
+import unicorn from "eslint-plugin-unicorn";
+import jsonc from "eslint-plugin-jsonc";
 
 tseslint.config(
-  ...eslintPluginJsonc.configs["flat/recommended-with-jsonc"],
   {
-    files: ["src/**/*.json", "public/**/*.json"],
-    languageOptions: {
-      parser: jsoncParser,
+    files: ["**/*.json"],
+    extends: [...jsonc.configs["flat/recommended-with-jsonc"]],
+    rules: {
+      "jsonc/no-comments": "error",
+      "jsonc/sort-keys": "error",
     },
   },
   {
@@ -20,6 +21,7 @@ tseslint.config(
       ...tseslint.configs.strictTypeChecked,
       ...tseslint.configs.stylistic,
       ...angular.configs.tsRecommended,
+      unicorn.configs.all,
     ],
     processor: angular.processInlineTemplates,
     rules: {
@@ -40,6 +42,7 @@ tseslint.config(
         },
       ],
       "@typescript-eslint/no-extraneous-class": "off",
+      "unicorn/no-null": "off",
     },
   },
   {
@@ -59,12 +62,13 @@ tseslint.config(
   },
   {
     ignores: [
-      "node_modules/",
+      "node_modules",
       "reports/",
       ".stryker-tmp/",
       ".angular",
       "package.json",
       "package-lock.json",
+      ".nx/workspace-data",
     ],
   }
 );
