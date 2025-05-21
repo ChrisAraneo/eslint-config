@@ -5,6 +5,7 @@ import eslintPluginJsonc from 'eslint-plugin-jsonc';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import jsoncParser from 'jsonc-eslint-parser';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
+import globals from 'globals';
 
 export default (jsonFiles, sourceFiles, htmlFiles, ignoredFiles) => {
   return tseslint.config(
