@@ -1,40 +1,29 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
-  "keywords": [],
+  "keywords": [
+    "eslint",
+    "typescript",
+    "angular"
+  ],
+  "homepage": "https://github.com/ChrisAraneo/eslint-config",
+  "bugs": {
+    "url": "https://github.com/ChrisAraneo/eslint-config/issues"
+  },
   "license": "MIT",
   "author": "Krzysztof Pająk (Chris Araneo) <chris.araneo@gmail.com>",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./index.js",
   "files": [
     "dist/**"
   ],
   "scripts": {
-    "build": "tsc --build tsconfig.json",
-    "typecheck": "tsc"
+    "format": "npx sort-package-json"
   },
-  "devDependencies": {
-    "@eslint/js": "^9.27.0",
-    "@humanwhocodes/momoa": "^3.3.8",
+  "dependencies": {
     "angular-eslint": "^19.4.0",
     "eslint": "^9.27.0",
-    "eslint-plugin-jsonc": "^2.20.1",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-unicorn": "^59.0.1",
-    "jsonc-eslint-parser": "^2.4.0",
-    "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.1"
-  },
-  "peerDependencies": {
-    "angular-eslint": "^19.4.0",
-    "eslint": ">= 9.0.0",
-    "eslint-plugin-jsonc": ">= 2.20.0",
-    "eslint-plugin-simple-import-sort": ">= 12.0.0",
-    "eslint-plugin-unicorn": ">= 59.0.0",
-    "jsonc-eslint-parser": ">= 2.4.0",
-    "typescript-eslint": ">= 8.0.0"
   },
   "publishConfig": {
     "access": "public"
