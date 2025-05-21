@@ -25,6 +25,20 @@ export default (jsonFiles, sourceFiles, htmlFiles, ignoredFiles) => {
           tsconfigRootDir: import.meta.dirname,
         },
       },
+      rules: {
+        'new-cap': 'off',
+        'sort-imports': 'off',
+        'sort-keys': 'off',
+        '@typescript-eslint/init-declarations': 'off',
+        '@typescript-eslint/parameter-properties': 'off',
+        '@typescript-eslint/explicit-member-accessibility': [
+          'error',
+          {
+            accessibility: 'no-public',
+          },
+        ],
+        '@typescript-eslint/no-extraneous-class': 'off',
+      },
     },
     {
       files: sourceFiles,
@@ -47,7 +61,7 @@ export default (jsonFiles, sourceFiles, htmlFiles, ignoredFiles) => {
             style: 'kebab-case',
           },
         ],
-        '@typescript-eslint/no-extraneous-class': 'off',
+        '@angular-eslint/template/prefer-control-flow': 'off',
       },
     },
     {
