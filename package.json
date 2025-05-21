@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "",
   "keywords": [
     "eslint",
@@ -19,7 +19,7 @@
     "./index.mjs"
   ],
   "scripts": {
-    "format": "npx sort-package-json"
+    "format": "npx sort-package-json && prettier --write ."
   },
   "dependencies": {
     "angular-eslint": "^19.4.0",
@@ -28,6 +28,9 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "jsonc-eslint-parser": "^2.4.0",
     "typescript-eslint": "^8.32.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
   },
   "publishConfig": {
     "access": "public"
