@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "keywords": [
     "eslint",
@@ -15,8 +15,7 @@
   "author": "Krzysztof Pająk (Chris Araneo) <chris.araneo@gmail.com>",
   "main": "./index.js",
   "files": [
-    "./typescript.js",
-    "./template.js"
+    "./index.js"
   ],
   "scripts": {
     "format": "npx sort-package-json"
