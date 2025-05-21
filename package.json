@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "keywords": [
     "eslint",
@@ -14,6 +14,11 @@
   "license": "MIT",
   "author": "Krzysztof Pająk (Chris Araneo) <chris.araneo@gmail.com>",
   "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./typescript": "./typescript.js",
+    "./template": "./template.js"
+  },
   "main": "./index.js",
   "files": [
     "./index.js",
