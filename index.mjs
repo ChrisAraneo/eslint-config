@@ -1,13 +1,13 @@
-import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
-import angular from "angular-eslint";
-import eslintPluginJsonc from "eslint-plugin-jsonc";
-import simpleImportSort from "eslint-plugin-simple-import-sort";
-import jsoncParser from "jsonc-eslint-parser";
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import angular from 'angular-eslint';
+import eslintPluginJsonc from 'eslint-plugin-jsonc';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import jsoncParser from 'jsonc-eslint-parser';
 
-export default function createConfig(jsonFiles, sourceFiles, htmlFiles) {
+export default (jsonFiles, sourceFiles, htmlFiles) => {
   return tseslint.config(
-    ...eslintPluginJsonc.configs["flat/recommended-with-jsonc"],
+    ...eslintPluginJsonc.configs['flat/recommended-with-jsonc'],
     {
       files: jsonFiles,
       languageOptions: {
@@ -16,40 +16,46 @@ export default function createConfig(jsonFiles, sourceFiles, htmlFiles) {
     },
     {
       files: sourceFiles,
-      extends: [
-        eslint.configs.all,
-        ...tseslint.configs.all,
-        ...angular.configs.tsAll,
-      ],
+      extends: [eslint.configs.all, ...tseslint.configs.all],
+      languageOptions: {
+        parserOptions: {
+          projectService: true,
+          tsconfigRootDir: import.meta.dirname,
+        },
+      },
+    },
+    {
+      files: sourceFiles,
+      extends: [...angular.configs.tsAll],
       processor: angular.processInlineTemplates,
       rules: {
-        "@angular-eslint/directive-selector": [
-          "error",
+        '@angular-eslint/directive-selector': [
+          'error',
           {
-            type: "attribute",
-            prefix: "app",
-            style: "camelCase",
+            type: 'attribute',
+            prefix: 'app',
+            style: 'camelCase',
           },
         ],
-        "@angular-eslint/component-selector": [
-          "error",
+        '@angular-eslint/component-selector': [
+          'error',
           {
-            type: "element",
-            prefix: "app",
-            style: "kebab-case",
+            type: 'element',
+            prefix: 'app',
+            style: 'kebab-case',
           },
         ],
-        "@typescript-eslint/no-extraneous-class": "off",
+        '@typescript-eslint/no-extraneous-class': 'off',
       },
     },
     {
       files: sourceFiles,
       plugins: {
-        "simple-import-sort": simpleImportSort,
+        'simple-import-sort': simpleImportSort,
       },
       rules: {
-        "simple-import-sort/imports": "error",
-        "simple-import-sort/exports": "error",
+        'simple-import-sort/imports': 'error',
+        'simple-import-sort/exports': 'error',
       },
     },
     {
@@ -58,13 +64,13 @@ export default function createConfig(jsonFiles, sourceFiles, htmlFiles) {
     },
     {
       ignores: [
-        "node_modules/",
-        "reports/",
-        ".stryker-tmp/",
-        ".angular",
-        "package.json",
-        "package-lock.json",
+        'node_modules/',
+        'reports/',
+        '.stryker-tmp/',
+        '.angular',
+        'package.json',
+        'package-lock.json',
       ],
-    }
+    },
   );
-}
+};
