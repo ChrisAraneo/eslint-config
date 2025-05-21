@@ -4,8 +4,9 @@ import angular from 'angular-eslint';
 import eslintPluginJsonc from 'eslint-plugin-jsonc';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import jsoncParser from 'jsonc-eslint-parser';
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
-export default (jsonFiles, sourceFiles, htmlFiles) => {
+export default (jsonFiles, sourceFiles, htmlFiles, ignoredFiles) => {
   return tseslint.config(
     ...eslintPluginJsonc.configs['flat/recommended-with-jsonc'],
     {
@@ -49,6 +50,12 @@ export default (jsonFiles, sourceFiles, htmlFiles) => {
       },
     },
     {
+      languageOptions: {
+        globals: globals.builtin,
+      },
+      extends: [eslintPluginUnicorn.configs.all],
+    },
+    {
       files: sourceFiles,
       plugins: {
         'simple-import-sort': simpleImportSort,
@@ -63,7 +70,7 @@ export default (jsonFiles, sourceFiles, htmlFiles) => {
       extends: [...angular.configs.templateAll],
     },
     {
-      ignores: [
+      ignores: ignoredFiles || [
         'node_modules/',
         'reports/',
         '.stryker-tmp/',
