@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   extends: ["plugin:@angular-eslint/template/recommended"],
   rules: {
     "@angular-eslint/template/attributes-order": [
