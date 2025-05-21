@@ -1,4 +1,7 @@
-module.exports = {
-  typescript: require("./typescript"),
-  template: require("./template"),
+import typescript from "./typescript";
+import template from "./template";
+
+export default {
+  typescript,
+  template,
 };
