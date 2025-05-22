@@ -51,8 +51,10 @@ export default (
         '@typescript-eslint/parameter-properties': 'off',
         'new-cap': 'off',
         'no-duplicate-imports': 'off',
+        'one-var': 'off',
         'sort-imports': 'off',
         'sort-keys': 'off',
+        'sort-vars': 'off',
       },
     },
     {
@@ -76,6 +78,9 @@ export default (
             type: 'attribute',
           },
         ],
+        '@angular-eslint/prefer-on-push-component-change-detection': 'off',
+        '@angular-eslint/prefer-signals': 'off',
+        '@angular-eslint/template/i18n': 'off',
       },
     },
     {
