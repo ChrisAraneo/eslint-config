@@ -57,6 +57,15 @@ export default (
         'sort-imports': 'off',
         'sort-keys': 'off',
         'sort-vars': 'off',
+        '@typescript-eslint/naming-convention': [
+          'error',
+          [
+            {
+              selector: 'enumMember',
+              format: ['PascalCase'],
+            },
+          ],
+        ],
       },
     },
     {
@@ -82,7 +91,6 @@ export default (
         ],
         '@angular-eslint/prefer-on-push-component-change-detection': 'off',
         '@angular-eslint/prefer-signals': 'off',
-        '@angular-eslint/template/i18n': 'off',
       },
     },
     {
@@ -106,6 +114,7 @@ export default (
       extends: [...angular.configs.templateAll],
       rules: {
         '@angular-eslint/template/prefer-control-flow': 'off',
+        '@angular-eslint/template/i18n': 'off',
       },
     },
     {
