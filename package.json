@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "",
   "keywords": [
     "eslint",
@@ -21,7 +21,7 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsc --build tsconfig.json",
+    "build": "tsc --build --clean tsconfig.json",
     "format": "npx sort-package-json && prettier --write ."
   },
   "dependencies": {
