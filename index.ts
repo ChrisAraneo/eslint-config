@@ -49,6 +49,7 @@ export default (
         '@typescript-eslint/init-declarations': 'off',
         '@typescript-eslint/no-extraneous-class': 'off',
         '@typescript-eslint/parameter-properties': 'off',
+        '@typescript-eslint/consistent-type-imports': 'off',
         'new-cap': 'off',
         'no-duplicate-imports': 'off',
         'one-var': 'off',
