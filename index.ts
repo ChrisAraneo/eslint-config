@@ -1,98 +1,108 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import angular from 'angular-eslint';
-import eslintPluginJsonc from 'eslint-plugin-jsonc';
+import jsonc from 'eslint-plugin-jsonc';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import jsoncParser from 'jsonc-eslint-parser';
-import eslintPluginUnicorn from 'eslint-plugin-unicorn';
+import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
 
-export default (jsonFiles, sourceFiles, htmlFiles, ignoredFiles) => {
+const DEFAULT_IGNORED_FILES = [
+  'node_modules/',
+  'reports/',
+  '.stryker-tmp/',
+  '.angular',
+  'package.json',
+  'package-lock.json',
+];
+
+export default (
+  jsons: string[] = [],
+  sources: string[] = [],
+  templates: string[] = [],
+  ignored: string[],
+) => {
   return tseslint.config(
-    ...eslintPluginJsonc.configs['flat/recommended-with-jsonc'],
+    ...jsonc.configs['flat/recommended-with-jsonc'],
     {
-      files: jsonFiles,
+      files: jsons,
       languageOptions: {
         parser: jsoncParser,
       },
     },
     {
-      files: sourceFiles,
+      files: sources,
       extends: [eslint.configs.all, ...tseslint.configs.all],
       languageOptions: {
         parserOptions: {
           projectService: true,
-          tsconfigRootDir: import.meta.dirname,
+          tsconfigRootDir: (import.meta as any).dirname,
         },
       },
       rules: {
-        'new-cap': 'off',
-        'sort-imports': 'off',
-        'sort-keys': 'off',
-        '@typescript-eslint/init-declarations': 'off',
-        '@typescript-eslint/parameter-properties': 'off',
         '@typescript-eslint/explicit-member-accessibility': [
           'error',
           {
             accessibility: 'no-public',
           },
         ],
+        '@typescript-eslint/init-declarations': 'off',
         '@typescript-eslint/no-extraneous-class': 'off',
+        '@typescript-eslint/parameter-properties': 'off',
+        'new-cap': 'off',
+        'no-duplicate-imports': 'off',
+        'sort-imports': 'off',
+        'sort-keys': 'off',
       },
     },
     {
-      files: sourceFiles,
+      files: sources,
       extends: [...angular.configs.tsAll],
       processor: angular.processInlineTemplates,
       rules: {
-        '@angular-eslint/directive-selector': [
-          'error',
-          {
-            type: 'attribute',
-            prefix: 'app',
-            style: 'camelCase',
-          },
-        ],
         '@angular-eslint/component-selector': [
           'error',
           {
-            type: 'element',
             prefix: 'app',
             style: 'kebab-case',
+            type: 'element',
           },
         ],
-        '@angular-eslint/template/prefer-control-flow': 'off',
+        '@angular-eslint/directive-selector': [
+          'error',
+          {
+            prefix: 'app',
+            style: 'camelCase',
+            type: 'attribute',
+          },
+        ],
       },
     },
     {
       languageOptions: {
         globals: globals.builtin,
       },
-      extends: [eslintPluginUnicorn.configs.all],
+      extends: [unicorn.configs.all],
     },
     {
-      files: sourceFiles,
+      files: sources,
       plugins: {
         'simple-import-sort': simpleImportSort,
       },
       rules: {
-        'simple-import-sort/imports': 'error',
         'simple-import-sort/exports': 'error',
+        'simple-import-sort/imports': 'error',
       },
     },
     {
-      files: htmlFiles,
+      files: templates,
       extends: [...angular.configs.templateAll],
+      rules: {
+        '@angular-eslint/template/prefer-control-flow': 'off',
+      },
     },
     {
-      ignores: ignoredFiles || [
-        'node_modules/',
-        'reports/',
-        '.stryker-tmp/',
-        '.angular',
-        'package.json',
-        'package-lock.json',
-      ],
+      ignores: ignored || DEFAULT_IGNORED_FILES,
     },
   );
 };
