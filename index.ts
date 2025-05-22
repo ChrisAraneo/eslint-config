@@ -36,6 +36,7 @@ export default (
       languageOptions: {
         parserOptions: {
           projectService: true,
+          allowDefaultProject: ['*.{js,mjs,cjs}', 'scripts/*.{js,mjs,cjs}'],
           tsconfigRootDir: (import.meta as any).dirname,
         },
       },
