@@ -59,12 +59,10 @@ export default (
         'sort-vars': 'off',
         '@typescript-eslint/naming-convention': [
           'error',
-          [
-            {
-              selector: 'enumMember',
-              format: ['PascalCase'],
-            },
-          ],
+          {
+            selector: 'enumMember',
+            format: ['PascalCase'],
+          },
         ],
       },
     },
