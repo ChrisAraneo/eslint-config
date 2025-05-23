@@ -57,6 +57,7 @@ export default (
         'sort-imports': 'off',
         'sort-keys': 'off',
         'sort-vars': 'off',
+        'no-ternary': 'off',
         '@typescript-eslint/naming-convention': [
           'error',
           {
@@ -96,6 +97,9 @@ export default (
         globals: globals.builtin,
       },
       extends: [unicorn.configs.all],
+      rules: {
+        'unicorn/prevent-abbreviations': 'off',
+      },
     },
     {
       files: sources,
