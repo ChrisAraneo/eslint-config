@@ -36,7 +36,10 @@ export default (
       languageOptions: {
         parserOptions: {
           projectService: true,
-          allowDefaultProject: ['*.{js,mjs,cjs}', 'scripts/*.{js,mjs,cjs}'],
+          allowDefaultProject: [
+            '*.{js,mjs,cjs,ts}',
+            'scripts/**/*.{js,mjs,cjs,ts}',
+          ],
           tsconfigRootDir: (import.meta as any).dirname,
         },
       },
@@ -58,6 +61,7 @@ export default (
         'sort-keys': 'off',
         'sort-vars': 'off',
         'no-ternary': 'off',
+        'id-length': 'off',
         '@typescript-eslint/naming-convention': [
           'error',
           {
@@ -90,6 +94,7 @@ export default (
         ],
         '@angular-eslint/prefer-on-push-component-change-detection': 'off',
         '@angular-eslint/prefer-signals': 'off',
+        '@angular-eslint/prefer-output-emitter-ref': 'off',
       },
     },
     {
@@ -99,6 +104,7 @@ export default (
       extends: [unicorn.configs.all],
       rules: {
         'unicorn/prevent-abbreviations': 'off',
+        'unicorn/prefer-global-this': 'off',
       },
     },
     {
