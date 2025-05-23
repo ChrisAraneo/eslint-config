@@ -35,7 +35,8 @@ export default (
       extends: [eslint.configs.all, ...tseslint.configs.all],
       languageOptions: {
         parserOptions: {
-          projectService: false,
+          projectService: true,
+          allowDefaultProject: ['./**/*.{js,mjs,cjs,ts}'],
           tsconfigRootDir: (import.meta as any).dirname,
         },
       },
