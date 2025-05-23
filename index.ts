@@ -35,11 +35,7 @@ export default (
       extends: [eslint.configs.all, ...tseslint.configs.all],
       languageOptions: {
         parserOptions: {
-          projectService: true,
-          allowDefaultProject: [
-            '*.{js,mjs,cjs,ts}',
-            'scripts/**/*.{js,mjs,cjs,ts}',
-          ],
+          projectService: false,
           tsconfigRootDir: (import.meta as any).dirname,
         },
       },
@@ -65,6 +61,7 @@ export default (
         'sort-vars': 'off',
         'no-ternary': 'off',
         'id-length': 'off',
+        'no-warning-comments': 'off',
         '@typescript-eslint/naming-convention': [
           'error',
           {
