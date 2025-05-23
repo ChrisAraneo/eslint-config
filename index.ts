@@ -54,6 +54,9 @@ export default (
         '@typescript-eslint/no-extraneous-class': 'off',
         '@typescript-eslint/parameter-properties': 'off',
         '@typescript-eslint/consistent-type-imports': 'off',
+        '@typescript-eslint/no-confusing-void-expression': 'off',
+        '@typescript-eslint/class-methods-use-this': 'off',
+        '@typescript-eslint/prefer-readonly-parameter-type': 'off',
         'new-cap': 'off',
         'no-duplicate-imports': 'off',
         'one-var': 'off',
@@ -95,6 +98,7 @@ export default (
         '@angular-eslint/prefer-on-push-component-change-detection': 'off',
         '@angular-eslint/prefer-signals': 'off',
         '@angular-eslint/prefer-output-emitter-ref': 'off',
+        '@angular-eslint/no-forward-ref': 'off',
       },
     },
     {
