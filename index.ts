@@ -56,7 +56,7 @@ export default (
         '@typescript-eslint/consistent-type-imports': 'off',
         '@typescript-eslint/no-confusing-void-expression': 'off',
         '@typescript-eslint/class-methods-use-this': 'off',
-        '@typescript-eslint/prefer-readonly-parameter-type': 'off',
+        '@typescript-eslint/prefer-readonly-parameter-types': 'off',
         'new-cap': 'off',
         'no-duplicate-imports': 'off',
         'one-var': 'off',
@@ -109,6 +109,7 @@ export default (
       rules: {
         'unicorn/prevent-abbreviations': 'off',
         'unicorn/prefer-global-this': 'off',
+        'unicorn/no-null': 'off',
       },
     },
     {
