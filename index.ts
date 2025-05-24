@@ -29,6 +29,12 @@ export default (
       languageOptions: {
         parser: jsoncParser,
       },
+      rules: {
+        'jsonc/no-comments': 'error',
+        'jsonc/sort-keys': 'error',
+        'jsonc/valid-json-number': 'error',
+        'jsonc/no-dupe-keys': 'error',
+      },
     },
     {
       files: sources,
