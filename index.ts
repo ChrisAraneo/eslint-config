@@ -68,6 +68,7 @@ export default (
         'no-ternary': 'off',
         'id-length': 'off',
         'no-warning-comments': 'off',
+        'no-underscore-dangle': 'off',
         '@typescript-eslint/naming-convention': [
           'error',
           {
