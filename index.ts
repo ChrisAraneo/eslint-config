@@ -59,17 +59,7 @@ export default (
         '@typescript-eslint/no-confusing-void-expression': 'off',
         '@typescript-eslint/class-methods-use-this': 'off',
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
-        'new-cap': 'off',
-        'no-duplicate-imports': 'off',
-        'one-var': 'off',
-        'sort-imports': 'off',
-        'sort-keys': 'off',
-        'sort-vars': 'off',
-        'no-ternary': 'off',
-        'id-length': 'off',
-        'no-warning-comments': 'off',
-        'no-underscore-dangle': 'off',
-        'member-ordering': [
+        '@typescript-eslint/member-ordering': [
           'error',
           {
             default: {
@@ -110,6 +100,16 @@ export default (
             format: ['PascalCase'],
           },
         ],
+        'new-cap': 'off',
+        'no-duplicate-imports': 'off',
+        'one-var': 'off',
+        'sort-imports': 'off',
+        'sort-keys': 'off',
+        'sort-vars': 'off',
+        'no-ternary': 'off',
+        'id-length': 'off',
+        'no-warning-comments': 'off',
+        'no-underscore-dangle': 'off',
       },
     },
     {
