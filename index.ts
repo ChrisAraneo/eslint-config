@@ -144,6 +144,7 @@ export default (
         'unicorn/prevent-abbreviations': 'off',
         'unicorn/prefer-global-this': 'off',
         'unicorn/no-null': 'off',
+        'unicorn/template-indent': 'off',
       },
     },
     {
