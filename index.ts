@@ -59,6 +59,7 @@ export default (
         '@typescript-eslint/no-confusing-void-expression': 'off',
         '@typescript-eslint/class-methods-use-this': 'off',
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
+        '@typescript-eslint/strict-boolean-expressions': 'off',
         '@typescript-eslint/member-ordering': [
           'error',
           {
