@@ -4,6 +4,7 @@ import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 export default (
   sources: string[] = [],
   templates: string[] = [],
+  prefix: string = 'app',
 ): InfiniteDepthConfigWithExtends[] => {
   return [
     {
@@ -14,7 +15,7 @@ export default (
         '@angular-eslint/component-selector': [
           'error',
           {
-            prefix: 'app',
+            prefix: prefix,
             style: 'kebab-case',
             type: 'element',
           },
@@ -22,7 +23,7 @@ export default (
         '@angular-eslint/directive-selector': [
           'error',
           {
-            prefix: 'app',
+            prefix: prefix,
             style: 'camelCase',
             type: 'attribute',
           },

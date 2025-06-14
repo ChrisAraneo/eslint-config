@@ -16,12 +16,24 @@ const DEFAULT_IGNORED_FILES = [
 ];
 
 export default (
-  jsons: string[] = [],
-  sources: string[] = [],
-  tests: string[] = [],
-  templates: string[] = [],
-  ignored: string[],
+  input: {
+    jsons: string[];
+    sources: string[];
+    tests: string[];
+    templates: string[];
+    angularElementPrefix: string;
+    ignored: string[];
+  } = {
+    jsons: [],
+    sources: [],
+    tests: [],
+    templates: [],
+    angularElementPrefix: 'app',
+    ignored: [],
+  },
 ) => {
+  const { jsons, sources, tests, templates, ignored } = input;
+
   return tseslint.config(
     ...createJsonConfigs(jsons),
     ...createAngularConfigs(sources, templates),
