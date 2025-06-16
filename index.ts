@@ -23,6 +23,7 @@ export default (
     templates: string[];
     angularElementPrefix: string;
     ignored: string[];
+    isAngularApp?: boolean;
   } = {
     jsons: [],
     sources: [],
@@ -30,13 +31,14 @@ export default (
     templates: [],
     angularElementPrefix: 'app',
     ignored: [],
+    isAngularApp: false,
   },
 ) => {
-  const { jsons, sources, tests, templates, ignored } = input;
+  const { jsons, sources, tests, templates, ignored, isAngularApp } = input;
 
   return tseslint.config(
+    ...(isAngularApp ? createAngularConfigs(sources, templates) : []),
     ...createJsonConfigs(jsons),
-    ...createAngularConfigs(sources, templates),
     ...createTypeScriptConfigs(sources),
     ...createTypeScriptTestsConfigs(tests),
     {
