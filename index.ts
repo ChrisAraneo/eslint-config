@@ -15,6 +15,14 @@ const DEFAULT_IGNORED_FILES = [
   'package-lock.json',
 ];
 
+function isNonEmptyStringArray(value: unknown): value is string[] {
+  return (
+    Array.isArray(value) &&
+    value.length > 0 &&
+    value.every((item) => typeof item === 'string')
+  );
+}
+
 export default (
   input: {
     jsons: string[];
@@ -37,10 +45,14 @@ export default (
   const { jsons, sources, tests, templates, ignored, isAngularApp } = input;
 
   return tseslint.config(
-    ...(isAngularApp ? createAngularConfigs(sources, templates) : []),
-    ...createJsonConfigs(jsons),
-    ...createTypeScriptConfigs(sources),
-    ...createTypeScriptTestsConfigs(tests),
+    ...(isAngularApp && isNonEmptyStringArray(templates)
+      ? createAngularConfigs(sources, templates)
+      : []),
+    ...(isNonEmptyStringArray(jsons) ? createJsonConfigs(jsons) : []),
+    ...(isNonEmptyStringArray(sources) ? createTypeScriptConfigs(sources) : []),
+    ...(isNonEmptyStringArray(tests)
+      ? createTypeScriptTestsConfigs(tests)
+      : []),
     {
       ignores: ignored || DEFAULT_IGNORED_FILES,
     },
