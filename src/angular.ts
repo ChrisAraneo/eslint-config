@@ -1,13 +1,21 @@
 import angular from 'angular-eslint';
 import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
+import { isEmpty } from './utils.js';
 
 export default (
+  isAngularApp: boolean = false,
   sources: string[] = [],
   templates: string[] = [],
-  prefix: string = 'app',
+  prefix?: string,
 ): InfiniteDepthConfigWithExtends[] => {
-  return [
-    {
+  if (!isAngularApp) {
+    return [];
+  }
+
+  const configs: InfiniteDepthConfigWithExtends[] = [];
+
+  if (!isEmpty(sources)) {
+    configs.push({
       files: sources,
       extends: [...angular.configs.tsAll],
       processor: angular.processInlineTemplates,
@@ -15,7 +23,7 @@ export default (
         '@angular-eslint/component-selector': [
           'error',
           {
-            prefix: prefix,
+            prefix: prefix || 'app',
             style: 'kebab-case',
             type: 'element',
           },
@@ -23,7 +31,7 @@ export default (
         '@angular-eslint/directive-selector': [
           'error',
           {
-            prefix: prefix,
+            prefix: prefix || 'app',
             style: 'camelCase',
             type: 'attribute',
           },
@@ -33,14 +41,19 @@ export default (
         '@angular-eslint/prefer-output-emitter-ref': 'off',
         '@angular-eslint/no-forward-ref': 'off',
       },
-    },
-    {
+    });
+  }
+
+  if (!isEmpty(templates)) {
+    configs.push({
       files: templates,
       extends: [...angular.configs.templateAll],
       rules: {
         '@angular-eslint/template/prefer-control-flow': 'off',
         '@angular-eslint/template/i18n': 'off',
       },
-    },
-  ];
+    });
+  }
+
+  return configs;
 };

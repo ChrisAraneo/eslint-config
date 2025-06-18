@@ -4,11 +4,16 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
 import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
+import { isEmpty } from './utils.js';
 
 const createConfigs = (
   sources: string[] = [],
   isTests: boolean = false,
 ): InfiniteDepthConfigWithExtends[] => {
+  if (isEmpty(sources)) {
+    return [];
+  }
+
   const errorWhenNotTests = !isTests ? 'error' : 'off';
 
   return [

@@ -1,6 +1,6 @@
 import tseslint from 'typescript-eslint';
 import createJsonConfigs from './src/json.js';
-import createAngularConfigs from './src/angular.js';
+import createAngularConfigsWhenIsAngularApp from './src/angular.js';
 import {
   createTypeScriptConfigs,
   createTypeScriptTestsConfigs,
@@ -14,14 +14,6 @@ const DEFAULT_IGNORED_FILES = [
   'package.json',
   'package-lock.json',
 ];
-
-function isNonEmptyStringArray(value: unknown): value is string[] {
-  return (
-    Array.isArray(value) &&
-    value.length > 0 &&
-    value.every((item) => typeof item === 'string')
-  );
-}
 
 export default (
   input: {
@@ -42,17 +34,26 @@ export default (
     isAngularApp: false,
   },
 ) => {
-  const { jsons, sources, tests, templates, ignored, isAngularApp } = input;
+  const {
+    jsons,
+    sources,
+    tests,
+    templates,
+    angularElementPrefix,
+    ignored,
+    isAngularApp,
+  } = input;
 
   return tseslint.config(
-    ...(isAngularApp && isNonEmptyStringArray(templates)
-      ? createAngularConfigs(sources, templates)
-      : []),
-    ...(isNonEmptyStringArray(jsons) ? createJsonConfigs(jsons) : []),
-    ...(isNonEmptyStringArray(sources) ? createTypeScriptConfigs(sources) : []),
-    ...(isNonEmptyStringArray(tests)
-      ? createTypeScriptTestsConfigs(tests)
-      : []),
+    ...createAngularConfigsWhenIsAngularApp(
+      isAngularApp,
+      sources,
+      templates,
+      angularElementPrefix,
+    ),
+    ...createJsonConfigs(jsons),
+    ...createTypeScriptConfigs(sources),
+    ...createTypeScriptTestsConfigs(tests),
     {
       ignores: ignored || DEFAULT_IGNORED_FILES,
     },
