@@ -21,5 +21,5 @@
     "target": "es2020"
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["*.ts", "src/angular.ts", "src/json.ts", "src/typescript.ts"]
+  "include": ["*.ts", "src/angular.ts", "src/json.ts", "src/typescript.ts", "src/utils.ts"]
 }
