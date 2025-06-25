@@ -17,9 +17,9 @@ export default (jsons: string[] = []): InfiniteDepthConfigWithExtends[] => {
       },
       rules: {
         'jsonc/no-comments': 'error',
+        'jsonc/no-dupe-keys': 'error',
         'jsonc/sort-keys': 'error',
         'jsonc/valid-json-number': 'error',
-        'jsonc/no-dupe-keys': 'error',
       },
     },
   ];
