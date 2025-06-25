@@ -16,8 +16,8 @@ export default (
 
   if (!isEmpty(sources)) {
     configs.push({
-      files: sources,
       extends: [...angular.configs.tsAll],
+      files: sources,
       processor: angular.processInlineTemplates,
       rules: {
         '@angular-eslint/component-selector': [
@@ -36,10 +36,10 @@ export default (
             type: 'attribute',
           },
         ],
-        '@angular-eslint/prefer-on-push-component-change-detection': 'off',
-        '@angular-eslint/prefer-signals': 'off',
-        '@angular-eslint/prefer-output-emitter-ref': 'off',
         '@angular-eslint/no-forward-ref': 'off',
+        '@angular-eslint/prefer-on-push-component-change-detection': 'off',
+        '@angular-eslint/prefer-output-emitter-ref': 'off',
+        '@angular-eslint/prefer-signals': 'off',
       },
     });
   }
@@ -49,8 +49,8 @@ export default (
       files: templates,
       extends: [...angular.configs.templateAll],
       rules: {
-        '@angular-eslint/template/prefer-control-flow': 'off',
         '@angular-eslint/template/i18n': 'off',
+        '@angular-eslint/template/prefer-control-flow': 'off',
       },
     });
   }
