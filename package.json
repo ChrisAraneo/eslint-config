@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.48",
+  "version": "0.0.49",
   "description": "",
   "keywords": [
     "eslint",
@@ -21,7 +21,7 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "rimraf ./dist && tsup index.ts src/*.ts",
+    "build": "rimraf ./dist && tsup index.ts",
     "format": "npx sort-package-json && prettier --write ."
   },
   "dependencies": {
