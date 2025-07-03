@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "description": "",
   "keywords": [
     "eslint",
@@ -21,12 +21,13 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "rimraf ./dist && tsc --build tsconfig.json",
+    "build": "rimraf ./dist && tsup index.ts src/*.ts",
     "format": "npx sort-package-json && prettier --write ."
   },
   "dependencies": {
     "@humanwhocodes/momoa": "^3.3.8",
     "angular-eslint": "^19.4.0",
+    "app-root-dir": "^1.0.2",
     "eslint": "^9.27.0",
     "eslint-plugin-jsonc": "^2.20.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
@@ -35,8 +36,10 @@
     "typescript-eslint": "^8.32.1"
   },
   "devDependencies": {
+    "@types/app-root-dir": "^0.1.4",
     "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
     "typescript": "^5.8.3"
   },
   "publishConfig": {

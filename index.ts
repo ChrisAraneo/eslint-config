@@ -23,6 +23,7 @@ export default (
     templates: string[];
     angularElementPrefix: string;
     ignored: string[];
+    tsconfigRootDir?: string;
     isAngularApp?: boolean;
   } = {
     jsons: [],
@@ -42,6 +43,7 @@ export default (
     angularElementPrefix,
     ignored,
     isAngularApp,
+    tsconfigRootDir,
   } = input;
 
   return tseslint.config(
@@ -52,8 +54,8 @@ export default (
       angularElementPrefix,
     ),
     ...createJsonConfigs(jsons),
-    ...createTypeScriptConfigs(sources),
-    ...createTypeScriptTestsConfigs(tests),
+    ...createTypeScriptConfigs(sources, tsconfigRootDir),
+    ...createTypeScriptTestsConfigs(tests, tsconfigRootDir),
     {
       ignores: ignored || DEFAULT_IGNORED_FILES,
     },

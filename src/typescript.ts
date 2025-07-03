@@ -5,10 +5,12 @@ import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
 import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 import { isEmpty } from './utils.js';
+import { get as getAppRootDir } from 'app-root-dir';
 
 const createConfigs = (
   sources: string[] = [],
   isTests: boolean = false,
+  tsconfigRootDir?: string,
 ): InfiniteDepthConfigWithExtends[] => {
   if (isEmpty(sources)) {
     return [];
@@ -23,7 +25,7 @@ const createConfigs = (
       languageOptions: {
         parserOptions: {
           projectService: true,
-          tsconfigRootDir: (import.meta as any).dirname,
+          tsconfigRootDir: tsconfigRootDir || getAppRootDir(),
         },
       },
       rules: {
@@ -127,10 +129,16 @@ const createConfigs = (
   ];
 };
 
-export const createTypeScriptConfigs = (sources: string[] = []) => {
-  return createConfigs(sources, false);
+export const createTypeScriptConfigs = (
+  sources: string[] = [],
+  tsconfigRootDir?: string,
+) => {
+  return createConfigs(sources, false, tsconfigRootDir);
 };
 
-export const createTypeScriptTestsConfigs = (sources: string[] = []) => {
-  return createConfigs(sources, true);
+export const createTypeScriptTestsConfigs = (
+  sources: string[] = [],
+  tsconfigRootDir?: string,
+) => {
+  return createConfigs(sources, true, tsconfigRootDir);
 };
