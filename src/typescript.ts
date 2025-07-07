@@ -17,6 +17,7 @@ const createConfigs = (
   }
 
   const errorWhenNotTests = !isTests ? 'error' : 'off';
+  const warnWhenNotTests = !isTests ? 'warn' : 'off';
 
   return [
     {
@@ -99,7 +100,7 @@ const createConfigs = (
         '@typescript-eslint/prefer-destructuring': errorWhenNotTests,
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
         '@typescript-eslint/strict-boolean-expressions': 'off',
-        '@typescript-eslint/no-unsafe-type-assertion': errorWhenNotTests,
+        '@typescript-eslint/no-unsafe-type-assertion': warnWhenNotTests,
         'id-length': 'off',
         'max-lines-per-function': errorWhenNotTests,
         'new-cap': 'off',
