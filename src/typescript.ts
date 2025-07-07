@@ -1,15 +1,16 @@
 import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import { get as getAppRootDir } from 'app-root-dir';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
+
 import { isEmpty } from './utils.js';
-import { get as getAppRootDir } from 'app-root-dir';
 
 const createConfigs = (
   sources: string[] = [],
-  isTests: boolean = false,
+  isTests = false,
   tsconfigRootDir?: string,
 ): InfiniteDepthConfigWithExtends[] => {
   if (isEmpty(sources)) {
@@ -38,7 +39,6 @@ const createConfigs = (
             accessibility: 'no-public',
           },
         ],
-        '@typescript-eslint/require-await': 'off',
         '@typescript-eslint/init-declarations': 'off',
         '@typescript-eslint/member-ordering': [
           'error',
@@ -73,11 +73,10 @@ const createConfigs = (
         '@typescript-eslint/naming-convention': [
           'error',
           {
-            selector: 'enumMember',
             format: ['PascalCase'],
+            selector: 'enumMember',
           },
         ],
-        'no-magic-numbers': 'off',
         '@typescript-eslint/no-confusing-void-expression': 'off',
         '@typescript-eslint/no-explicit-any': errorWhenNotTests,
         '@typescript-eslint/no-extraneous-class': 'off',
@@ -96,15 +95,17 @@ const createConfigs = (
         '@typescript-eslint/no-unsafe-function-type': errorWhenNotTests,
         '@typescript-eslint/no-unsafe-member-access': errorWhenNotTests,
         '@typescript-eslint/no-unsafe-return': errorWhenNotTests,
+        '@typescript-eslint/no-unsafe-type-assertion': warnWhenNotTests,
         '@typescript-eslint/parameter-properties': 'off',
         '@typescript-eslint/prefer-destructuring': errorWhenNotTests,
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
+        '@typescript-eslint/require-await': 'off',
         '@typescript-eslint/strict-boolean-expressions': 'off',
-        '@typescript-eslint/no-unsafe-type-assertion': warnWhenNotTests,
         'id-length': 'off',
         'max-lines-per-function': errorWhenNotTests,
         'new-cap': 'off',
         'no-duplicate-imports': 'off',
+        'no-magic-numbers': 'off',
         'no-ternary': 'off',
         'no-underscore-dangle': 'off',
         'no-warning-comments': 'off',

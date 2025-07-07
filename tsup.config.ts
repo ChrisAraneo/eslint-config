@@ -1,14 +1,14 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  platform: 'node',
-  target: 'node18',
-  splitting: false,
-  sourcemap: true,
   clean: true,
   dts: {
-    resolve: true,
     entry: './index.ts',
+    resolve: true,
   },
   format: ['cjs', 'esm'],
+  platform: 'node',
+  sourcemap: true,
+  splitting: false,
+  target: 'node18',
 });

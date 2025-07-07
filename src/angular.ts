@@ -1,9 +1,10 @@
 import angular from 'angular-eslint';
 import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
+
 import { isEmpty } from './utils.js';
 
 export default (
-  isAngularApp: boolean = false,
+  isAngularApp = false,
   sources: string[] = [],
   templates: string[] = [],
   prefix?: string,
@@ -46,8 +47,8 @@ export default (
 
   if (!isEmpty(templates)) {
     configs.push({
-      files: templates,
       extends: [...angular.configs.templateAll],
+      files: templates,
       rules: {
         '@angular-eslint/template/i18n': 'off',
         '@angular-eslint/template/prefer-control-flow': 'off',

@@ -1,6 +1,7 @@
 import tseslint from 'typescript-eslint';
-import createJsonConfigs from './src/json.js';
+
 import createAngularConfigsWhenIsAngularApp from './src/angular.js';
+import createJsonConfigs from './src/json.js';
 import {
   createTypeScriptConfigs,
   createTypeScriptTestsConfigs,
@@ -26,23 +27,23 @@ export default (
     tsconfigRootDir?: string;
     isAngularApp?: boolean;
   } = {
-    jsons: [],
-    sources: [],
-    tests: [],
-    templates: [],
     angularElementPrefix: 'app',
     ignored: [],
     isAngularApp: false,
+    jsons: [],
+    sources: [],
+    templates: [],
+    tests: [],
   },
 ) => {
   const {
-    jsons,
-    sources,
-    tests,
-    templates,
     angularElementPrefix,
     ignored,
     isAngularApp,
+    jsons,
+    sources,
+    templates,
+    tests,
     tsconfigRootDir,
   } = input;
 
