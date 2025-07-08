@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.51",
+  "version": "0.0.52",
   "description": "",
   "keywords": [
     "eslint",
@@ -21,7 +21,7 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "rimraf ./dist && tsup index.ts",
+    "build": "rimraf ./dist && tsc --build tsconfig.json",
     "chores": "npm run lint && npm run format",
     "format": "npx sort-package-json && prettier --write .",
     "lint": "eslint . --fix"
@@ -42,7 +42,6 @@
     "jiti": "^2.4.2",
     "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
-    "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.35.1"
   },
