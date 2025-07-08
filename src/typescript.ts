@@ -40,6 +40,7 @@ const createConfigs = (
           },
         ],
         '@typescript-eslint/init-declarations': 'off',
+        '@typescript-eslint/max-params': 'off',
         '@typescript-eslint/member-ordering': [
           'error',
           {
@@ -103,6 +104,19 @@ const createConfigs = (
         '@typescript-eslint/strict-boolean-expressions': 'off',
         'id-length': 'off',
         'max-lines-per-function': errorWhenNotTests,
+        'max-params': [
+          'error',
+          {
+            max: 6,
+          },
+        ],
+        'max-statements': [
+          'error',
+          {
+            ignoreTopLevelFunctions: true,
+            max: 15,
+          },
+        ],
         'new-cap': 'off',
         'no-duplicate-imports': 'off',
         'no-magic-numbers': 'off',
