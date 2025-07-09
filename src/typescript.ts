@@ -16,8 +16,10 @@ const createConfigs = (
   if (isEmpty(sources)) {
     return [];
   }
+
   const errorWhenNotTests = !isTests ? 'error' : 'off';
   const warnWhenNotTests = !isTests ? 'warn' : 'off';
+
   return [
     {
       extends: [eslint.configs.all, ...tseslint.configs.all],
@@ -163,12 +165,14 @@ const createConfigs = (
     },
   ];
 };
+
 export const createTypeScriptConfigs = (
   sources: string[] = [],
   tsconfigRootDir?: string,
 ) => {
   return createConfigs(sources, false, tsconfigRootDir);
 };
+
 export const createTypeScriptTestsConfigs = (
   sources: string[] = [],
   tsconfigRootDir?: string,
