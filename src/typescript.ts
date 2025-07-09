@@ -16,10 +16,8 @@ const createConfigs = (
   if (isEmpty(sources)) {
     return [];
   }
-
   const errorWhenNotTests = !isTests ? 'error' : 'off';
   const warnWhenNotTests = !isTests ? 'warn' : 'off';
-
   return [
     {
       extends: [eslint.configs.all, ...tseslint.configs.all],
@@ -35,9 +33,7 @@ const createConfigs = (
         '@typescript-eslint/consistent-type-imports': 'off',
         '@typescript-eslint/explicit-member-accessibility': [
           'error',
-          {
-            accessibility: 'no-public',
-          },
+          { accessibility: 'no-public' },
         ],
         '@typescript-eslint/init-declarations': 'off',
         '@typescript-eslint/max-params': 'off',
@@ -73,9 +69,37 @@ const createConfigs = (
         ],
         '@typescript-eslint/naming-convention': [
           'error',
+          { format: ['strictCamelCase'], selector: 'default' },
+          {
+            format: ['strictCamelCase', 'StrictPascalCase'],
+            selector: ['function', 'import'],
+          },
+          {
+            format: ['StrictPascalCase'],
+            selector: ['typeLike'],
+          },
+          { format: ['PascalCase'], selector: 'enumMember' },
           {
             format: ['PascalCase'],
-            selector: 'enumMember',
+            prefix: ['is', 'has', 'are', 'can', 'should', 'did', 'will'],
+            selector: ['variable', 'parameter', 'accessor'],
+            types: ['boolean'],
+          },
+          {
+            format: null,
+            modifiers: ['requiresQuotes'],
+            selector: ['objectLiteralProperty'],
+          },
+          {
+            filter: {
+              match: false,
+              regex:
+                '^(allowfullscreen|allowFullScreen|async|autofocus|autoFocus|autoplay|autoPlay|checked|defaultChecked|contenteditable|contentEditable|controls|default|defer|disabled|draggable|formnovalidate|formNoValidate|hidden|inert|ismap|itemscope|itemScope|loop|multiple|muted|nomodule|noModule|novalidate|noValidate|open|playsinline|playsInline|readonly|readOnly|required|reversed|selected|spellcheck|spellCheck)$',
+            },
+            format: ['PascalCase'],
+            prefix: ['is', 'has', 'are', 'can', 'should', 'did', 'will'],
+            selector: ['property'],
+            types: ['boolean'],
           },
         ],
         '@typescript-eslint/no-confusing-void-expression': 'off',
@@ -104,19 +128,8 @@ const createConfigs = (
         '@typescript-eslint/strict-boolean-expressions': 'off',
         'id-length': 'off',
         'max-lines-per-function': errorWhenNotTests,
-        'max-params': [
-          'error',
-          {
-            max: 6,
-          },
-        ],
-        'max-statements': [
-          'error',
-          {
-            ignoreTopLevelFunctions: true,
-            max: 15,
-          },
-        ],
+        'max-params': ['error', { max: 6 }],
+        'max-statements': ['error', { ignoreTopLevelFunctions: true, max: 15 }],
         'new-cap': 'off',
         'no-duplicate-imports': 'off',
         'no-magic-numbers': 'off',
@@ -132,9 +145,7 @@ const createConfigs = (
     {
       extends: [unicorn.configs.all],
       files: sources,
-      languageOptions: {
-        globals: globals.builtin,
-      },
+      languageOptions: { globals: globals.builtin },
       rules: {
         'unicorn/no-null': 'off',
         'unicorn/prefer-global-this': 'off',
@@ -144,9 +155,7 @@ const createConfigs = (
     },
     {
       files: sources,
-      plugins: {
-        'simple-import-sort': simpleImportSort,
-      },
+      plugins: { 'simple-import-sort': simpleImportSort },
       rules: {
         'simple-import-sort/exports': 'error',
         'simple-import-sort/imports': 'error',
@@ -154,14 +163,12 @@ const createConfigs = (
     },
   ];
 };
-
 export const createTypeScriptConfigs = (
   sources: string[] = [],
   tsconfigRootDir?: string,
 ) => {
   return createConfigs(sources, false, tsconfigRootDir);
 };
-
 export const createTypeScriptTestsConfigs = (
   sources: string[] = [],
   tsconfigRootDir?: string,
