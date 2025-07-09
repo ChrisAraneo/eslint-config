@@ -70,7 +70,7 @@ const createConfigs = (
           },
         ],
         '@typescript-eslint/naming-convention': [
-          'error',
+          'warn',
           { format: ['strictCamelCase'], selector: 'default' },
           {
             format: ['strictCamelCase'],
@@ -123,6 +123,12 @@ const createConfigs = (
             selector: 'variable',
             types: ['string', 'number'],
           },
+          {
+            format: ['UPPER_CASE', 'strictCamelCase'],
+            modifiers: ['const', 'global'],
+            selector: 'variable',
+            types: ['object'],
+          },
         ],
         '@typescript-eslint/no-confusing-void-expression': 'off',
         '@typescript-eslint/no-explicit-any': errorWhenNotTests,
@@ -143,6 +149,18 @@ const createConfigs = (
         '@typescript-eslint/no-unsafe-member-access': errorWhenNotTests,
         '@typescript-eslint/no-unsafe-return': errorWhenNotTests,
         '@typescript-eslint/no-unsafe-type-assertion': warnWhenNotTests,
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "args": "all",
+            "argsIgnorePattern": "^_",
+            "caughtErrors": "all",
+            "caughtErrorsIgnorePattern": "^_",
+            "destructuredArrayIgnorePattern": "^_",
+            "ignoreRestSiblings": true,
+            "varsIgnorePattern": "^_"
+          }
+        ],
         '@typescript-eslint/parameter-properties': 'off',
         '@typescript-eslint/prefer-destructuring': errorWhenNotTests,
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
@@ -157,6 +175,8 @@ const createConfigs = (
         'no-magic-numbers': 'off',
         'no-ternary': 'off',
         'no-underscore-dangle': 'off',
+        'no-unused-vars': 'off',
+        'no-void': 'off',
         'no-warning-comments': 'off',
         'one-var': 'off',
         'sort-imports': 'off',
