@@ -3,6 +3,7 @@
     "allowUnreachableCode": false,
     "alwaysStrict": true,
     "baseUrl": "./",
+    "declaration": true,
     "esModuleInterop": true,
     "lib": ["es2020", "dom"],
     "module": "NodeNext",
