@@ -105,14 +105,14 @@ const createConfigs = (
           },
           {
             format: ['UPPER_CASE'],
-            modifiers: ['const'],
+            modifiers: ['const', 'global'],
             prefix: ['IS_', 'HAS_', 'ARE_', 'CAN_', 'SHOULD_', 'DID_', 'WILL_'],
             selector: 'variable',
             types: ['boolean'],
           },
           {
             format: ['UPPER_CASE'],
-            modifiers: ['const'],
+            modifiers: ['const', 'global'],
             selector: 'variable',
             types: ['string', 'number'],
           },
