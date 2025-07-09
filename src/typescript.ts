@@ -73,6 +73,11 @@ const createConfigs = (
           'error',
           { format: ['strictCamelCase'], selector: 'default' },
           {
+            format: ['strictCamelCase'],
+            leadingUnderscore: 'allow',
+            selector: 'parameter',
+          },
+          {
             format: ['strictCamelCase', 'StrictPascalCase'],
             selector: ['function', 'import'],
           },
@@ -105,6 +110,7 @@ const createConfigs = (
           },
           {
             format: ['UPPER_CASE'],
+            leadingUnderscore: 'allow',
             modifiers: ['const', 'global'],
             prefix: ['IS_', 'HAS_', 'ARE_', 'CAN_', 'SHOULD_', 'DID_', 'WILL_'],
             selector: 'variable',
@@ -112,6 +118,7 @@ const createConfigs = (
           },
           {
             format: ['UPPER_CASE'],
+            leadingUnderscore: 'allow',
             modifiers: ['const', 'global'],
             selector: 'variable',
             types: ['string', 'number'],
