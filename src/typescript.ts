@@ -121,7 +121,6 @@ const createConfigs = (
             leadingUnderscore: 'allow',
             modifiers: ['const', 'global'],
             selector: 'variable',
-            types: ['string', 'number', 'object'],
           },
         ],
         '@typescript-eslint/no-confusing-void-expression': 'off',
