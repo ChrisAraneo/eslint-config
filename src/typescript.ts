@@ -149,17 +149,17 @@ const createConfigs = (
         '@typescript-eslint/no-unsafe-member-access': errorWhenNotTests,
         '@typescript-eslint/no-unsafe-return': errorWhenNotTests,
         '@typescript-eslint/no-unsafe-type-assertion': warnWhenNotTests,
-        "@typescript-eslint/no-unused-vars": [
-          "error",
+        '@typescript-eslint/no-unused-vars': [
+          'error',
           {
-            "args": "all",
-            "argsIgnorePattern": "^_",
-            "caughtErrors": "all",
-            "caughtErrorsIgnorePattern": "^_",
-            "destructuredArrayIgnorePattern": "^_",
-            "ignoreRestSiblings": true,
-            "varsIgnorePattern": "^_"
-          }
+            args: 'all',
+            argsIgnorePattern: '^_',
+            caughtErrors: 'all',
+            caughtErrorsIgnorePattern: '^_',
+            destructuredArrayIgnorePattern: '^_',
+            ignoreRestSiblings: true,
+            varsIgnorePattern: '^_',
+          },
         ],
         '@typescript-eslint/parameter-properties': 'off',
         '@typescript-eslint/prefer-destructuring': errorWhenNotTests,
@@ -171,6 +171,7 @@ const createConfigs = (
         'max-params': ['error', 6],
         'max-statements': ['error', 15],
         'new-cap': 'off',
+        'no-await-in-loop': 'off',
         'no-duplicate-imports': 'off',
         'no-magic-numbers': 'off',
         'no-ternary': 'off',
@@ -190,7 +191,9 @@ const createConfigs = (
       languageOptions: { globals: globals.builtin },
       rules: {
         'unicorn/no-null': 'off',
+        'unicorn/number-literal-case': 'off',
         'unicorn/prefer-global-this': 'off',
+        'unicorn/prefer-ternary': 'off',
         'unicorn/prevent-abbreviations': 'off',
         'unicorn/template-indent': 'off',
       },
