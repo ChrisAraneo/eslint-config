@@ -124,6 +124,11 @@ const createConfigs = (
             types: ['string', 'number', 'array'],
           },
           {
+            format: ['UPPER_CASE'],
+            modifiers: ['const', 'global'],
+            selector: 'default',
+          },
+          {
             format: ['strictCamelCase'],
             modifiers: ['const', 'global'],
             selector: 'variable',
