@@ -121,6 +121,13 @@ const createConfigs = (
             leadingUnderscore: 'allow',
             modifiers: ['const', 'global'],
             selector: 'variable',
+            types: ['string', 'number', 'array'],
+          },
+          {
+            format: ['strictCamelCase'],
+            modifiers: ['const', 'global'],
+            selector: 'variable',
+            types: ['function'],
           },
         ],
         '@typescript-eslint/no-confusing-void-expression': 'off',
