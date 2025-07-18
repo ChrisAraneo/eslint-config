@@ -86,6 +86,7 @@ const createConfigs = (
             selector: ['typeLike'],
           },
           { format: ['PascalCase'], selector: 'enumMember' },
+          { format: ['PascalCase'], modifiers: 'static' },
           {
             format: ['PascalCase'],
             prefix: ['is', 'has', 'are', 'can', 'should', 'did', 'will'],
