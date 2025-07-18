@@ -88,7 +88,7 @@ const createConfigs = (
           { format: ['PascalCase'], selector: 'enumMember' },
           {
             format: ['PascalCase'],
-            modifiers: 'static',
+            modifiers: ['static'],
             selector: 'classProperty',
           },
           {
