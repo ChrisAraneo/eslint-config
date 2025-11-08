@@ -200,6 +200,7 @@ const createConfigs = (
       files: sources,
       languageOptions: { globals: globals.builtin },
       rules: {
+        'unicorn/import-style': 'off',
         'unicorn/no-null': 'off',
         'unicorn/number-literal-case': 'off',
         'unicorn/prefer-global-this': 'off',
