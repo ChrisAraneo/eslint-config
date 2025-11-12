@@ -184,6 +184,7 @@ const createConfigs = (
         'no-await-in-loop': 'off',
         'no-duplicate-imports': 'off',
         'no-magic-numbers': 'off',
+        'no-plusplus': 'off',
         'no-ternary': 'off',
         'no-underscore-dangle': 'off',
         'no-unused-vars': 'off',
