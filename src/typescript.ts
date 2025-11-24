@@ -203,6 +203,8 @@ const createConfigs = (
       rules: {
         'unicorn/import-style': 'off',
         'unicorn/no-array-for-each': 'off',
+        'unicorn/no-array-reduce': 'off',
+        'unicorn/no-for-loop': 'error',
         'unicorn/no-null': 'off',
         'unicorn/number-literal-case': 'off',
         'unicorn/prefer-global-this': 'off',
