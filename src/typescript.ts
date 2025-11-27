@@ -73,8 +73,20 @@ const createConfigs = (
           'warn',
           { format: ['strictCamelCase'], selector: 'default' },
           {
+            filter: {
+              match: false,
+              regex: '^_+$',
+            },
             format: ['strictCamelCase'],
             leadingUnderscore: 'allow',
+            selector: 'parameter',
+          },
+          {
+            custom: {
+              match: true,
+              regex: '^_+$',
+            },
+            format: null,
             selector: 'parameter',
           },
           {
