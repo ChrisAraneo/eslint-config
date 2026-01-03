@@ -49,6 +49,11 @@ export default (
     configs.push({
       extends: [...angular.configs.templateAll],
       files: templates,
+      languageOptions: {
+        parserOptions: {
+          extraFileExtensions: ['.html'],
+        },
+      },
       rules: {
         '@angular-eslint/template/i18n': 'off',
         '@angular-eslint/template/prefer-control-flow': 'off',

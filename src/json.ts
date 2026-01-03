@@ -15,6 +15,9 @@ export default (jsons: string[] = []): InfiniteDepthConfigWithExtends[] => {
       files: jsons,
       languageOptions: {
         parser: jsoncParser,
+        parserOptions: {
+          extraFileExtensions: ['.json'],
+        },
       },
       rules: {
         'jsonc/no-comments': 'error',
