@@ -17,7 +17,7 @@ export default (
 
   if (!isEmpty(sources)) {
     configs.push({
-      ...angular.configs.tsAll,
+      extends: [...angular.configs.tsAll],
       files: sources,
       processor: angular.processInlineTemplates,
       rules: {
@@ -47,7 +47,7 @@ export default (
 
   if (!isEmpty(templates)) {
     configs.push({
-      ...angular.configs.templateAll,
+      extends: [...angular.configs.templateAll],
       files: templates,
       rules: {
         '@angular-eslint/template/i18n': 'off',
