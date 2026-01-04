@@ -17,7 +17,7 @@ export default (
 
   if (!isEmpty(sources)) {
     configs.push({
-      extends: [...angular.configs.tsAll],
+      ...angular.configs.tsAll,
       files: sources,
       processor: angular.processInlineTemplates,
       rules: {
@@ -47,13 +47,8 @@ export default (
 
   if (!isEmpty(templates)) {
     configs.push({
-      extends: [...angular.configs.templateAll],
+      ...angular.configs.templateAll,
       files: templates,
-      languageOptions: {
-        parserOptions: {
-          extraFileExtensions: ['.html'],
-        },
-      },
       rules: {
         '@angular-eslint/template/i18n': 'off',
         '@angular-eslint/template/prefer-control-flow': 'off',
