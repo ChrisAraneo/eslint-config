@@ -12,6 +12,7 @@ const createConfigs = (
   sources: string[] = [],
   isTests = false,
   tsconfigRootDir?: string,
+  shouldResolveAppRootDir?: boolean,
 ): InfiniteDepthConfigWithExtends[] => {
   if (isEmpty(sources)) {
     return [];
@@ -20,15 +21,22 @@ const createConfigs = (
   const errorWhenNotTests = !isTests ? 'error' : 'off';
   const warnWhenNotTests = !isTests ? 'warn' : 'off';
 
+  const parserOptions = {
+    projectService: true,
+  };
+
+  if (tsconfigRootDir && !shouldResolveAppRootDir) {
+    Object.assign(parserOptions, { tsconfigRootDir });
+  } else if (shouldResolveAppRootDir) {
+    Object.assign(parserOptions, { tsconfigRootDir: getAppRootDir() });
+  }
+
   return [
     {
       extends: [eslint.configs.all, ...tseslint.configs.all],
       files: sources,
       languageOptions: {
-        parserOptions: {
-          projectService: true,
-          tsconfigRootDir: tsconfigRootDir || getAppRootDir(),
-        },
+        parserOptions,
       },
       rules: {
         '@typescript-eslint/class-methods-use-this': 'off',
@@ -238,7 +246,9 @@ const createConfigs = (
     {
       extends: [unicorn.configs.all],
       files: sources,
-      languageOptions: { globals: globals.builtin },
+      languageOptions: {
+        globals: globals.builtin,
+      },
       rules: {
         'unicorn/import-style': 'off',
         'unicorn/no-array-for-each': 'off',
@@ -266,8 +276,14 @@ const createConfigs = (
 export const createTypeScriptConfigs = (
   sources: string[] = [],
   tsconfigRootDir?: string,
+  shouldResolveAppRootDir?: boolean,
 ) => {
-  return createConfigs(sources, false, tsconfigRootDir);
+  return createConfigs(
+    sources,
+    false,
+    tsconfigRootDir,
+    shouldResolveAppRootDir,
+  );
 };
 
 export const createTypeScriptTestsConfigs = (

@@ -23,14 +23,15 @@ export default (
     tests: string[];
     templates: string[];
     angularElementPrefix: string;
-    ignored: string[];
+    ignored?: string[];
     tsconfigRootDir?: string;
     isAngularApp?: boolean;
+    shouldResolveAppRootDir?: boolean;
   } = {
     angularElementPrefix: 'app',
-    ignored: [],
     isAngularApp: false,
     jsons: [],
+    shouldResolveAppRootDir: false,
     sources: [],
     templates: [],
     tests: [],
@@ -41,6 +42,7 @@ export default (
     ignored,
     isAngularApp,
     jsons,
+    shouldResolveAppRootDir,
     sources,
     templates,
     tests,
@@ -55,10 +57,14 @@ export default (
       angularElementPrefix,
     ),
     ...createJsonConfigs(jsons),
-    ...createTypeScriptConfigs(sources, tsconfigRootDir),
+    ...createTypeScriptConfigs(
+      sources,
+      tsconfigRootDir,
+      shouldResolveAppRootDir,
+    ),
     ...createTypeScriptTestsConfigs(tests, tsconfigRootDir),
     {
-      ignores: ignored || DEFAULT_IGNORED_FILES,
+      ignores: ignored ?? DEFAULT_IGNORED_FILES,
     },
   );
 };

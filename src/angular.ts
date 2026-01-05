@@ -7,7 +7,7 @@ export default (
   isAngularApp = false,
   sources: string[] = [],
   templates: string[] = [],
-  prefix?: string,
+  prefix = 'app',
 ): InfiniteDepthConfigWithExtends[] => {
   if (!isAngularApp) {
     return [];
@@ -24,7 +24,7 @@ export default (
         '@angular-eslint/component-selector': [
           'error',
           {
-            prefix: prefix || 'app',
+            prefix,
             style: 'kebab-case',
             type: 'element',
           },
@@ -32,7 +32,7 @@ export default (
         '@angular-eslint/directive-selector': [
           'error',
           {
-            prefix: prefix || 'app',
+            prefix,
             style: 'camelCase',
             type: 'attribute',
           },
