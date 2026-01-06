@@ -22,6 +22,7 @@ const createConfigs = (
   const warnWhenNotTests = !isTests ? 'warn' : 'off';
 
   const parserOptions = {
+    allowAutomaticSingleRunInference: true,
     projectService: true,
   };
 

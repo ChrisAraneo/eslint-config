@@ -19,6 +19,12 @@ export default (
     configs.push({
       extends: [...angular.configs.tsAll],
       files: sources,
+      languageOptions: {
+        parserOptions: {
+          allowAutomaticSingleRunInference: true,
+          projectService: true,
+        },
+      },
       processor: angular.processInlineTemplates,
       rules: {
         '@angular-eslint/component-selector': [
@@ -49,6 +55,12 @@ export default (
     configs.push({
       extends: [...angular.configs.templateAll],
       files: templates,
+      languageOptions: {
+        parserOptions: {
+          allowAutomaticSingleRunInference: true,
+          projectService: true,
+        },
+      },
       rules: {
         '@angular-eslint/template/i18n': 'off',
         '@angular-eslint/template/prefer-control-flow': 'off',
