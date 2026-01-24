@@ -6,7 +6,7 @@ import { isEmpty } from './utils.js';
 
 export default (
   jsons: string[] = [],
-  ignored: string[] = [],
+  ignored?: string[],
 ): InfiniteDepthConfigWithExtends[] => {
   if (isEmpty(jsons)) {
     return [];

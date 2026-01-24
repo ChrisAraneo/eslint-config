@@ -6,11 +6,11 @@ import { createTypeScriptConfigs } from './typescript.js';
 import { isEmpty } from './utils.js';
 
 export default (
+  prefix = 'app',
   sources: string[] = [],
   templates: string[] = [],
   jsons: string[] = [],
-  prefix = 'app',
-  ignored: string[] = [],
+  ignored?: string[],
 ): InfiniteDepthConfigWithExtends[] => {
   const configs: InfiniteDepthConfigWithExtends[] = [];
 
