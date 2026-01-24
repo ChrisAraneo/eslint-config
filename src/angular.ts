@@ -1,21 +1,22 @@
 import angular from 'angular-eslint';
 import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
+import createJsonConfigs from './json.js';
+import { createTypeScriptConfigs } from './typescript.js';
 import { isEmpty } from './utils.js';
 
 export default (
-  isAngularApp = false,
   sources: string[] = [],
   templates: string[] = [],
+  jsons: string[] = [],
   prefix = 'app',
+  ignored: string[] = [],
 ): InfiniteDepthConfigWithExtends[] => {
-  if (!isAngularApp) {
-    return [];
-  }
-
   const configs: InfiniteDepthConfigWithExtends[] = [];
 
   if (!isEmpty(sources)) {
+    configs.push(...createTypeScriptConfigs(sources));
+
     configs.push({
       extends: [...angular.configs.tsAll],
       files: sources,
@@ -65,6 +66,18 @@ export default (
         '@angular-eslint/template/i18n': 'off',
         '@angular-eslint/template/prefer-control-flow': 'off',
       },
+    });
+  }
+
+  if (!isEmpty(jsons)) {
+    configs.push({
+      ...createJsonConfigs(jsons),
+    });
+  }
+
+  if (!isEmpty(ignored)) {
+    configs.push({
+      ignores: ignored,
     });
   }
 

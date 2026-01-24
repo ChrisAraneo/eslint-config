@@ -4,12 +4,15 @@ import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
 import { isEmpty } from './utils.js';
 
-export default (jsons: string[] = []): InfiniteDepthConfigWithExtends[] => {
+export default (
+  jsons: string[] = [],
+  ignored: string[] = [],
+): InfiniteDepthConfigWithExtends[] => {
   if (isEmpty(jsons)) {
     return [];
   }
 
-  return [
+  const configs: InfiniteDepthConfigWithExtends[] = [
     ...jsonc.configs['flat/recommended-with-jsonc'],
     {
       files: jsons,
@@ -24,4 +27,12 @@ export default (jsons: string[] = []): InfiniteDepthConfigWithExtends[] => {
       },
     },
   ];
+
+  if (!isEmpty(ignored)) {
+    configs.push({
+      ignores: ignored,
+    });
+  }
+
+  return configs;
 };

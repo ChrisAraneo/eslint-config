@@ -1,5 +1,6 @@
 import eslint from '@eslint/js';
 import { get as getAppRootDir } from 'app-root-dir';
+import { defineConfig } from 'eslint/config';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
@@ -32,7 +33,7 @@ const createConfigs = (
     Object.assign(parserOptions, { tsconfigRootDir: getAppRootDir() });
   }
 
-  return [
+  return defineConfig([
     {
       extends: [eslint.configs.all, ...tseslint.configs.all],
       files: sources,
@@ -271,7 +272,7 @@ const createConfigs = (
         'simple-import-sort/imports': 'error',
       },
     },
-  ];
+  ]);
 };
 
 export const createTypeScriptConfigs = (

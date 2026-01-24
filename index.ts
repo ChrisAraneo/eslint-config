@@ -1,6 +1,4 @@
-import tseslint from 'typescript-eslint';
-
-import createAngularConfigsWhenIsAngularApp from './src/angular.js';
+import createAngularConfigs from './src/angular.js';
 import createJsonConfigs from './src/json.js';
 import {
   createTypeScriptConfigs,
@@ -16,55 +14,29 @@ const DEFAULT_IGNORED_FILES = [
   'package-lock.json',
 ];
 
-export default (
-  input: {
-    jsons: string[];
-    sources: string[];
-    tests: string[];
-    templates: string[];
-    angularElementPrefix: string;
-    ignored?: string[];
-    tsconfigRootDir?: string;
-    isAngularApp?: boolean;
-    shouldResolveAppRootDir?: boolean;
-  } = {
-    angularElementPrefix: 'app',
-    isAngularApp: false,
-    jsons: [],
-    shouldResolveAppRootDir: false,
-    sources: [],
-    templates: [],
-    tests: [],
-  },
-) => {
-  const {
-    angularElementPrefix,
-    ignored,
-    isAngularApp,
-    jsons,
-    shouldResolveAppRootDir,
-    sources,
-    templates,
-    tests,
-    tsconfigRootDir,
-  } = input;
-
-  return tseslint.config(
-    ...createAngularConfigsWhenIsAngularApp(
-      isAngularApp,
+export default {
+  createAngularConfigs: (
+    sources: string[],
+    templates: string[],
+    jsons: string[],
+    angularElementPrefix: string,
+    ignored?: string[],
+  ) =>
+    createAngularConfigs(
       sources,
       templates,
+      jsons,
       angularElementPrefix,
+      ignored ?? DEFAULT_IGNORED_FILES,
     ),
-    ...createJsonConfigs(jsons),
-    ...createTypeScriptConfigs(
-      sources,
-      tsconfigRootDir,
-      shouldResolveAppRootDir,
-    ),
-    ...createTypeScriptTestsConfigs(tests, tsconfigRootDir),
-    {
-      ignores: ignored ?? DEFAULT_IGNORED_FILES,
-    },
-  );
+  createJsonConfigs: (jsons: string[], ignored?: string[]) =>
+    createJsonConfigs(jsons, ignored),
+  createTypeScriptConfigs: (
+    sources: string[],
+    tsconfigRootDir?: string,
+    shouldResolveAppRootDir?: boolean,
+  ) =>
+    createTypeScriptConfigs(sources, tsconfigRootDir, shouldResolveAppRootDir),
+  createTypeScriptTestsConfigs: (tests: string[], tsconfigRootDir?: string) =>
+    createTypeScriptTestsConfigs(tests, tsconfigRootDir),
 };
