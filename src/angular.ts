@@ -3,7 +3,7 @@ import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
 import createJsonConfigs from './json.js';
 import { createTypeScriptConfigs } from './typescript.js';
-import { isEmpty } from './utils.js';
+import { isNotEmpty } from './utils.js';
 
 export default (
   prefix = 'app',
@@ -14,68 +14,78 @@ export default (
 ): InfiniteDepthConfigWithExtends[] => {
   const configs: InfiniteDepthConfigWithExtends[] = [];
 
-  if (!isEmpty(sources)) {
+  if (isNotEmpty(sources)) {
     configs.push(...createTypeScriptConfigs(sources));
 
-    configs.push({
-      extends: [...angular.configs.tsAll],
-      files: sources,
-      languageOptions: {
-        parserOptions: {
-          allowAutomaticSingleRunInference: true,
-          projectService: true,
+    configs.push(
+      ...angular.configs.tsAll.map((config) => ({
+        ...config,
+        files: sources,
+      })),
+      {
+        files: sources,
+        languageOptions: {
+          parserOptions: {
+            allowAutomaticSingleRunInference: true,
+            projectService: true,
+          },
+        },
+        processor: angular.processInlineTemplates,
+        rules: {
+          '@angular-eslint/component-selector': [
+            'error',
+            {
+              prefix,
+              style: 'kebab-case',
+              type: 'element',
+            },
+          ],
+          '@angular-eslint/directive-selector': [
+            'error',
+            {
+              prefix,
+              style: 'camelCase',
+              type: 'attribute',
+            },
+          ],
+          '@angular-eslint/no-forward-ref': 'off',
+          '@angular-eslint/prefer-on-push-component-change-detection': 'off',
+          '@angular-eslint/prefer-output-emitter-ref': 'off',
+          '@angular-eslint/prefer-signals': 'off',
         },
       },
-      processor: angular.processInlineTemplates,
-      rules: {
-        '@angular-eslint/component-selector': [
-          'error',
-          {
-            prefix,
-            style: 'kebab-case',
-            type: 'element',
-          },
-        ],
-        '@angular-eslint/directive-selector': [
-          'error',
-          {
-            prefix,
-            style: 'camelCase',
-            type: 'attribute',
-          },
-        ],
-        '@angular-eslint/no-forward-ref': 'off',
-        '@angular-eslint/prefer-on-push-component-change-detection': 'off',
-        '@angular-eslint/prefer-output-emitter-ref': 'off',
-        '@angular-eslint/prefer-signals': 'off',
-      },
-    });
+    );
   }
 
-  if (!isEmpty(templates)) {
-    configs.push({
-      extends: [...angular.configs.templateAll],
-      files: templates,
-      languageOptions: {
-        parserOptions: {
-          allowAutomaticSingleRunInference: true,
-          projectService: true,
+  if (isNotEmpty(templates)) {
+    configs.push(
+      ...angular.configs.templateAll.map((config) => ({
+        ...config,
+        files: templates,
+      })),
+      {
+        files: templates,
+        languageOptions: {
+          parserOptions: {
+            allowAutomaticSingleRunInference: true,
+            projectService: true,
+          },
+        },
+        rules: {
+          '@angular-eslint/template/i18n': 'off',
+          '@angular-eslint/template/prefer-control-flow': 'off',
         },
       },
-      rules: {
-        '@angular-eslint/template/i18n': 'off',
-        '@angular-eslint/template/prefer-control-flow': 'off',
-      },
-    });
+    );
   }
 
-  if (!isEmpty(jsons)) {
+  if (isNotEmpty(jsons)) {
     configs.push({
       ...createJsonConfigs(jsons),
     });
   }
 
-  if (!isEmpty(ignored)) {
+  if (isNotEmpty(ignored)) {
     configs.push({
       ignores: ignored,
     });
