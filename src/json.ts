@@ -2,7 +2,7 @@ import jsonc from 'eslint-plugin-jsonc';
 import jsoncParser from 'jsonc-eslint-parser';
 import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
-import { isEmpty, isNotEmpty } from './utils.js';
+import { isEmpty } from './utils.js';
 
 export default (
   jsons: string[] = [],
@@ -28,7 +28,7 @@ export default (
     },
   ];
 
-  if (isNotEmpty(ignored)) {
+  if (!isEmpty(ignored)) {
     configs.push({
       ignores: ignored,
     });

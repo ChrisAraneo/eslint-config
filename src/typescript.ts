@@ -35,17 +35,7 @@ const createConfigs = (
 
   return defineConfig([
     {
-      ...eslint.configs.all,
-      files: sources,
-      languageOptions: {
-        parserOptions,
-      },
-    },
-    ...tseslint.configs.all.map((config) => ({
-      ...config,
-      files: sources,
-    })),
-    {
+      extends: [eslint.configs.all, ...tseslint.configs.all],
       files: sources,
       languageOptions: {
         parserOptions,
@@ -256,13 +246,12 @@ const createConfigs = (
       },
     },
     {
-      ...unicorn.configs.all,
+      extends: [unicorn.configs.all],
       files: sources,
       languageOptions: {
         globals: globals.builtin,
       },
       rules: {
-        ...unicorn.configs.all.rules,
         'unicorn/import-style': 'off',
         'unicorn/no-array-for-each': 'off',
         'unicorn/no-array-reduce': 'off',
