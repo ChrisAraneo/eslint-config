@@ -10,13 +10,6 @@ export const getAngularSourcesConfigs = (
       ({
         ...config,
         files: sources,
-        languageOptions: {
-          ...config.languageOptions,
-          parserOptions: {
-            allowAutomaticSingleRunInference: true,
-            projectService: true,
-          },
-        },
         ...(config.plugins && { plugins: config.plugins }),
         ...(config.processor && { processor: config.processor }),
         rules: {

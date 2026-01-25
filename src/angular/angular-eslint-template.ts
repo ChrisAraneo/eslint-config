@@ -9,13 +9,6 @@ export const getAngularTemplatesConfigs = (
       ({
         ...config,
         files: templates,
-        languageOptions: {
-          ...config.languageOptions,
-          parserOptions: {
-            allowAutomaticSingleRunInference: true,
-            projectService: true,
-          },
-        },
         ...(config.plugins && { plugins: config.plugins }),
         rules: {
           ...config.rules,
