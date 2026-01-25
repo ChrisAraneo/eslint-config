@@ -18,7 +18,7 @@ export const getAngularSourcesConfigs = (
           },
         },
         ...(config.plugins && { plugins: config.plugins }),
-        processor: config.processor,
+        ...(config.processor && { processor: config.processor }),
         rules: {
           ...config.rules,
           '@angular-eslint/component-selector': [
