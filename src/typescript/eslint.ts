@@ -32,3 +32,6 @@ export const getEslintConfig = (
     },
   };
 };
+
+export const getEslintConfigRuleKeys = (): string[] =>
+  Object.keys(getEslintConfig([], false).rules ?? {});

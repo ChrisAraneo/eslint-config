@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.93",
+  "version": "0.0.94",
   "description": "",
   "keywords": [
     "eslint",
@@ -29,6 +29,7 @@
   "dependencies": {
     "@eslint/json": "^0.14.0",
     "@humanwhocodes/momoa": "^3.3.10",
+    "@nx/eslint-plugin": "^22.4.1",
     "angular-eslint": "^21.1.0",
     "app-root-dir": "^1.0.2",
     "eslint": "^9.39.2",

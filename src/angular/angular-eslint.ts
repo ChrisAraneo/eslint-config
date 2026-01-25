@@ -35,3 +35,6 @@ export const getAngularSourcesConfigs = (
         },
       }) as Linter.Config,
   );
+
+export const getAngularSourcesConfigsRuleKeys = (): string[] =>
+  angular.configs.tsAll.flatMap((config) => Object.keys(config.rules ?? {}));

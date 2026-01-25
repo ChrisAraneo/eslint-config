@@ -196,3 +196,6 @@ export const getTypescriptEslintConfig = (
     },
   };
 };
+
+export const getTypescriptEslintConfigRuleKeys = (): string[] =>
+  Object.keys(getTypescriptEslintConfig([], {}, false).rules ?? {});

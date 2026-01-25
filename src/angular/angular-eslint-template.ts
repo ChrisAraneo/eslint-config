@@ -1,9 +1,9 @@
 import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
 
-import { getEslintConfig } from '../typescript/eslint.js';
-import { getTypescriptEslintConfig } from '../typescript/typescript-eslint.js';
-import { getAngularSourcesConfigs } from './angular-eslint.js';
+import { getEslintConfigRuleKeys } from '../typescript/eslint.js';
+import { getTypescriptEslintConfigRuleKeys } from '../typescript/typescript-eslint.js';
+import { getAngularSourcesConfigsRuleKeys } from './angular-eslint.js';
 
 export const getAngularTemplatesConfigs = (
   templates: string[],
@@ -20,20 +20,15 @@ export const getAngularTemplatesConfigs = (
         },
       }) as Linter.Config,
   ),
-  // Ensure template files don't inherit rules from source code configs
-  {
+  getDisabledSourceRules(templates),
+];
+
+const getDisabledSourceRules = (templates: string[]) =>
+  ({
     files: templates,
     rules: [
-      ...Object.keys(getEslintConfig(templates, false).rules ?? {}),
-      ...Object.keys(
-        getTypescriptEslintConfig(templates, {}, false).rules ?? {},
-      ),
-      ...getAngularSourcesConfigs('', templates).flatMap((config) =>
-        Object.keys(config.rules ?? {}),
-      ),
-    ].reduce(
-      (acc, key) => ({ ...acc, [key]: 'off' }),
-      {} as Record<string, string>,
-    ),
-  } as Linter.Config,
-];
+      ...getEslintConfigRuleKeys(),
+      ...getTypescriptEslintConfigRuleKeys(),
+      ...getAngularSourcesConfigsRuleKeys(),
+    ].reduce((acc, key) => ({ ...acc, [key]: 'off' }), {}),
+  }) as Linter.Config;
