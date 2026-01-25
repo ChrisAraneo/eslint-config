@@ -23,6 +23,7 @@ export const getTypescriptEslintConfig = (
       ...tseslint.configs.all
         .map((config: CompatibleConfig) => config.rules)
         .reduce((a, b) => ({ ...a, ...b }), {}),
+      '@typescript-eslint/await-thenable': 'off',
       '@typescript-eslint/class-methods-use-this': 'off',
       '@typescript-eslint/consistent-type-imports': 'off',
       '@typescript-eslint/explicit-member-accessibility': [
