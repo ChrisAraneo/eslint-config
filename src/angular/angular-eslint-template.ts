@@ -5,6 +5,7 @@ export const getAngularTemplatesConfigs = (
   templates: string[],
 ): Linter.Config[] =>
   angular.configs.templateAll.map((config) => ({
+    ...config,
     files: templates,
     languageOptions: {
       ...config.languageOptions,
@@ -13,6 +14,7 @@ export const getAngularTemplatesConfigs = (
         projectService: true,
       },
     },
+    plugins: config.plugins as Linter.Config['plugins'],
     rules: {
       ...config.rules,
       '@angular-eslint/template/i18n': 'off',

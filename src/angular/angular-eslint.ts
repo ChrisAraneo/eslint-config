@@ -6,6 +6,7 @@ export const getAngularSourcesConfigs = (
   sources: string[],
 ): Linter.Config[] =>
   angular.configs.tsAll.map((config) => ({
+    ...config,
     files: sources,
     languageOptions: {
       ...config.languageOptions,
@@ -14,6 +15,7 @@ export const getAngularSourcesConfigs = (
         projectService: true,
       },
     },
+    plugins: config.plugins as Linter.Config['plugins'],
     processor: config.processor,
     rules: {
       ...config.rules,
