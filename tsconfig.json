@@ -25,9 +25,9 @@
   "exclude": ["node_modules", "dist"],
   "include": [
     "*.ts",
-    "src/angular.ts",
-    "src/json.ts",
-    "src/typescript.ts",
+    "src/angular/index.ts",
+    "src/json/index.ts",
+    "src/typescript/index.ts",
     "src/utils.ts"
   ]
 }
