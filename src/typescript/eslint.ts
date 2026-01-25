@@ -3,16 +3,12 @@ import type { Linter } from 'eslint';
 
 export const getEslintConfig = (
   sources: string[],
-  parserOptions: Record<string, unknown>,
   isTests: boolean,
 ): Linter.Config => {
   const errorWhenNotTests = !isTests ? 'error' : 'off';
 
   return {
     files: sources,
-    languageOptions: {
-      parserOptions,
-    },
     rules: {
       ...eslint.configs.all.rules,
       'id-length': 'off',

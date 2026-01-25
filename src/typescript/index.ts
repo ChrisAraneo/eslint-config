@@ -18,10 +18,7 @@ const createConfigs = (
     return [];
   }
 
-  const parserOptions = {
-    allowAutomaticSingleRunInference: true,
-    projectService: true,
-  };
+  const parserOptions = {};
 
   if (tsconfigRootDir && !shouldResolveAppRootDir) {
     Object.assign(parserOptions, { tsconfigRootDir });
@@ -30,7 +27,7 @@ const createConfigs = (
   }
 
   return defineConfig([
-    getEslintConfig(sources, parserOptions, isTests),
+    getEslintConfig(sources, isTests),
     getTypescriptEslintConfig(sources, parserOptions, isTests),
     getUnicornConfig(sources),
     getSimpleImportSortConfig(sources),

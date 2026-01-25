@@ -16,6 +16,7 @@ export const getTypescriptEslintConfig = (
       parser: tseslint.parser,
       parserOptions: {
         ...parserOptions,
+        allowAutomaticSingleRunInference: true,
         projectService: true,
       },
     },
