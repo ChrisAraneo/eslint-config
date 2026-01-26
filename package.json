@@ -34,7 +34,7 @@
     "app-root-dir": "^1.0.2",
     "eslint": "^9.39.2",
     "eslint-plugin-jsonc": "^2.21.0",
-    "eslint-plugin-perfectionist": "^5.2.0",
+    "eslint-plugin-perfectionist": "^5.4.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unicorn": "^62.0.0",
     "jsonc-eslint-parser": "^2.4.2",
