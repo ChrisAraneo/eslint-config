@@ -3,7 +3,7 @@ import perfectionist from 'eslint-plugin-perfectionist';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+export default [
   eslint.configs.recommended,
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
@@ -28,4 +28,4 @@ export default tseslint.config(
   {
     ignores: ['dist/', 'package-lock.json'],
   },
-);
+];
