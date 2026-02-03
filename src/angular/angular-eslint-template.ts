@@ -1,10 +1,6 @@
 import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
 
-import { getEslintConfigRuleKeys } from '../typescript/eslint.js';
-import { getTypescriptEslintConfigRuleKeys } from '../typescript/typescript-eslint.js';
-import { getAngularSourcesConfigsRuleKeys } from './angular-eslint.js';
-
 export const getAngularTemplatesConfigs = (
   templates: string[],
 ): Linter.Config[] => [
@@ -20,15 +16,4 @@ export const getAngularTemplatesConfigs = (
         },
       }) as Linter.Config,
   ),
-  getDisabledSourceRules(templates),
 ];
-
-const getDisabledSourceRules = (templates: string[]) =>
-  ({
-    files: templates,
-    rules: [
-      ...getEslintConfigRuleKeys(),
-      ...getTypescriptEslintConfigRuleKeys(),
-      ...getAngularSourcesConfigsRuleKeys(),
-    ].reduce((acc, key) => ({ ...acc, [key]: 'off' }), {}),
-  }) as Linter.Config;

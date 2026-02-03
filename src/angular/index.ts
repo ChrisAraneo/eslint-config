@@ -1,11 +1,16 @@
 import type { Linter } from 'eslint';
 import { defineConfig } from 'eslint/config';
+import { getEslintConfigRuleKeys } from 'src/typescript/eslint.js';
+import { getTypescriptEslintConfigRuleKeys } from 'src/typescript/typescript-eslint.js';
 import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
 import createJsonConfigs from '../json/index.js';
 import { createTypeScriptConfigs } from '../typescript/index.js';
 import { isEmpty } from '../utils.js';
-import { getAngularSourcesConfigs } from './angular-eslint.js';
+import {
+  getAngularSourcesConfigs,
+  getAngularSourcesConfigsRuleKeys,
+} from './angular-eslint.js';
 import { getAngularTemplatesConfigs } from './angular-eslint-template.js';
 
 export default (
@@ -23,11 +28,18 @@ export default (
   }
 
   if (!isEmpty(templates)) {
-    configs.push(...getAngularTemplatesConfigs(templates));
+    configs.push(
+      ...([
+        ...getAngularTemplatesConfigs(templates),
+        getDisabledSourceRules(templates),
+      ] as Linter.Config[]),
+    );
   }
 
   if (!isEmpty(jsons)) {
-    configs.push(...createJsonConfigs(jsons));
+    configs.push(
+      ...[...createJsonConfigs(jsons), getDisabledSourceRules(jsons)],
+    );
   }
 
   if (!isEmpty(ignored)) {
@@ -38,3 +50,13 @@ export default (
 
   return defineConfig(configs);
 };
+
+const getDisabledSourceRules = (files: string[]) =>
+  ({
+    files,
+    rules: [
+      ...getEslintConfigRuleKeys(),
+      ...getTypescriptEslintConfigRuleKeys(),
+      ...getAngularSourcesConfigsRuleKeys(),
+    ].reduce((acc, key) => ({ ...acc, [key]: 'off' }), {}),
+  }) as Linter.Config;

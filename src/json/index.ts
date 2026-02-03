@@ -8,5 +8,5 @@ export default (jsons: string[] = []) => {
     return [];
   }
 
-  return defineConfig([getJsoncConfig(jsons)]);
+  return defineConfig(getJsoncConfig(jsons));
 };
