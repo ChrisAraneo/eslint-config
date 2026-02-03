@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.97",
+  "version": "0.0.98",
   "description": "",
   "keywords": [
     "eslint",
@@ -27,10 +27,10 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@eslint/json": "^0.14.0",
+    "@eslint/json": "^1.0.0",
     "@humanwhocodes/momoa": "^3.3.10",
-    "@nx/eslint-plugin": "^22.4.1",
-    "angular-eslint": "^21.1.0",
+    "@nx/eslint-plugin": "^22.4.4",
+    "angular-eslint": "^21.2.0",
     "app-root-dir": "^1.0.2",
     "eslint": "^9.39.2",
     "eslint-plugin-jsonc": "^2.21.0",
@@ -39,18 +39,18 @@
     "eslint-plugin-unicorn": "^62.0.0",
     "jsonc-eslint-parser": "^2.4.2",
     "lodash": "^4.17.23",
-    "typescript-eslint": "^8.53.1"
+    "typescript-eslint": "^8.54.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@types/app-root-dir": "^0.1.4",
     "@types/lodash": "^4.17.23",
     "jiti": "^2.6.1",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.1",
     "rimraf": "^6.1.2",
-    "sort-package-json": "^3.6.0",
+    "sort-package-json": "^3.6.1",
     "typescript": "^5.9.3"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
