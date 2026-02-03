@@ -1,40 +1,42 @@
 import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
 
+import { isEmpty } from '../utils.js';
+
 export const getAngularSourcesConfigs = (
   prefix: string,
   sources: string[],
 ): Linter.Config[] =>
-  angular.configs.tsAll.map(
-    (config) =>
-      ({
-        ...config,
-        files: sources,
-        rules: {
-          ...config.rules,
-          '@angular-eslint/component-selector': [
-            'error',
-            {
-              prefix,
-              style: 'kebab-case',
-              type: 'element',
+  isEmpty(sources)
+    ? []
+    : angular.configs.tsAll.map(
+        (config) =>
+          ({
+            ...config,
+            files: sources,
+            rules: {
+              ...config.rules,
+              '@angular-eslint/component-selector': [
+                'error',
+                {
+                  prefix,
+                  style: 'kebab-case',
+                  type: 'element',
+                },
+              ],
+              '@angular-eslint/directive-selector': [
+                'error',
+                {
+                  prefix,
+                  style: 'camelCase',
+                  type: 'attribute',
+                },
+              ],
+              '@angular-eslint/no-forward-ref': 'off',
+              '@angular-eslint/prefer-on-push-component-change-detection':
+                'off',
+              '@angular-eslint/prefer-output-emitter-ref': 'off',
+              '@angular-eslint/prefer-signals': 'off',
             },
-          ],
-          '@angular-eslint/directive-selector': [
-            'error',
-            {
-              prefix,
-              style: 'camelCase',
-              type: 'attribute',
-            },
-          ],
-          '@angular-eslint/no-forward-ref': 'off',
-          '@angular-eslint/prefer-on-push-component-change-detection': 'off',
-          '@angular-eslint/prefer-output-emitter-ref': 'off',
-          '@angular-eslint/prefer-signals': 'off',
-        },
-      }) as Linter.Config,
-  );
-
-export const getAngularSourcesConfigsRuleKeys = (): string[] =>
-  angular.configs.tsAll.flatMap((config) => Object.keys(config.rules ?? {}));
+          }) as Linter.Config,
+      );

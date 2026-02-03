@@ -3,10 +3,10 @@ import type { Linter } from 'eslint';
 import { defineConfig } from 'eslint/config';
 
 import { isEmpty } from '../utils.js';
-import { getEslintConfig } from './eslint.js';
-import { getSimpleImportSortConfig } from './simple-import-sort.js';
-import { getTypescriptEslintConfig } from './typescript-eslint.js';
-import { getUnicornConfig } from './unicorn.js';
+import { getEslintConfigs } from './eslint.js';
+import { getSimpleImportSortConfigs } from './simple-import-sort.js';
+import { getTypescriptEslintConfigs } from './typescript-eslint.js';
+import { getUnicornConfigs } from './unicorn.js';
 
 const createConfigs = (
   sources: string[] = [],
@@ -27,10 +27,10 @@ const createConfigs = (
   }
 
   return defineConfig([
-    getEslintConfig(sources, isTests),
-    getTypescriptEslintConfig(sources, parserOptions, isTests),
-    getUnicornConfig(sources),
-    getSimpleImportSortConfig(sources),
+    ...getEslintConfigs(sources, isTests),
+    ...getTypescriptEslintConfigs(sources, parserOptions, isTests),
+    ...getUnicornConfigs(sources),
+    ...getSimpleImportSortConfigs(sources),
   ]);
 };
 

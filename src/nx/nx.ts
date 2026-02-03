@@ -1,27 +1,31 @@
 import nx from '@nx/eslint-plugin';
 import type { Linter } from 'eslint';
 
+import { isEmpty } from '../utils.js';
+
 export const getNxConfigs = (sources: string[]): Linter.Config[] =>
-  [
-    ...nx.configs['flat/base'],
-    ...nx.configs['flat/typescript'],
-    ...nx.configs['flat/javascript'],
-    {
-      files: sources,
-      rules: {
-        '@nx/enforce-module-boundaries': [
-          'error',
-          {
-            allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
-            depConstraints: [
+  isEmpty(sources)
+    ? []
+    : ([
+        ...nx.configs['flat/base'],
+        ...nx.configs['flat/typescript'],
+        ...nx.configs['flat/javascript'],
+        {
+          files: sources,
+          rules: {
+            '@nx/enforce-module-boundaries': [
+              'error',
               {
-                onlyDependOnLibsWithTags: ['*'],
-                sourceTag: '*',
+                allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
+                depConstraints: [
+                  {
+                    onlyDependOnLibsWithTags: ['*'],
+                    sourceTag: '*',
+                  },
+                ],
+                enforceBuildableLibDependency: true,
               },
             ],
-            enforceBuildableLibDependency: true,
           },
-        ],
-      },
-    },
-  ] as Linter.Config[];
+        },
+      ] as Linter.Config[]);
