@@ -1,7 +1,6 @@
 import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
-
-import { isEmpty } from '../utils.js';
+import { isEmpty } from 'lodash';
 
 export const getAngularTemplatesConfigs = (
   templates: string[],

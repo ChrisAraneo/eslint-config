@@ -2,8 +2,7 @@ import json from '@eslint/json';
 import type { Linter } from 'eslint';
 import jsonc from 'eslint-plugin-jsonc';
 import jsoncParser from 'jsonc-eslint-parser';
-
-import { isEmpty } from '../utils.js';
+import { isEmpty } from 'lodash';
 
 export const getJsoncConfigs = (jsons: string[]): Linter.Config[] =>
   isEmpty(jsons)

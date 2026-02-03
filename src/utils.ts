@@ -1,29 +1,22 @@
 import type { Linter } from 'eslint';
-import { chain, mapValues, keys as getKeys } from 'lodash';
+import { chain, isEmpty, keys as getKeys, mapValues } from 'lodash';
 
-export function isEmpty(value: unknown): boolean {
-  return (Array.isArray(value) && value.length === 0) || !Array.isArray(value);
-}
+export const isNotEmpty = (value: unknown): boolean => !isEmpty(value);
 
-export function isNotEmpty(value: unknown): boolean {
-  return !isEmpty(value);
-}
-
-export function addCrossConfigOffRules(
+const extractRulesPerKey = (
   configs: Record<string, Linter.Config[]>,
-  options?: { order?: string[] },
-): Linter.Config[] {
-  const keys = getKeys(configs);
-  const orderedKeys = isEmpty(options?.order) ? keys : (options?.order ?? keys);
-
-  const rulesPerKey = mapValues(configs, (configArray) =>
+): Record<string, string[]> =>
+  mapValues(configs, (configArray) =>
     chain(configArray)
       .flatMap((config) => getKeys(config.rules ?? {}))
       .uniq()
       .value(),
   );
 
-  const filesPerKey = mapValues(configs, (configArray) =>
+const extractFilesPerKey = (
+  configs: Record<string, Linter.Config[]>,
+): Record<string, string[]> =>
+  mapValues(configs, (configArray) =>
     chain(configArray)
       .flatMap((config) => config.files ?? [])
       .flatten()
@@ -32,11 +25,16 @@ export function addCrossConfigOffRules(
       .value(),
   );
 
-  const offRulesConfigs = chain(keys)
+const createOffRulesConfigs = (
+  keys: string[],
+  rulesPerKey: Record<string, string[]>,
+  filesPerKey: Record<string, string[]>,
+): Linter.Config[] =>
+  chain(keys)
     .map((key) => ({
-      key,
       files: filesPerKey[key] ?? [],
       filesKey: JSON.stringify([...(filesPerKey[key] ?? [])].sort()),
+      key,
       otherRules: chain(keys)
         .filter((k) => k !== key)
         .flatMap((k) => rulesPerKey[k] ?? [])
@@ -62,8 +60,19 @@ export function addCrossConfigOffRules(
     }))
     .value();
 
+export const addCrossConfigOffRules = (
+  configs: Record<string, Linter.Config[]>,
+  options?: { order?: string[] },
+): Linter.Config[] => {
+  const keys = getKeys(configs);
+  const orderedKeys = isEmpty(options?.order) ? keys : (options?.order ?? keys);
+
+  const rulesPerKey = extractRulesPerKey(configs);
+  const filesPerKey = extractFilesPerKey(configs);
+  const offRulesConfigs = createOffRulesConfigs(keys, rulesPerKey, filesPerKey);
+
   return chain(orderedKeys)
     .flatMap((key) => configs[key] ?? [])
     .concat(offRulesConfigs)
     .value();
-}
+};
