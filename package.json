@@ -38,10 +38,12 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unicorn": "^62.0.0",
     "jsonc-eslint-parser": "^2.4.2",
+    "lodash": "^4.17.23",
     "typescript-eslint": "^8.53.1"
   },
   "devDependencies": {
     "@types/app-root-dir": "^0.1.4",
+    "@types/lodash": "^4.17.23",
     "jiti": "^2.6.1",
     "prettier": "^3.7.4",
     "rimraf": "^6.1.2",

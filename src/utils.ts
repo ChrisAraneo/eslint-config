@@ -1,4 +1,5 @@
 import type { Linter } from 'eslint';
+import { chain, mapValues, keys as getKeys } from 'lodash';
 
 export function isEmpty(value: unknown): boolean {
   return (Array.isArray(value) && value.length === 0) || !Array.isArray(value);
@@ -12,77 +13,57 @@ export function addCrossConfigOffRules(
   configs: Record<string, Linter.Config[]>,
   options?: { order?: string[] },
 ): Linter.Config[] {
-  const keys = Object.keys(configs);
-  const orderedKeys = isEmpty(options?.order) ? keys : (options?.order ?? []);
+  const keys = getKeys(configs);
+  const orderedKeys = isEmpty(options?.order) ? keys : (options?.order ?? keys);
 
-  const rulesPerKey: Record<string, Set<string>> = {};
-  const filesPerKey: Record<string, string[]> = {};
+  const rulesPerKey = mapValues(configs, (configArray) =>
+    chain(configArray)
+      .flatMap((config) => getKeys(config.rules ?? {}))
+      .uniq()
+      .value(),
+  );
 
-  for (const key of keys) {
-    rulesPerKey[key] = new Set();
-    const filesSet = new Set<string>();
+  const filesPerKey = mapValues(configs, (configArray) =>
+    chain(configArray)
+      .flatMap((config) => config.files ?? [])
+      .flatten()
+      .filter((f): f is string => typeof f === 'string')
+      .uniq()
+      .value(),
+  );
 
-    for (const config of configs[key] ?? []) {
-      if (config.rules) {
-        Object.keys(config.rules ?? {}).forEach((r) =>
-          rulesPerKey[key]?.add(r),
-        );
-      }
-      if (config.files) {
-        const f = Array.isArray(config.files)
-          ? config.files.flat()
-          : [config.files];
-        f.forEach((file) => typeof file === 'string' && filesSet.add(file));
-      }
-    }
-
-    filesPerKey[key] = Array.from(filesSet);
-  }
-
-  const offRulesByFilesKey = new Map<
-    string,
-    { files: string[]; rules: Set<string> }
-  >();
-
-  for (const key of keys) {
-    const files = filesPerKey[key];
-    const filesKey = JSON.stringify([...(files ?? [])].sort());
-
-    const otherRules = new Set<string>();
-    for (const otherKey of keys) {
-      if (otherKey !== key) {
-        rulesPerKey[otherKey]?.forEach((r) => otherRules.add(r));
-      }
-    }
-
-    if (otherRules.size === 0) continue;
-
-    if (offRulesByFilesKey.has(filesKey)) {
-      const existing = offRulesByFilesKey.get(filesKey);
-      otherRules.forEach((r) => existing?.rules.add(r));
-    } else {
-      offRulesByFilesKey.set(filesKey, {
-        files: files ?? [],
-        rules: otherRules,
-      });
-    }
-  }
-
-  const result: Linter.Config[] = [];
-  for (const key of orderedKeys) {
-    result.push(...(configs[key] ?? []));
-  }
-
-  for (const { files, rules } of offRulesByFilesKey.values()) {
-    const offRules: Linter.RulesRecord = {};
-    rules.forEach((r) => (offRules[r] = 'off'));
-
-    result.push({
-      name: 'disable-other-rules',
+  const offRulesConfigs = chain(keys)
+    .map((key) => ({
+      key,
+      files: filesPerKey[key] ?? [],
+      filesKey: JSON.stringify([...(filesPerKey[key] ?? [])].sort()),
+      otherRules: chain(keys)
+        .filter((k) => k !== key)
+        .flatMap((k) => rulesPerKey[k] ?? [])
+        .uniq()
+        .value(),
+    }))
+    .filter(({ otherRules }) => otherRules.length > 0)
+    .groupBy('filesKey')
+    .values()
+    .map((group) => ({
+      files: group[0]?.files ?? [],
+      rules: chain(group)
+        .flatMap((g) => g.otherRules)
+        .uniq()
+        .keyBy()
+        .mapValues(() => 'off' as const)
+        .value(),
+    }))
+    .map(({ files, rules }) => ({
+      name: 'disable-other-rules' as const,
       ...(files.length > 0 && { files }),
-      rules: offRules,
-    });
-  }
+      rules,
+    }))
+    .value();
 
-  return result;
+  return chain(orderedKeys)
+    .flatMap((key) => configs[key] ?? [])
+    .concat(offRulesConfigs)
+    .value();
 }
