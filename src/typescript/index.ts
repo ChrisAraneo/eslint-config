@@ -38,9 +38,10 @@ export const createTypeScriptConfigs = (
   sources: string[] = [],
   tsconfigRootDir?: string,
   shouldResolveAppRootDir?: boolean,
-) => createConfigs(sources, false, tsconfigRootDir, shouldResolveAppRootDir);
+): Linter.Config[] =>
+  createConfigs(sources, false, tsconfigRootDir, shouldResolveAppRootDir);
 
 export const createTypeScriptTestsConfigs = (
   sources: string[] = [],
   tsconfigRootDir?: string,
-) => createConfigs(sources, true, tsconfigRootDir);
+): Linter.Config[] => createConfigs(sources, true, tsconfigRootDir);

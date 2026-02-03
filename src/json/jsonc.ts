@@ -16,7 +16,7 @@ export const getJsoncConfigs = (jsons: string[]): Linter.Config[] =>
           plugins: {
             json,
             jsonc,
-          } as Linter.Config['plugins'],
+          } as unknown as Linter.Config['plugins'],
           rules: {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ...(jsonc.configs['flat/recommended-with-jsonc'] as any).rules,
