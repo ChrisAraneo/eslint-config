@@ -1,7 +1,6 @@
-import { defineConfig } from 'eslint/config';
-import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
-
+import { ConfigBlock, SOURCES } from '../interfaces.js';
 import { getNxConfigs } from './nx.js';
 
-export default (sources: string[] = []): InfiniteDepthConfigWithExtends[] =>
-  defineConfig(getNxConfigs(sources));
+export const createNxConfigBlock = (sources: string[] = []): ConfigBlock => ({
+  [SOURCES]: getNxConfigs(sources),
+});

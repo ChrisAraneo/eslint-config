@@ -1,3 +1,22 @@
+import type { Linter } from 'eslint';
+import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
+
+export const SOURCES = Symbol('sources');
+export const TESTS = Symbol('tests');
+export const TEMPLATES = Symbol('templates');
+export const JSONS = Symbol('jsons');
+export const NX = Symbol('nx');
+export const IGNORED = Symbol('ignored');
+
+export interface ConfigBlock {
+  [SOURCES]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
+  [TESTS]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
+  [TEMPLATES]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
+  [JSONS]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
+  [NX]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
+  [IGNORED]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
+}
+
 export interface TypeScriptConfigOptions {
   sources?: string[];
   tsconfigRootDir?: string;

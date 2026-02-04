@@ -1,34 +1,32 @@
-import { defineConfig } from 'eslint/config';
-import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
+import {
+  ConfigBlock,
+  IGNORED,
+  JSONS,
+  SOURCES,
+  TEMPLATES,
+} from 'src/interfaces.js';
+import { getJsoncConfigs } from 'src/json/jsonc.js';
 
-import createJsonConfigs from '../json/index.js';
-import { createTypeScriptConfigs } from '../typescript/index.js';
-import { addCrossConfigOffRules } from '../utils.js';
+import { createTypeScriptConfigBlock } from '../typescript/index.js';
 import { getAngularSourcesConfigs } from './angular-eslint.js';
 import { getAngularTemplatesConfigs } from './angular-eslint-template.js';
 
-export default (
+export const createAngularConfigBlock = (
   prefix = 'app',
   sources: string[] = [],
   templates: string[] = [],
   jsons: string[] = [],
   ignored?: string[],
-): InfiniteDepthConfigWithExtends[] =>
-  defineConfig(
-    addCrossConfigOffRules(
-      {
-        ignored: [
-          {
-            ignores: ignored,
-          },
-        ],
-        json: createJsonConfigs(jsons),
-        sources: [
-          ...createTypeScriptConfigs(sources),
-          ...getAngularSourcesConfigs(prefix, sources),
-        ],
-        templates: getAngularTemplatesConfigs(templates),
-      },
-      { order: ['sources', 'templates', 'json', 'ignored'] },
-    ),
-  );
+): ConfigBlock => ({
+  [IGNORED]: [
+    {
+      ignores: ignored,
+    },
+  ],
+  [JSONS]: getJsoncConfigs(jsons),
+  [SOURCES]: [
+    ...(createTypeScriptConfigBlock(sources)[SOURCES] || []),
+    ...getAngularSourcesConfigs(prefix, sources),
+  ],
+  [TEMPLATES]: getAngularTemplatesConfigs(templates),
+});

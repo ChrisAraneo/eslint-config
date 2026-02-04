@@ -3,6 +3,7 @@ import type { Linter } from 'eslint';
 import { defineConfig } from 'eslint/config';
 import { isEmpty } from 'lodash';
 
+import { ConfigBlock, SOURCES, TESTS } from '../interfaces.js';
 import { getEslintConfigs } from './eslint.js';
 import { getSimpleImportSortConfigs } from './simple-import-sort.js';
 import { getTypescriptEslintConfigs } from './typescript-eslint.js';
@@ -34,14 +35,22 @@ const createConfigs = (
         ...getSimpleImportSortConfigs(sources),
       ]);
 
-export const createTypeScriptConfigs = (
+export const createTypeScriptConfigBlock = (
   sources: string[] = [],
   tsconfigRootDir?: string,
   shouldResolveAppRootDir?: boolean,
-): Linter.Config[] =>
-  createConfigs(sources, false, tsconfigRootDir, shouldResolveAppRootDir);
+): ConfigBlock => ({
+  [SOURCES]: createConfigs(
+    sources,
+    false,
+    tsconfigRootDir,
+    shouldResolveAppRootDir,
+  ),
+});
 
-export const createTypeScriptTestsConfigs = (
+export const createTypeScriptTestsConfigBlock = (
   sources: string[] = [],
   tsconfigRootDir?: string,
-): Linter.Config[] => createConfigs(sources, true, tsconfigRootDir);
+): ConfigBlock => ({
+  [TESTS]: createConfigs(sources, true, tsconfigRootDir),
+});

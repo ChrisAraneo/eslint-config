@@ -1,105 +1,86 @@
 import type { Linter } from 'eslint';
 import { defineConfig } from 'eslint/config';
-import type { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
-import { getAngularSourcesConfigs } from './angular/angular-eslint.js';
-import { getAngularTemplatesConfigs } from './angular/angular-eslint-template.js';
+import { createAngularConfigBlock } from './angular/index.js';
 import {
   AngularSourceConfigOptions,
-  AngularTemplateConfigOptions,
   BuilderOptions,
+  ConfigBlock,
+  IGNORED,
   IgnoredConfigOptions,
   JsonConfigOptions,
+  JSONS,
+  NX,
   NxConfigOptions,
+  SOURCES,
+  TEMPLATES,
+  TESTS,
   TypeScriptConfigOptions,
   TypeScriptTestConfigOptions,
 } from './interfaces.js';
-import { getJsoncConfigs } from './json/jsonc.js';
-import { getNxConfigs } from './nx/nx.js';
+import { createJsonConfigBlock } from './json/index.js';
+import { createNxConfigBlock } from './nx/index.js';
 import {
-  createTypeScriptConfigs,
-  createTypeScriptTestsConfigs,
+  createTypeScriptConfigBlock,
+  createTypeScriptTestsConfigBlock,
 } from './typescript/index.js';
 import { addCrossConfigOffRules } from './utils.js';
 
-export interface ConfigBlocks {
-  typescript?: Linter.Config[];
-  typescriptTests?: Linter.Config[];
-  angularSources?: Linter.Config[];
-  angularTemplates?: Linter.Config[];
-  json?: Linter.Config[];
-  nx?: InfiniteDepthConfigWithExtends[];
-  ignored?: Linter.Config[];
-  [key: string]: Linter.Config[] | InfiniteDepthConfigWithExtends[] | undefined;
-}
-
 export class ESLintConfigBuilder {
-  private configBlocks: ConfigBlocks = {};
+  private configBlocks: ConfigBlock = {};
 
   addTypeScript(options: TypeScriptConfigOptions): this {
     const { shouldResolveAppRootDir, sources = [], tsconfigRootDir } = options;
-    this.configBlocks.typescript = createTypeScriptConfigs(
-      sources,
-      tsconfigRootDir,
-      shouldResolveAppRootDir,
-    );
+
+    this.configBlocks = {
+      ...this.configBlocks,
+      ...createTypeScriptConfigBlock(
+        sources,
+        tsconfigRootDir,
+        shouldResolveAppRootDir,
+      ),
+    };
+
     return this;
   }
 
   addTypeScriptTests(options: TypeScriptTestConfigOptions): this {
-    const { sources = [], tsconfigRootDir } = options;
-    this.configBlocks.typescriptTests = createTypeScriptTestsConfigs(
-      sources,
-      tsconfigRootDir,
+    return this.addConfigBlock(
+      createTypeScriptTestsConfigBlock(
+        options?.sources ?? [],
+        options?.tsconfigRootDir,
+      ),
     );
-    return this;
   }
 
-  addAngularSources(options: AngularSourceConfigOptions): this {
-    const { prefix = 'app', sources = [] } = options;
-    this.configBlocks.angularSources = getAngularSourcesConfigs(
-      prefix,
-      sources,
+  addAngularConfigs(options: AngularSourceConfigOptions): this {
+    return this.addConfigBlock(
+      createAngularConfigBlock(
+        options?.prefix ?? 'app',
+        options?.sources ?? [],
+      ),
     );
-    return this;
-  }
-
-  addAngularTemplates(options: AngularTemplateConfigOptions): this {
-    const { templates = [] } = options;
-    this.configBlocks.angularTemplates = getAngularTemplatesConfigs(templates);
-    return this;
   }
 
   addJson(options: JsonConfigOptions): this {
-    const { jsons = [] } = options;
-    this.configBlocks.json = getJsoncConfigs(jsons);
-    return this;
+    return this.addConfigBlock(createJsonConfigBlock(options?.jsons ?? []));
   }
 
   addNx(options: NxConfigOptions): this {
-    const { sources = [] } = options;
-    this.configBlocks.nx = getNxConfigs(sources);
-    return this;
+    return this.addConfigBlock(createNxConfigBlock(options?.sources ?? []));
   }
 
   addIgnored(options: IgnoredConfigOptions): this {
-    const { ignored } = options;
-    this.configBlocks.ignored = ignored
-      ? [
-          {
-            ignores: ignored,
-          },
-        ]
-      : [];
-    return this;
+    return this.addConfigBlock({
+      [IGNORED]: [
+        {
+          ignores: options?.ignored,
+        },
+      ],
+    });
   }
 
-  addCustom(key: string, configs: Linter.Config[]): this {
-    this.configBlocks[key] = configs;
-    return this;
-  }
-
-  build(options?: BuilderOptions): InfiniteDepthConfigWithExtends[] {
+  build(options?: BuilderOptions): Linter.Config[] {
     const configsWithValues: Record<string, Linter.Config[]> = {};
 
     for (const [key, value] of Object.entries(this.configBlocks)) {
@@ -115,6 +96,35 @@ export class ESLintConfigBuilder {
 
   reset(): this {
     this.configBlocks = {};
+    return this;
+  }
+
+  private addConfigBlock(block: ConfigBlock): this {
+    this.configBlocks[SOURCES] = [
+      ...(this.configBlocks[SOURCES] ?? []),
+      ...(block[SOURCES] ?? []),
+    ];
+    this.configBlocks[TESTS] = [
+      ...(this.configBlocks[TESTS] ?? []),
+      ...(block[TESTS] ?? []),
+    ];
+    this.configBlocks[TEMPLATES] = [
+      ...(this.configBlocks[TEMPLATES] ?? []),
+      ...(block[TEMPLATES] ?? []),
+    ];
+    this.configBlocks[JSONS] = [
+      ...(this.configBlocks[JSONS] ?? []),
+      ...(block[JSONS] ?? []),
+    ];
+    this.configBlocks[NX] = [
+      ...(this.configBlocks[NX] ?? []),
+      ...(block[NX] ?? []),
+    ];
+    this.configBlocks[IGNORED] = [
+      ...(this.configBlocks[IGNORED] ?? []),
+      ...(block[IGNORED] ?? []),
+    ];
+
     return this;
   }
 }
