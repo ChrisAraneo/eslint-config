@@ -1,15 +1,16 @@
-import createAngularConfigs from './src/angular/index.js';
-import createJsonConfigs from './src/json/index.js';
-import createNxConfigs from './src/nx/index.js';
-import {
-  createTypeScriptConfigs,
-  createTypeScriptTestsConfigs,
-} from './src/typescript/index.js';
+import { createConfigBuilder } from './src/builder.js';
 
-export {
-  createAngularConfigs,
-  createJsonConfigs,
-  createNxConfigs,
-  createTypeScriptConfigs,
-  createTypeScriptTestsConfigs,
-};
+/**
+ * Builder for incrementally constructing ESLint configurations.
+ * Allows adding different config blocks and building the final configuration.
+ *
+ * @example
+ * ```typescript
+ * const config = createConfigBuilder()
+ *   .addTypeScript({ sources: ['src/**\/*.ts'] })
+ *   .addJson({ jsons: ['**\/*.json'] })
+ *   .addIgnored({ ignored: ['dist/**'] })
+ *   .build({ order: ['typescript', 'json', 'ignored'] });
+ * ```
+ */
+export { createConfigBuilder };
