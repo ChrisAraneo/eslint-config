@@ -42,6 +42,7 @@ createConfigBuilder()
 ```
 
 **Options:**
+
 - `sources` (optional): Array of glob patterns for TypeScript files (default: `[]`)
 - `tsconfigRootDir` (optional): Root directory for TypeScript configuration
 - `shouldResolveAppRootDir` (optional): Whether to resolve the app root directory (default: `false`)
@@ -60,6 +61,7 @@ createConfigBuilder()
 ```
 
 **Options:**
+
 - `sources` (optional): Array of glob patterns for test files (default: `[]`)
 - `tsconfigRootDir` (optional): Root directory for TypeScript configuration
 
@@ -77,6 +79,7 @@ createConfigBuilder()
 ```
 
 **Options:**
+
 - `prefix` (optional): Angular component selector prefix (default: `'app'`)
 - `sources` (optional): Array of glob patterns for Angular files (default: `[]`)
 
@@ -93,6 +96,7 @@ createConfigBuilder()
 ```
 
 **Options:**
+
 - `jsons` (optional): Array of glob patterns for JSON files (default: `[]`)
 
 ### Nx Configuration
@@ -108,6 +112,7 @@ createConfigBuilder()
 ```
 
 **Options:**
+
 - `sources` (optional): Array of glob patterns for Nx workspace files (default: `[]`)
 
 ### Ignored Files
@@ -123,6 +128,7 @@ createConfigBuilder()
 ```
 
 **Options:**
+
 - `ignored` (optional): Array of glob patterns for files to ignore (default: `[]`)
 
 ## Example
@@ -170,6 +176,7 @@ The `build()` method accepts optional configuration:
 ```
 
 **Options:**
+
 - `order` (optional): Array specifying the order of configuration blocks
 
 ## Included Plugins
