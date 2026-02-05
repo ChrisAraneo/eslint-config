@@ -3,7 +3,7 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import { isEmpty } from 'lodash';
 
 export const getSimpleImportSortConfigs = (
-  sources: string[],
+  sources?: string[],
 ): Linter.Config[] =>
   isEmpty(sources)
     ? []

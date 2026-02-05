@@ -49,7 +49,7 @@ export const createTypeScriptConfigBlock = (
 });
 
 export const createTypeScriptTestsConfigBlock = (
-  sources: string[] = [],
+  sources?: string[],
   tsconfigRootDir?: string,
 ): ConfigBlock => ({
   [TESTS]: createConfigs(sources, true, tsconfigRootDir),

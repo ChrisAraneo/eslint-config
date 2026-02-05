@@ -4,9 +4,9 @@ import { CompatibleConfig } from 'node_modules/typescript-eslint/dist/compatibil
 import tseslint from 'typescript-eslint';
 
 export const getTypescriptEslintConfigs = (
-  sources: string[],
-  parserOptions: Record<string, unknown>,
-  isTests: boolean,
+  sources?: string[],
+  parserOptions?: Record<string, unknown>,
+  isTests?: boolean,
 ): Linter.Config[] => {
   const warnWhenNotTests = !isTests ? 'warn' : 'off';
   const errorWhenNotTests = !isTests ? 'error' : 'off';
@@ -19,7 +19,7 @@ export const getTypescriptEslintConfigs = (
           languageOptions: {
             parser: tseslint.parser,
             parserOptions: {
-              ...parserOptions,
+              ...(parserOptions ?? {}),
               allowAutomaticSingleRunInference: true,
               projectService: true,
             },

@@ -3,7 +3,7 @@ import type { Linter } from 'eslint';
 import { isEmpty } from 'lodash';
 
 export const getAngularTemplatesConfigs = (
-  templates: string[],
+  templates?: string[],
 ): Linter.Config[] =>
   isEmpty(templates)
     ? []

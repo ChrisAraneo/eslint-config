@@ -3,8 +3,8 @@ import type { Linter } from 'eslint';
 import { isEmpty } from 'lodash';
 
 export const getAngularSourcesConfigs = (
-  prefix: string,
-  sources: string[],
+  prefix?: string,
+  sources?: string[],
 ): Linter.Config[] =>
   isEmpty(sources)
     ? []
@@ -18,7 +18,7 @@ export const getAngularSourcesConfigs = (
               '@angular-eslint/component-selector': [
                 'error',
                 {
-                  prefix,
+                  prefix: prefix ?? 'app',
                   style: 'kebab-case',
                   type: 'element',
                 },
@@ -26,7 +26,7 @@ export const getAngularSourcesConfigs = (
               '@angular-eslint/directive-selector': [
                 'error',
                 {
-                  prefix,
+                  prefix: prefix ?? 'app',
                   style: 'camelCase',
                   type: 'attribute',
                 },

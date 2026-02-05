@@ -4,7 +4,7 @@ import jsonc from 'eslint-plugin-jsonc';
 import jsoncParser from 'jsonc-eslint-parser';
 import { isEmpty } from 'lodash';
 
-export const getJsoncConfigs = (jsons: string[]): Linter.Config[] =>
+export const getJsoncConfigs = (jsons?: string[]): Linter.Config[] =>
   isEmpty(jsons)
     ? []
     : [

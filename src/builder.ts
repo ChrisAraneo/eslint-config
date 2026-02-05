@@ -3,7 +3,7 @@ import { defineConfig } from 'eslint/config';
 
 import { createAngularConfigBlock } from './angular/index.js';
 import {
-  AngularSourceConfigOptions,
+  AngularConfigOptions,
   BuilderOptions,
   ConfigBlock,
   IGNORED,
@@ -47,27 +47,30 @@ export class ESLintConfigBuilder {
   addTypeScriptTests(options: TypeScriptTestConfigOptions): this {
     return this.addConfigBlock(
       createTypeScriptTestsConfigBlock(
-        options?.sources ?? [],
+        options?.sources,
         options?.tsconfigRootDir,
       ),
     );
   }
 
-  addAngularConfigs(options: AngularSourceConfigOptions): this {
+  addAngularConfigs(options: AngularConfigOptions): this {
     return this.addConfigBlock(
       createAngularConfigBlock(
-        options?.prefix ?? 'app',
-        options?.sources ?? [],
+        options?.prefix,
+        options?.sources,
+        options?.templates,
+        options?.jsons,
+        options?.ignored,
       ),
     );
   }
 
   addJson(options: JsonConfigOptions): this {
-    return this.addConfigBlock(createJsonConfigBlock(options?.jsons ?? []));
+    return this.addConfigBlock(createJsonConfigBlock(options?.jsons));
   }
 
   addNx(options: NxConfigOptions): this {
-    return this.addConfigBlock(createNxConfigBlock(options?.sources ?? []));
+    return this.addConfigBlock(createNxConfigBlock(options?.sources));
   }
 
   addIgnored(options: IgnoredConfigOptions): this {

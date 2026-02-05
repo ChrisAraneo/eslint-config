@@ -28,13 +28,12 @@ export interface TypeScriptTestConfigOptions {
   tsconfigRootDir?: string;
 }
 
-export interface AngularSourceConfigOptions {
+export interface AngularConfigOptions {
   prefix?: string;
   sources?: string[];
-}
-
-export interface AngularTemplateConfigOptions {
   templates?: string[];
+  jsons?: string[];
+  ignored?: string[];
 }
 
 export interface JsonConfigOptions {

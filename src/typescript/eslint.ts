@@ -3,8 +3,8 @@ import type { Linter } from 'eslint';
 import { isEmpty } from 'lodash';
 
 export const getEslintConfigs = (
-  sources: string[],
-  isTests: boolean,
+  sources?: string[],
+  isTests?: boolean,
 ): Linter.Config[] => {
   const errorWhenNotTests = !isTests ? 'error' : 'off';
 
