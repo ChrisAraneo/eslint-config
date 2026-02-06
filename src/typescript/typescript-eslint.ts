@@ -1,7 +1,8 @@
 import type { Linter } from 'eslint';
-import { isEmpty } from 'lodash';
 import { CompatibleConfig } from 'node_modules/typescript-eslint/dist/compatibility-types.js';
 import tseslint from 'typescript-eslint';
+
+import { isEmpty } from '../utils.js';
 
 export const getTypescriptEslintConfigs = (
   sources?: string[],

@@ -1,7 +1,8 @@
 import type { Linter } from 'eslint';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
-import { isEmpty } from 'lodash';
+
+import { isEmpty } from '../utils.js';
 
 export const getUnicornConfigs = (sources?: string[]): Linter.Config[] =>
   isEmpty(sources)

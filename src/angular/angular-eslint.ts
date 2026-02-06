@@ -1,6 +1,7 @@
 import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
-import { isEmpty } from 'lodash';
+
+import { isEmpty } from '../utils.js';
 
 export const getAngularSourcesConfigs = (
   prefix?: string,

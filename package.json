@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.101",
+  "version": "0.0.102",
   "description": "",
   "keywords": [
     "eslint",
@@ -41,12 +41,10 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unicorn": "^62.0.0",
     "jsonc-eslint-parser": "^2.4.2",
-    "lodash": "^4.17.23",
     "typescript-eslint": "^8.54.0"
   },
   "devDependencies": {
     "@types/app-root-dir": "^0.1.4",
-    "@types/lodash": "^4.17.23",
     "jiti": "^2.6.1",
     "prettier": "^3.8.1",
     "rimraf": "^6.1.2",
