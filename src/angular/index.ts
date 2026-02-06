@@ -5,9 +5,8 @@ import {
   SOURCES,
   TEMPLATES,
   TESTS,
-} from 'src/interfaces.js';
-import { getJsoncConfigs } from 'src/json/jsonc.js';
-
+} from '../interfaces.js';
+import { getJsoncConfigs } from '../json/jsonc.js';
 import {
   createTypeScriptConfigBlock,
   createTypeScriptTestsConfigBlock,

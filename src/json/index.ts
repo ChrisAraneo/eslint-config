@@ -1,5 +1,4 @@
-import { ConfigBlock, JSONS } from 'src/interfaces.js';
-
+import { ConfigBlock, JSONS } from '../interfaces.js';
 import { getJsoncConfigs } from './jsonc.js';
 
 export const createJsonConfigBlock = (jsons: string[] = []): ConfigBlock => ({
