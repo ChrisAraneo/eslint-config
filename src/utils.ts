@@ -59,7 +59,16 @@ class ChainWrapper<T> {
     return new ChainWrapper(arr.flatMap(fn as (item: unknown) => U[]));
   }
 
-  filter(fn: (item: unknown) => boolean): ChainWrapper<unknown[]> {
+  filter<U extends T extends (infer R)[] ? R : never>(
+    fn: (item: T extends (infer R)[] ? R : never) => item is U,
+  ): ChainWrapper<U[]>;
+
+  filter(
+    fn: (item: T extends (infer R)[] ? R : never) => boolean,
+  ): ChainWrapper<T>;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  filter(fn: (item: any) => boolean): ChainWrapper<any> {
     const arr = this._value as unknown[];
 
     return new ChainWrapper(arr.filter(fn));
@@ -110,12 +119,12 @@ class ChainWrapper<T> {
     >;
   }
 
-  values(): ChainWrapper<T extends Record<string, infer V> ? V[] : never> {
-    const obj = this._value as Record<string, unknown>;
+  values<V = T extends Record<string, infer U> ? U : never>(): ChainWrapper<
+    V[]
+  > {
+    const obj = this._value as Record<string, V>;
 
-    return new ChainWrapper(Object.values(obj)) as ChainWrapper<
-      T extends Record<string, infer V> ? V[] : never
-    >;
+    return new ChainWrapper(Object.values(obj)) as ChainWrapper<V[]>;
   }
 
   keyBy(): ChainWrapper<Record<string, T extends (infer R)[] ? R : never>> {
@@ -153,55 +162,65 @@ export const chain = <T>(value: T): ChainWrapper<T> => {
   return new ChainWrapper(value);
 };
 
-const extractRulesPerKey = (
-  configs: Record<string, Linter.Config[]>,
-): Record<string, string[]> =>
-  mapValues(
-    configs,
-    (configArray) =>
-      chain(configArray)
-        .flatMap((config) => getKeys(config.rules ?? {}))
-        .uniq()
-        .value() as string[],
-  ) as Record<string, string[]>;
+const extractRulesPerKey = (configs: Record<string, Linter.Config[]>) =>
+  mapValues(configs, (configArray) =>
+    chain(configArray)
+      .flatMap((config) => getKeys(config.rules ?? {}))
+      .uniq()
+      .value()
+      .map(String),
+  );
 
 const extractFilesPerKey = (
   configs: Record<string, Linter.Config[]>,
 ): Record<string, string[]> =>
-  mapValues(
-    configs,
-    (configArray) =>
-      chain(configArray)
-        .flatMap((config) => config.files ?? [])
-        .flatten()
-        .filter((f): f is string => typeof f === 'string')
-        .uniq()
-        .value() as string[],
-  ) as Record<string, string[]>;
+  mapValues(configs, (configArray) =>
+    chain(configArray)
+      .flatMap((config) => config.files ?? [])
+      .flatten()
+      .filter((f): f is string => typeof f === 'string')
+      .uniq()
+      .value(),
+  );
+
+interface KeyConfig {
+  files: string[];
+  filesKey: string;
+  key: string;
+  otherRules: string[];
+}
 
 const createOffRulesConfigs = (
   keys: string[],
   rulesPerKey: Record<string, string[]>,
   filesPerKey: Record<string, string[]>,
-): Linter.Config[] =>
-  chain(keys)
-    .map((key) => ({
-      files: filesPerKey[key] ?? [],
-      filesKey: JSON.stringify([...(filesPerKey[key] ?? [])].sort()),
-      key,
-      otherRules: chain(keys)
-        .filter((k) => k !== key)
-        .flatMap((k) => rulesPerKey[k as string] ?? [])
-        .uniq()
-        .value(),
-    }))
-    .filter(({ otherRules }) => otherRules.length > 0)
+): Linter.Config[] => {
+  const keyConfigs = chain(keys)
+    .map(
+      (key): KeyConfig => ({
+        files: filesPerKey[key] ?? [],
+        filesKey: JSON.stringify([...(filesPerKey[key] ?? [])].sort()),
+        key,
+        otherRules: chain(keys)
+          .filter((k): k is string => k !== key)
+          .flatMap((k) => rulesPerKey[k] ?? [])
+          .uniq()
+          .value(),
+      }),
+    )
+    .filter((config): config is KeyConfig => config.otherRules.length > 0)
+    .value();
+
+  const grouped = chain(keyConfigs)
     .groupBy('filesKey')
-    .values()
+    .values<KeyConfig[]>()
+    .value();
+
+  return chain(grouped)
     .map((group) => ({
-      files: (group[0] as { files: string[] })?.files ?? [],
+      files: group[0]?.files ?? [],
       rules: chain(group)
-        .flatMap((g) => (g as { otherRules: string[] }).otherRules)
+        .flatMap((g) => g.otherRules)
         .uniq()
         .keyBy()
         .mapValues(() => 'off' as const)
@@ -213,6 +232,7 @@ const createOffRulesConfigs = (
       rules,
     }))
     .value();
+};
 
 export const addCrossConfigOffRules = (
   configs: Record<string, Linter.Config[]>,
