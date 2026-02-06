@@ -32,52 +32,63 @@ export class ESLintConfigBuilder {
   addTypeScript(options: TypeScriptConfigOptions): this {
     const { shouldResolveAppRootDir, sources = [], tsconfigRootDir } = options;
 
-    this.configBlocks = {
-      ...this.configBlocks,
-      ...createTypeScriptConfigBlock(
+    return this.addConfigBlock(
+      createTypeScriptConfigBlock(
         sources,
         tsconfigRootDir,
         shouldResolveAppRootDir,
       ),
-    };
-
-    return this;
+    );
   }
 
   addTypeScriptTests(options: TypeScriptTestConfigOptions): this {
+    const { sources = [], tsconfigRootDir } = options;
+
     return this.addConfigBlock(
-      createTypeScriptTestsConfigBlock(
-        options?.sources,
-        options?.tsconfigRootDir,
-      ),
+      createTypeScriptTestsConfigBlock(sources, tsconfigRootDir),
     );
   }
 
   addAngularConfigs(options: AngularConfigOptions): this {
+    const {
+      ignored,
+      jsons = [],
+      prefix = 'app',
+      sources = [],
+      templates = [],
+      tests = [],
+    } = options;
+
     return this.addConfigBlock(
       createAngularConfigBlock(
-        options?.prefix,
-        options?.sources,
-        options?.templates,
-        options?.jsons,
-        options?.ignored,
+        prefix,
+        sources,
+        tests,
+        templates,
+        jsons,
+        ignored,
       ),
     );
   }
 
   addJson(options: JsonConfigOptions): this {
-    return this.addConfigBlock(createJsonConfigBlock(options?.jsons));
+    const { jsons = [] } = options;
+
+    return this.addConfigBlock(createJsonConfigBlock(jsons));
   }
 
   addNx(options: NxConfigOptions): this {
-    return this.addConfigBlock(createNxConfigBlock(options?.sources));
+    const { sources = [] } = options;
+
+    return this.addConfigBlock(createNxConfigBlock(sources));
   }
 
   addIgnored(options: IgnoredConfigOptions): this {
+    const { ignored } = options;
     return this.addConfigBlock({
       [IGNORED]: [
         {
-          ignores: options?.ignored,
+          ignores: ignored,
         },
       ],
     });

@@ -31,6 +31,7 @@ export interface TypeScriptTestConfigOptions {
 export interface AngularConfigOptions {
   prefix?: string;
   sources?: string[];
+  tests?: string[];
   templates?: string[];
   jsons?: string[];
   ignored?: string[];
