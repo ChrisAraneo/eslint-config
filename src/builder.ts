@@ -29,7 +29,7 @@ import { addCrossConfigOffRules } from './utils.js';
 export class ESLintConfigBuilder {
   private configBlocks: ConfigBlock = {};
 
-  addTypeScript(options: TypeScriptConfigOptions): this {
+  addTypeScriptConfig(options: TypeScriptConfigOptions): this {
     const { shouldResolveAppRootDir, sources = [], tsconfigRootDir } = options;
 
     return this.addConfigBlock(
@@ -41,7 +41,7 @@ export class ESLintConfigBuilder {
     );
   }
 
-  addTypeScriptTests(options: TypeScriptTestConfigOptions): this {
+  addTypeScriptTestsConfig(options: TypeScriptTestConfigOptions): this {
     const { sources = [], tsconfigRootDir } = options;
 
     return this.addConfigBlock(
@@ -49,7 +49,7 @@ export class ESLintConfigBuilder {
     );
   }
 
-  addAngularConfigs(options: AngularConfigOptions): this {
+  addAngularConfig(options: AngularConfigOptions): this {
     const {
       ignored,
       jsons = [],
@@ -71,19 +71,19 @@ export class ESLintConfigBuilder {
     );
   }
 
-  addJson(options: JsonConfigOptions): this {
+  addJsonConfig(options: JsonConfigOptions): this {
     const { jsons = [] } = options;
 
     return this.addConfigBlock(createJsonConfigBlock(jsons));
   }
 
-  addNx(options: NxConfigOptions): this {
+  addNxConfig(options: NxConfigOptions): this {
     const { sources = [] } = options;
 
     return this.addConfigBlock(createNxConfigBlock(sources));
   }
 
-  addIgnored(options: IgnoredConfigOptions): this {
+  addIgnoredConfig(options: IgnoredConfigOptions): this {
     const { ignored } = options;
     return this.addConfigBlock({
       [IGNORED]: [
@@ -143,5 +143,5 @@ export class ESLintConfigBuilder {
   }
 }
 
-export const createConfigBuilder = (): ESLintConfigBuilder =>
+export const configBuilder = (): ESLintConfigBuilder =>
   new ESLintConfigBuilder();
