@@ -97,9 +97,11 @@ export class ESLintConfigBuilder {
   build(options?: BuilderOptions): Linter.Config[] {
     const configsWithValues: Record<string, Linter.Config[]> = {};
 
-    for (const [key, value] of Object.entries(this.configBlocks)) {
+    for (const key of Reflect.ownKeys(this.configBlocks)) {
+      const value = this.configBlocks[key as keyof ConfigBlock];
+
       if (value && value.length > 0) {
-        configsWithValues[key] = value as Linter.Config[];
+        configsWithValues[String(key)] = value as Linter.Config[];
       }
     }
 
