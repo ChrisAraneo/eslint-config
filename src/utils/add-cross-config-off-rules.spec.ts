@@ -30,19 +30,19 @@ describe('addCrossConfigOffRules', () => {
 
   it('should add off rules for other config types', () => {
     const configs: Record<string, Linter.Config[]> = {
-      typescript: [
-        {
-          files: ['**/*.ts'],
-          rules: {
-            'ts-rule': 'error',
-          },
-        },
-      ],
       tests: [
         {
           files: ['**/*.spec.ts'],
           rules: {
             'test-rule': 'error',
+          },
+        },
+      ],
+      typescript: [
+        {
+          files: ['**/*.ts'],
+          rules: {
+            'ts-rule': 'error',
           },
         },
       ],
@@ -61,19 +61,19 @@ describe('addCrossConfigOffRules', () => {
 
   it('should respect order option', () => {
     const configs: Record<string, Linter.Config[]> = {
-      typescript: [
-        {
-          files: ['**/*.ts'],
-          rules: {
-            'ts-rule': 'error',
-          },
-        },
-      ],
       tests: [
         {
           files: ['**/*.spec.ts'],
           rules: {
             'test-rule': 'error',
+          },
+        },
+      ],
+      typescript: [
+        {
+          files: ['**/*.ts'],
+          rules: {
+            'ts-rule': 'error',
           },
         },
       ],
@@ -143,19 +143,19 @@ describe('addCrossConfigOffRules', () => {
 
   it('should handle complex multi-config scenario', () => {
     const configs: Record<string, Linter.Config[]> = {
-      typescript: [
-        {
-          files: ['src/**/*.ts'],
-          rules: {
-            'ts-rule': 'error',
-          },
-        },
-      ],
       tests: [
         {
           files: ['**/*.spec.ts'],
           rules: {
             'test-rule': 'error',
+          },
+        },
+      ],
+      typescript: [
+        {
+          files: ['src/**/*.ts'],
+          rules: {
+            'ts-rule': 'error',
           },
         },
       ],

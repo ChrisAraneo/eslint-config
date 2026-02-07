@@ -50,14 +50,6 @@ describe('extractFilesPerKey', () => {
 
   it('should handle multiple config types', () => {
     const configs: Record<string, Linter.Config[]> = {
-      typescript: [
-        {
-          files: ['**/*.ts'],
-          rules: {
-            'ts-rule': 'error',
-          },
-        },
-      ],
       tests: [
         {
           files: ['**/*.spec.ts'],
@@ -66,13 +58,21 @@ describe('extractFilesPerKey', () => {
           },
         },
       ],
+      typescript: [
+        {
+          files: ['**/*.ts'],
+          rules: {
+            'ts-rule': 'error',
+          },
+        },
+      ],
     };
 
     const result = extractFilesPerKey(configs);
 
     expect(result).toEqual({
-      typescript: ['**/*.ts'],
       tests: ['**/*.spec.ts'],
+      typescript: ['**/*.ts'],
     });
   });
 

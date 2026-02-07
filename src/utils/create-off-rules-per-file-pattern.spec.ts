@@ -20,12 +20,12 @@ describe('createOffRulesPerFilePattern', () => {
   it('should create off rules for multiple config types', () => {
     const keys = ['typescript', 'tests'];
     const rulesPerKey = {
-      typescript: ['ts-rule'],
       tests: ['test-rule'],
+      typescript: ['ts-rule'],
     };
     const filesPerKey = {
-      typescript: ['**/*.ts'],
       tests: ['**/*.spec.ts'],
+      typescript: ['**/*.ts'],
     };
 
     const result = createOffRulesPerFilePattern(keys, rulesPerKey, filesPerKey);
@@ -47,12 +47,12 @@ describe('createOffRulesPerFilePattern', () => {
   it('should handle configs with no files', () => {
     const keys = ['typescript', 'tests'];
     const rulesPerKey = {
-      typescript: ['ts-rule'],
       tests: ['test-rule'],
+      typescript: ['ts-rule'],
     };
     const filesPerKey = {
-      typescript: [],
       tests: ['**/*.spec.ts'],
+      typescript: [],
     };
 
     const result = createOffRulesPerFilePattern(keys, rulesPerKey, filesPerKey);
@@ -66,12 +66,12 @@ describe('createOffRulesPerFilePattern', () => {
   it('should handle configs with no rules', () => {
     const keys = ['typescript', 'tests'];
     const rulesPerKey = {
-      typescript: [],
       tests: ['test-rule'],
+      typescript: [],
     };
     const filesPerKey = {
-      typescript: ['**/*.ts'],
       tests: ['**/*.spec.ts'],
+      typescript: ['**/*.ts'],
     };
 
     const result = createOffRulesPerFilePattern(keys, rulesPerKey, filesPerKey);
@@ -85,14 +85,14 @@ describe('createOffRulesPerFilePattern', () => {
   it('should handle multiple rules from different config types', () => {
     const keys = ['typescript', 'tests', 'json'];
     const rulesPerKey = {
-      typescript: ['ts-rule-1', 'ts-rule-2'],
-      tests: ['test-rule'],
       json: ['json-rule'],
+      tests: ['test-rule'],
+      typescript: ['ts-rule-1', 'ts-rule-2'],
     };
     const filesPerKey = {
-      typescript: ['**/*.ts'],
-      tests: ['**/*.spec.ts'],
       json: ['**/*.json'],
+      tests: ['**/*.spec.ts'],
+      typescript: ['**/*.ts'],
     };
 
     const result = createOffRulesPerFilePattern(keys, rulesPerKey, filesPerKey);
@@ -102,20 +102,20 @@ describe('createOffRulesPerFilePattern', () => {
     const jsonFilesKey = JSON.stringify(['**/*.json']);
 
     expect(result.get(tsFilesKey)).toEqual({
-      'test-rule': 'off',
       'json-rule': 'off',
+      'test-rule': 'off',
     });
 
     expect(result.get(testFilesKey)).toEqual({
+      'json-rule': 'off',
       'ts-rule-1': 'off',
       'ts-rule-2': 'off',
-      'json-rule': 'off',
     });
 
     expect(result.get(jsonFilesKey)).toEqual({
+      'test-rule': 'off',
       'ts-rule-1': 'off',
       'ts-rule-2': 'off',
-      'test-rule': 'off',
     });
   });
 
@@ -132,12 +132,12 @@ describe('createOffRulesPerFilePattern', () => {
   it('should normalize file patterns by sorting', () => {
     const keys = ['typescript', 'tests'];
     const rulesPerKey = {
-      typescript: ['ts-rule'],
       tests: ['test-rule'],
+      typescript: ['ts-rule'],
     };
     const filesPerKey = {
-      typescript: ['**/*.tsx', '**/*.ts'],
       tests: ['**/*.spec.ts'],
+      typescript: ['**/*.tsx', '**/*.ts'],
     };
 
     const result = createOffRulesPerFilePattern(keys, rulesPerKey, filesPerKey);

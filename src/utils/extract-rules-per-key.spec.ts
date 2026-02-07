@@ -54,14 +54,6 @@ describe('extractRulesPerKey', () => {
 
   it('should handle multiple config types', () => {
     const configs: Record<string, Linter.Config[]> = {
-      typescript: [
-        {
-          files: ['**/*.ts'],
-          rules: {
-            'ts-rule': 'error',
-          },
-        },
-      ],
       tests: [
         {
           files: ['**/*.spec.ts'],
@@ -70,13 +62,21 @@ describe('extractRulesPerKey', () => {
           },
         },
       ],
+      typescript: [
+        {
+          files: ['**/*.ts'],
+          rules: {
+            'ts-rule': 'error',
+          },
+        },
+      ],
     };
 
     const result = extractRulesPerKey(configs);
 
     expect(result).toEqual({
-      typescript: ['ts-rule'],
       tests: ['test-rule'],
+      typescript: ['ts-rule'],
     });
   });
 
@@ -135,20 +135,20 @@ describe('extractRulesPerKey', () => {
 
   it('should extract rules from complex multi-config scenario', () => {
     const configs: Record<string, Linter.Config[]> = {
+      tests: [
+        {
+          files: ['**/*.spec.ts'],
+          rules: {
+            'test-rule': 'error',
+          },
+        },
+      ],
       typescript: [
         {
           files: ['src/**/*.ts'],
           rules: {
             'ts-rule-1': 'error',
             'ts-rule-2': 'warn',
-          },
-        },
-      ],
-      tests: [
-        {
-          files: ['**/*.spec.ts'],
-          rules: {
-            'test-rule': 'error',
           },
         },
       ],
