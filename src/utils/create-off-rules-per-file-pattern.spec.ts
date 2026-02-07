@@ -14,7 +14,7 @@ describe('createOffRulesPerFilePattern', () => {
 
     const result = createOffRulesPerFilePattern(keys, rulesPerKey, filesPerKey);
 
-    expect(result.size).toBe(0); // No off rules needed for single config type
+    expect(result.size).toBe(0);
   });
 
   it('should create off rules for multiple config types', () => {
@@ -136,13 +136,12 @@ describe('createOffRulesPerFilePattern', () => {
       tests: ['test-rule'],
     };
     const filesPerKey = {
-      typescript: ['**/*.tsx', '**/*.ts'], // Unsorted
+      typescript: ['**/*.tsx', '**/*.ts'],
       tests: ['**/*.spec.ts'],
     };
 
     const result = createOffRulesPerFilePattern(keys, rulesPerKey, filesPerKey);
 
-    // Should use sorted key
     const tsFilesKey = JSON.stringify(['**/*.ts', '**/*.tsx']);
     expect(result.has(tsFilesKey)).toBe(true);
   });

@@ -50,12 +50,10 @@ describe('addCrossConfigOffRules', () => {
     const result = addCrossConfigOffRules(configs);
     expect(result).toHaveLength(2);
 
-    // Find the config with test files
     const testConfig = result.find((c) => c.files?.includes('**/*.spec.ts'));
     expect(testConfig?.rules).toHaveProperty('test-rule', 'error');
     expect(testConfig?.rules).toHaveProperty('ts-rule', 'off');
 
-    // Find the config with ts files
     const tsConfig = result.find((c) => c.files?.includes('**/*.ts'));
     expect(tsConfig?.rules).toHaveProperty('ts-rule', 'error');
     expect(tsConfig?.rules).toHaveProperty('test-rule', 'off');
@@ -137,7 +135,7 @@ describe('addCrossConfigOffRules', () => {
     };
     const result = addCrossConfigOffRules(configs);
     expect(result).toHaveLength(2);
-    // The last config with the same files should have all rules
+
     expect(result[1]?.rules).toEqual({
       'ts-rule-2': 'error',
     });
