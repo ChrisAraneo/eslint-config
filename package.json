@@ -27,7 +27,10 @@
     "build": "rimraf ./dist && tsc --build tsconfig.json",
     "chores": "npm run lint:fix && npm run format",
     "format": "npx sort-package-json && prettier --write .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "dependencies": {
     "@eslint/json": "^1.0.0",
@@ -44,11 +47,15 @@
     "typescript-eslint": "^8.54.0"
   },
   "devDependencies": {
+    "@jest/globals": "^30.2.0",
     "@types/app-root-dir": "^0.1.4",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.2.0",
     "jiti": "^2.6.1",
     "prettier": "^3.8.1",
     "rimraf": "^6.1.2",
     "sort-package-json": "^3.6.1",
+    "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
   },
   "publishConfig": {
