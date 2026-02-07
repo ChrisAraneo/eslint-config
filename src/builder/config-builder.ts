@@ -1,7 +1,7 @@
 import type { Linter } from 'eslint';
 import { defineConfig } from 'eslint/config';
 
-import { createAngularConfigBlock } from './angular/index.js';
+import { createAngularConfigBlock } from '../angular/index.js';
 import {
   AngularConfigOptions,
   ConfigBlock,
@@ -16,16 +16,16 @@ import {
   TESTS,
   TypeScriptConfigOptions,
   TypeScriptTestConfigOptions,
-} from './interfaces.js';
-import { createJsonConfigBlock } from './json/index.js';
-import { createNxConfigBlock } from './nx/index.js';
+} from '../interfaces.js';
+import { createJsonConfigBlock } from '../json/index.js';
+import { createNxConfigBlock } from '../nx/index.js';
 import {
   createTypeScriptConfigBlock,
   createTypeScriptTestsConfigBlock,
-} from './typescript/index.js';
-import { addCrossConfigOffRules } from './utils/add-cross-config-off-rules.js';
+} from '../typescript/index.js';
+import { addCrossConfigOffRules } from './add-cross-config-off-rules.js';
 
-export class ESLintConfigBuilder {
+class ESLintConfigBuilder {
   private configBlocks: ConfigBlock = {};
 
   addTypeScriptConfig(options: TypeScriptConfigOptions): this {
