@@ -18,6 +18,7 @@ const config: Config = {
   roots: ['<rootDir>'],
   testEnvironment: 'node',
   testMatch: ['**/__tests__/**/*.test.ts', '**/?(*.)+(spec|test).ts'],
+  transformIgnorePatterns: ['node_modules/(?!(lodash-es)/)'],
   transform: {
     '^.+\\.tsx?$': [
       'ts-jest',
