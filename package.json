@@ -35,6 +35,7 @@
     "@eslint/json": "^1.0.0",
     "@humanwhocodes/momoa": "^3.3.10",
     "@nx/eslint-plugin": "^22.4.4",
+    "@types/lodash-es": "^4.17.12",
     "angular-eslint": "^21.2.0",
     "app-root-dir": "^1.0.2",
     "eslint": "^9.39.2",
@@ -44,6 +45,7 @@
     "eslint-plugin-unicorn": "^62.0.0",
     "jsonc-eslint-parser": "^2.4.2",
     "lodash": "^4.17.23",
+    "lodash-es": "^4.17.23",
     "typescript-eslint": "^8.54.0"
   },
   "devDependencies": {
