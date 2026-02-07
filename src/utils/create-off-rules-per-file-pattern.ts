@@ -9,12 +9,12 @@ interface KeyConfig {
 
 type OffRules = Record<string, 'off'>;
 
-export const createOffRulesPerFilePattern = (
+const getKeyConfigs = (
   keys: string[],
   rulesPerKey: Record<string, string[]>,
   filesPerKey: Record<string, string[]>,
-): Map<string, OffRules> => {
-  const keyConfigs = chain(keys)
+): KeyConfig[] =>
+  chain(keys)
     .map(
       (key): KeyConfig => ({
         files: filesPerKey[key] ?? [],
@@ -27,23 +27,27 @@ export const createOffRulesPerFilePattern = (
           .value(),
       }),
     )
-    .filter((config): config is KeyConfig => config.otherRules.length > 0)
+    .filter((config): config is KeyConfig => !!config.otherRules.length)
     .value();
 
-  const grouped = chain(keyConfigs).groupBy('filesKey').values().value();
-
-  const offRulesMap = new Map<string, OffRules>();
-
-  for (const group of grouped) {
-    const filesKey = group[0]?.filesKey ?? '';
-    const rules = chain(group)
-      .flatMap((g) => g.otherRules)
-      .uniq()
-      .keyBy()
-      .mapValues(() => 'off' as const)
-      .value();
-    offRulesMap.set(filesKey, rules);
-  }
-
-  return offRulesMap;
-};
+export const createOffRulesPerFilePattern = (
+  keys: string[],
+  rulesPerKey: Record<string, string[]>,
+  filesPerKey: Record<string, string[]>,
+): Map<string, OffRules> =>
+  chain(getKeyConfigs(keys, rulesPerKey, filesPerKey))
+    .groupBy('filesKey')
+    .mapValues((group) =>
+      chain(group)
+        .flatMap((g) => g.otherRules)
+        .uniq()
+        .keyBy()
+        .mapValues(() => 'off' as const)
+        .value(),
+    )
+    .entries()
+    .reduce(
+      (map, [filesKey, rules]) => map.set(filesKey, rules),
+      new Map<string, OffRules>(),
+    )
+    .value();
