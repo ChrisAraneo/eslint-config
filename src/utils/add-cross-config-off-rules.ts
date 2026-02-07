@@ -1,50 +1,94 @@
 import type { Linter } from 'eslint';
-import { chain, isEmpty } from 'lodash-es';
+import { cloneDeep, isEmpty, uniq } from 'lodash-es';
 
-import { createOffRulesPerFilePattern } from './create-off-rules-per-file-pattern.js';
-import { extractFilesPerKey } from './extract-files-per-key.js';
-import { extractRulesPerKey } from './extract-rules-per-key.js';
+import {
+  ConfigBlock,
+  JSONS,
+  NX,
+  SOURCES,
+  TEMPLATES,
+  TESTS,
+} from '../interfaces.js';
 import { getKeys } from './get-keys.js';
 
-export const addCrossConfigOffRules = (
-  configs: Record<string, Linter.Config[]>,
-  options?: { order?: string[] },
-): Linter.Config[] => {
-  const keys = getKeys(configs);
-  const orderedKeys = isEmpty(options?.order) ? keys : (options?.order ?? keys);
+const getOffRules = (config: Linter.Config): Record<string, 'off'> => {
+  const rules: string[] = [];
 
-  const rulesPerKey = extractRulesPerKey(configs);
-  const filesPerKey = extractFilesPerKey(configs);
-  const offRulesMap = createOffRulesPerFilePattern(
-    keys,
-    rulesPerKey,
-    filesPerKey,
+  rules.push(...(getKeys((config as unknown as any).rules).map(String) ?? {}));
+
+  const keys = uniq(rules);
+
+  const result: Record<string, 'off'> = {};
+
+  keys.forEach((key) => {
+    result[key] = 'off';
+  });
+
+  return result;
+};
+
+const pushOffRulesConfig = (
+  previousConfigBlock: ConfigBlock,
+  currentConfigBlock: ConfigBlock,
+  configsToDisable: Linter.Config[],
+  key: keyof ConfigBlock,
+) => {
+  const files = previousConfigBlock[key]?.length
+    ? previousConfigBlock[key]?.[0]?.files
+    : undefined;
+
+  if (isEmpty(files)) {
+    return currentConfigBlock;
+  }
+
+  currentConfigBlock[SOURCES] = [
+    ...(previousConfigBlock[SOURCES] ?? []),
+    {
+      files,
+      name: 'off-rules',
+      rules: configsToDisable.reduce(
+        (acc, config) => ({ ...acc, ...getOffRules(config) }),
+        {} as Record<string, 'off'>,
+      ),
+    } as unknown as Linter.Config,
+  ];
+
+  return currentConfigBlock;
+};
+
+export const addCrossConfigOffRules = (configBlock: ConfigBlock) => {
+  const sources = configBlock[SOURCES] ?? [];
+  const tests = configBlock[TESTS] ?? [];
+  const templates = configBlock[TEMPLATES] ?? [];
+  const jsons = configBlock[JSONS] ?? [];
+  const nx = configBlock[NX] ?? [];
+
+  const updatedConfigBlock = cloneDeep(configBlock);
+
+  pushOffRulesConfig(
+    configBlock,
+    updatedConfigBlock,
+    [...templates, ...jsons],
+    SOURCES,
+  );
+  pushOffRulesConfig(
+    configBlock,
+    updatedConfigBlock,
+    [...templates, ...jsons],
+    TESTS,
+  );
+  pushOffRulesConfig(
+    configBlock,
+    updatedConfigBlock,
+    [...sources, ...tests, ...jsons, ...nx],
+    TEMPLATES,
+  );
+  pushOffRulesConfig(
+    configBlock,
+    updatedConfigBlock,
+    [...sources, ...tests, ...templates, ...nx],
+    JSONS,
   );
 
-  const allConfigs = chain(orderedKeys)
-    .flatMap((key) => configs[key] ?? [])
-    .value();
-
-  const filesKeyToLastIndex = chain(allConfigs)
-    .map((config, index) => ({
-      config,
-      files: config?.files ?? [],
-      index,
-    }))
-    .reverse()
-    .filter(({ files }) => files.length > 0)
-    .keyBy(({ files }) => JSON.stringify([...files].sort()))
-    .mapValues(({ index }) => index)
-    .value();
-
-  return allConfigs.map((config, index) => {
-    const files = config?.files ?? [];
-    const filesKey = JSON.stringify([...files].sort());
-    const isLastWithThisFilesKey = filesKeyToLastIndex[filesKey] === index;
-    const offRules = offRulesMap.get(filesKey);
-
-    return isLastWithThisFilesKey && offRules
-      ? { ...config, rules: { ...config.rules, ...offRules } }
-      : config;
-  });
+  return updatedConfigBlock;
 };

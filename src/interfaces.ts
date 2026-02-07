@@ -1,5 +1,4 @@
 import type { Linter } from 'eslint';
-import { InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
 export const SOURCES = Symbol('sources');
 export const TESTS = Symbol('tests');
@@ -9,12 +8,12 @@ export const NX = Symbol('nx');
 export const IGNORED = Symbol('ignored');
 
 export interface ConfigBlock {
-  [SOURCES]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
-  [TESTS]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
-  [TEMPLATES]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
-  [JSONS]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
-  [NX]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
-  [IGNORED]?: Linter.Config[] | InfiniteDepthConfigWithExtends[];
+  [SOURCES]?: Linter.Config[];
+  [TESTS]?: Linter.Config[];
+  [TEMPLATES]?: Linter.Config[];
+  [JSONS]?: Linter.Config[];
+  [NX]?: Linter.Config[];
+  [IGNORED]?: Linter.Config[];
 }
 
 export interface TypeScriptConfigOptions {
@@ -47,8 +46,4 @@ export interface NxConfigOptions {
 
 export interface IgnoredConfigOptions {
   ignored?: string[];
-}
-
-export interface BuilderOptions {
-  order?: string[];
 }

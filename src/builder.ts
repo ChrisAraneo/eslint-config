@@ -4,7 +4,6 @@ import { defineConfig } from 'eslint/config';
 import { createAngularConfigBlock } from './angular/index.js';
 import {
   AngularConfigOptions,
-  BuilderOptions,
   ConfigBlock,
   IGNORED,
   IgnoredConfigOptions,
@@ -94,20 +93,17 @@ export class ESLintConfigBuilder {
     });
   }
 
-  build(options?: BuilderOptions): Linter.Config[] {
-    const configsWithValues: Record<string, Linter.Config[]> = {};
+  build(): Linter.Config[] {
+    this.configBlocks = addCrossConfigOffRules(this.configBlocks);
 
-    for (const key of Reflect.ownKeys(this.configBlocks)) {
-      const value = this.configBlocks[key as keyof ConfigBlock];
-
-      if (value && value.length > 0) {
-        configsWithValues[String(key)] = value as Linter.Config[];
-      }
-    }
-
-    return defineConfig(
-      addCrossConfigOffRules(configsWithValues, { order: options?.order }),
-    );
+    return defineConfig([
+      ...(this.configBlocks[SOURCES] ?? []),
+      ...(this.configBlocks[TESTS] ?? []),
+      ...(this.configBlocks[TEMPLATES] ?? []),
+      ...(this.configBlocks[JSONS] ?? []),
+      ...(this.configBlocks[NX] ?? []),
+      ...(this.configBlocks[IGNORED] ?? []),
+    ]);
   }
 
   reset(): this {
