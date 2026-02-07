@@ -217,8 +217,8 @@ describe('appendConfigWhenDefined', () => {
     it('should append config with name property', () => {
       const configs: Linter.Config[] = [];
       const newConfig: Linter.Config = {
-        name: 'off-rules',
         files: ['src/**/*.ts'],
+        name: 'off-rules',
         rules: { 'no-console': 'off' },
       };
 
