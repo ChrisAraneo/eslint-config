@@ -1,53 +1,59 @@
-import { cloneDeep } from 'lodash-es';
+import { chain } from 'lodash-es';
 
 import {
-  ConfigBlock,
+  ConfigKey,
   JSONS,
   NX,
   SOURCES,
   TEMPLATES,
   TESTS,
+  type ConfigBlock,
 } from '../interfaces.js';
-import { appendConfig } from './append-config.js';
+import { getConfigValue } from './get-config-value.js';
+import { appendConfigWhenDefined } from './append-config-when-defined.js';
 import { createOffRulesConfig } from './create-off-rules-config.js';
 import { findFirstFiles } from './find-first-files.js';
+import { getConfigsToDisable } from './get-configs-to-disable.js';
 
-export const addCrossConfigOffRules = (
-  configBlock: ConfigBlock,
-): ConfigBlock => {
-  const sources = cloneDeep(configBlock[SOURCES] ?? []);
-  const tests = cloneDeep(configBlock[TESTS] ?? []);
-  const templates = cloneDeep(configBlock[TEMPLATES] ?? []);
-  const jsons = cloneDeep(configBlock[JSONS] ?? []);
-  const nx = cloneDeep(configBlock[NX] ?? []);
-
-  return {
-    ...configBlock,
-    [JSONS]: appendConfig(
-      jsons,
-      createOffRulesConfig(findFirstFiles(jsons), [
-        ...sources,
-        ...tests,
-        ...templates,
-        ...nx,
-      ]),
-    ),
-    [SOURCES]: appendConfig(
-      sources,
-      createOffRulesConfig(findFirstFiles(sources), [...templates, ...jsons]),
-    ),
-    [TEMPLATES]: appendConfig(
-      templates,
-      createOffRulesConfig(findFirstFiles(templates), [
-        ...sources,
-        ...tests,
-        ...jsons,
-        ...nx,
-      ]),
-    ),
-    [TESTS]: appendConfig(
-      tests,
-      createOffRulesConfig(findFirstFiles(tests), [...templates, ...jsons]),
-    ),
-  };
-};
+export const addCrossConfigOffRules = (configBlock: ConfigBlock): ConfigBlock =>
+  chain(
+    ((configBlock) => [
+      {
+        key: SOURCES,
+        configs: getConfigValue(configBlock, SOURCES),
+        disableFrom: [TEMPLATES, JSONS],
+      },
+      {
+        key: TESTS,
+        configs: getConfigValue(configBlock, TESTS),
+        disableFrom: [TEMPLATES, JSONS],
+      },
+      {
+        key: TEMPLATES,
+        configs: getConfigValue(configBlock, TEMPLATES),
+        disableFrom: [SOURCES, TESTS, JSONS, NX],
+      },
+      {
+        key: JSONS,
+        configs: getConfigValue(configBlock, JSONS),
+        disableFrom: [SOURCES, TESTS, TEMPLATES, NX],
+      },
+    ])(configBlock),
+  )
+    .map((mapping) => [
+      mapping.key,
+      appendConfigWhenDefined(
+        mapping.configs,
+        createOffRulesConfig(
+          findFirstFiles(mapping.configs),
+          getConfigsToDisable(configBlock, mapping.disableFrom as ConfigKey[]),
+        ),
+      ),
+    ])
+    .reduce(
+      (acc, [key, configs]) => ({ ...acc, [key as ConfigKey]: configs }),
+      {
+        ...configBlock,
+      } as ConfigBlock,
+    )
+    .value();

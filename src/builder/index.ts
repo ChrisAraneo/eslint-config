@@ -1,5 +1,5 @@
 export { addCrossConfigOffRules } from './add-cross-config-off-rules.js';
-export { appendConfig } from './append-config.js';
+export { appendConfigWhenDefined } from './append-config-when-defined.js';
 export { configBuilder } from './config-builder.js';
 export { createOffRulesConfig } from './create-off-rules-config.js';
 export { disableAllRules } from './disable-all-rules.js';

@@ -7,6 +7,13 @@ export const JSONS = Symbol('jsons');
 export const NX = Symbol('nx');
 export const IGNORED = Symbol('ignored');
 
+export type ConfigKey =
+  | typeof SOURCES
+  | typeof TESTS
+  | typeof TEMPLATES
+  | typeof JSONS
+  | typeof NX;
+
 export interface ConfigBlock {
   [SOURCES]?: Linter.Config[];
   [TESTS]?: Linter.Config[];
