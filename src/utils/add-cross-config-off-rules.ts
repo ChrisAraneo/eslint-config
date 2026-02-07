@@ -1,5 +1,5 @@
 import type { Linter } from 'eslint';
-import { cloneDeep, isEmpty, uniq } from 'lodash-es';
+import { chain, cloneDeep, isEmpty } from 'lodash-es';
 
 import {
   ConfigBlock,
@@ -11,84 +11,77 @@ import {
 } from '../interfaces.js';
 import { getKeys } from './get-keys.js';
 
-const getOffRules = (config: Linter.Config): Record<string, 'off'> => {
-  const rules: string[] = [];
+const getOffRules = (config: Linter.Config): Record<string, 'off'> =>
+  chain(getKeys(config.rules ?? {}))
+    .map(String)
+    .uniq()
+    .keyBy()
+    .mapValues(() => 'off' as const)
+    .value();
 
-  rules.push(...(getKeys((config as unknown as any).rules).map(String) ?? {}));
+const mergeOffRules = (configs: Linter.Config[]): Record<string, 'off'> =>
+  configs.reduce(
+    (acc, config) => ({ ...acc, ...getOffRules(config) }),
+    {} as Record<string, 'off'>,
+  );
 
-  const keys = uniq(rules);
-
-  const result: Record<string, 'off'> = {};
-
-  keys.forEach((key) => {
-    result[key] = 'off';
-  });
-
-  return result;
-};
-
-const pushOffRulesConfig = (
-  previousConfigBlock: ConfigBlock,
-  currentConfigBlock: ConfigBlock,
+const createOffRulesConfig = (
+  files: Linter.Config['files'],
   configsToDisable: Linter.Config[],
-  key: keyof ConfigBlock,
-) => {
-  const files = previousConfigBlock[key]?.length
-    ? previousConfigBlock[key]?.[0]?.files
-    : undefined;
+): Linter.Config | null =>
+  isEmpty(files)
+    ? null
+    : ({
+        files:
+          configsToDisable.find((config) => config?.files?.length)?.files ?? [],
+        name: 'off-rules',
+        rules: mergeOffRules(configsToDisable),
+      } as unknown as Linter.Config);
 
-  if (isEmpty(files)) {
-    return currentConfigBlock;
-  }
+const getFiles = (configs: Linter.Config[]): Linter.Config['files'] =>
+  configs.find((config) => config?.files?.length)?.files ?? [];
 
-  currentConfigBlock[SOURCES] = [
-    ...(previousConfigBlock[SOURCES] ?? []),
-    {
-      files,
-      name: 'off-rules',
-      rules: configsToDisable.reduce(
-        (acc, config) => ({ ...acc, ...getOffRules(config) }),
-        {} as Record<string, 'off'>,
-      ),
-    } as unknown as Linter.Config,
-  ];
+const addOffRulesConfig = (
+  configs: Linter.Config[],
+  offRulesConfig: Linter.Config | null,
+): Linter.Config[] => (offRulesConfig ? [...configs, offRulesConfig] : configs);
 
-  return currentConfigBlock;
-};
+export const addCrossConfigOffRules = (
+  configBlock: ConfigBlock,
+): ConfigBlock => {
+  const sources = cloneDeep(configBlock[SOURCES] ?? []);
+  const tests = cloneDeep(configBlock[TESTS] ?? []);
+  const templates = cloneDeep(configBlock[TEMPLATES] ?? []);
+  const jsons = cloneDeep(configBlock[JSONS] ?? []);
+  const nx = cloneDeep(configBlock[NX] ?? []);
 
-export const addCrossConfigOffRules = (configBlock: ConfigBlock) => {
-  const sources = configBlock[SOURCES] ?? [];
-  const tests = configBlock[TESTS] ?? [];
-  const templates = configBlock[TEMPLATES] ?? [];
-  const jsons = configBlock[JSONS] ?? [];
-  const nx = configBlock[NX] ?? [];
-
-  const updatedConfigBlock = cloneDeep(configBlock);
-
-  pushOffRulesConfig(
-    configBlock,
-    updatedConfigBlock,
-    [...templates, ...jsons],
-    SOURCES,
-  );
-  pushOffRulesConfig(
-    configBlock,
-    updatedConfigBlock,
-    [...templates, ...jsons],
-    TESTS,
-  );
-  pushOffRulesConfig(
-    configBlock,
-    updatedConfigBlock,
-    [...sources, ...tests, ...jsons, ...nx],
-    TEMPLATES,
-  );
-  pushOffRulesConfig(
-    configBlock,
-    updatedConfigBlock,
-    [...sources, ...tests, ...templates, ...nx],
-    JSONS,
-  );
-
-  return updatedConfigBlock;
+  return {
+    ...configBlock,
+    [JSONS]: addOffRulesConfig(
+      jsons,
+      createOffRulesConfig(getFiles(jsons), [
+        ...sources,
+        ...tests,
+        ...templates,
+        ...nx,
+      ]),
+    ),
+    [SOURCES]: addOffRulesConfig(
+      sources,
+      createOffRulesConfig(getFiles(sources), [...templates, ...jsons]),
+    ),
+    [TEMPLATES]: addOffRulesConfig(
+      templates,
+      createOffRulesConfig(getFiles(templates), [
+        ...sources,
+        ...tests,
+        ...jsons,
+        ...nx,
+      ]),
+    ),
+    [TESTS]: addOffRulesConfig(
+      tests,
+      createOffRulesConfig(getFiles(tests), [...templates, ...jsons]),
+    ),
+  };
 };
