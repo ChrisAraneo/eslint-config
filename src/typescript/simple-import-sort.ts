@@ -1,7 +1,6 @@
 import type { Linter } from 'eslint';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
-
-import { isEmpty } from '../utils.js';
+import { isEmpty } from 'lodash-es';
 
 export const getSimpleImportSortConfigs = (
   sources?: string[],

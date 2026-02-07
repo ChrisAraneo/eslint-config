@@ -1,9 +1,9 @@
 import { get as getAppRootDir } from 'app-root-dir';
 import type { Linter } from 'eslint';
 import { defineConfig } from 'eslint/config';
+import { isEmpty } from 'lodash-es';
 
 import { ConfigBlock, SOURCES, TESTS } from '../interfaces.js';
-import { isEmpty } from '../utils.js';
 import { getEslintConfigs } from './eslint.js';
 import { getSimpleImportSortConfigs } from './simple-import-sort.js';
 import { getTypescriptEslintConfigs } from './typescript-eslint.js';

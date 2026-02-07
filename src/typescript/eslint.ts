@@ -1,7 +1,6 @@
 import eslint from '@eslint/js';
 import type { Linter } from 'eslint';
-
-import { isEmpty } from '../utils.js';
+import { isEmpty } from 'lodash-es';
 
 export const getEslintConfigs = (
   sources?: string[],
