@@ -26,6 +26,11 @@ export default [
     },
   },
   {
+    rules: {
+      '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
+  {
     ignores: ['dist/', 'package-lock.json'],
   },
 ];
