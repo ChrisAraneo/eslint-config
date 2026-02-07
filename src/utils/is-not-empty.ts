@@ -1,3 +1,3 @@
-import { isEmpty } from './is-empty.js';
+import { isEmpty } from 'lodash-es';
 
 export const isNotEmpty = (value: unknown): boolean => !isEmpty(value);

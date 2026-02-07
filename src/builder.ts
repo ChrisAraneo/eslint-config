@@ -24,7 +24,7 @@ import {
   createTypeScriptConfigBlock,
   createTypeScriptTestsConfigBlock,
 } from './typescript/index.js';
-import { addCrossConfigOffRules } from './utils.js';
+import { addCrossConfigOffRules } from './utils/add-cross-config-off-rules.js';
 
 export class ESLintConfigBuilder {
   private configBlocks: ConfigBlock = {};

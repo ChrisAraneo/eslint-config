@@ -29,6 +29,6 @@
     "src/json/index.ts",
     "src/nx/index.ts",
     "src/typescript/index.ts",
-    "src/utils.ts"
+    "src/utils/index.ts"
   ]
 }
