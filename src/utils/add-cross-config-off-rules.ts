@@ -25,30 +25,26 @@ export const addCrossConfigOffRules = (
     .flatMap((key) => configs[key] ?? [])
     .value();
 
-  const filesKeyToLastIndex = new Map<string, number>();
+  const filesKeyToLastIndex = chain(allConfigs)
+    .map((config, index) => ({
+      config,
+      files: config?.files ?? [],
+      index,
+    }))
+    .reverse()
+    .filter(({ files }) => files.length > 0)
+    .keyBy(({ files }) => JSON.stringify([...files].sort()))
+    .mapValues(({ index }) => index)
+    .value();
 
-  for (let i = allConfigs.length - 1; i >= 0; i--) {
-    const config = allConfigs[i];
+  return allConfigs.map((config, index) => {
     const files = config?.files ?? [];
     const filesKey = JSON.stringify([...files].sort());
+    const isLastWithThisFilesKey = filesKeyToLastIndex[filesKey] === index;
+    const offRules = offRulesMap.get(filesKey);
 
-    if (!filesKeyToLastIndex.has(filesKey) && files.length > 0) {
-      filesKeyToLastIndex.set(filesKey, i);
-    }
-  }
-
-  for (const [filesKey, offRules] of offRulesMap) {
-    const lastIndex = filesKeyToLastIndex.get(filesKey);
-    if (lastIndex !== undefined) {
-      const config = allConfigs[lastIndex];
-      if (config) {
-        config.rules = {
-          ...config.rules,
-          ...offRules,
-        };
-      }
-    }
-  }
-
-  return allConfigs;
+    return isLastWithThisFilesKey && offRules
+      ? { ...config, rules: { ...config.rules, ...offRules } }
+      : config;
+  });
 };
