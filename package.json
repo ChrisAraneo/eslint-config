@@ -27,6 +27,7 @@
     "build": "rimraf ./dist && tsc --build tsconfig.json",
     "chores": "npm run lint:fix && npm run format",
     "format": "npx sort-package-json && prettier --write .",
+    "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
