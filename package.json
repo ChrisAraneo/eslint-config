@@ -1,14 +1,15 @@
 {
   "name": "@chris.araneo/eslint-config",
   "version": "0.0.106",
-  "description": "",
+  "description": "Simple ESLint configuration builder",
   "keywords": [
     "eslint",
     "typescript",
     "angular",
     "nx",
     "json",
-    "eslint-config"
+    "eslint-config",
+    "eslint-rules"
   ],
   "homepage": "https://github.com/ChrisAraneo/eslint-config",
   "bugs": {
@@ -64,6 +65,7 @@
     "rimraf": "^6.1.2",
     "sort-package-json": "^3.6.1",
     "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
   "publishConfig": {
