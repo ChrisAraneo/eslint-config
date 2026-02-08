@@ -6,7 +6,7 @@ import {
   AngularConfigOptions,
   ConfigBlock,
   IGNORED,
-  IgnoredConfigOptions,
+  IgnoredOptions,
   JsonConfigOptions,
   JSONS,
   NX,
@@ -82,7 +82,7 @@ class ESLintConfigBuilder {
     return this.addConfigBlock(createNxConfigBlock(sources));
   }
 
-  addIgnoredConfig(options: IgnoredConfigOptions): this {
+  addIgnored(options: IgnoredOptions): this {
     const { ignored } = options;
     return this.addConfigBlock({
       [IGNORED]: [

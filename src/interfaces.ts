@@ -51,6 +51,6 @@ export interface NxConfigOptions {
   sources?: string[];
 }
 
-export interface IgnoredConfigOptions {
+export interface IgnoredOptions {
   ignored?: string[];
 }
