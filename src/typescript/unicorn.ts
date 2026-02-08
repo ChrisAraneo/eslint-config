@@ -17,6 +17,7 @@ export const getUnicornConfigs = (sources?: string[]): Linter.Config[] =>
           rules: {
             ...unicorn.configs.all.rules,
             'unicorn/import-style': 'off',
+            'unicorn/new-for-builtins': 'off',
             'unicorn/no-array-for-each': 'off',
             'unicorn/no-array-reduce': 'off',
             'unicorn/no-for-loop': 'error',
