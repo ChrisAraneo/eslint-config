@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
@@ -33,7 +33,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        node-version: [24]
 
     steps:
       - name: Checkout code
@@ -52,7 +52,7 @@ jobs:
         run: npm test -- --coverage
 
       - name: Upload coverage reports
-        if: matrix.node-version == 20
+        if: matrix.node-version == 24
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
@@ -71,7 +71,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install dependencies
