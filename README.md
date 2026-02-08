@@ -18,7 +18,7 @@
 npm install --save-dev @chris.araneo/eslint-config
 ```
 
-## Quick start
+## Quick Start
 
 Create an `eslint.config.mjs` file in your project root:
 
