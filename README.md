@@ -74,7 +74,7 @@ Add specific linting rules for test files:
 ```javascript
 configBuilder()
   .addTypeScriptTestsConfig({
-    sources: ['**/*.spec.ts', '**/*.test.ts'],
+    sources: ['**/*.spec.ts'],
     tsconfigRootDir: import.meta.dirname,
   })
   .build();
@@ -114,7 +114,7 @@ Add linting for JSON files:
 ```javascript
 configBuilder()
   .addJsonConfig({
-    jsons: ['**/*.json', 'tsconfig.json'],
+    jsons: ['**/*.json'],
   })
   .build();
 ```
@@ -148,29 +148,6 @@ configBuilder()
 ```
 
 - `ignored` (optional): Array of glob patterns for files to ignore (default: `[]`)
-
-## Example
-
-Here's a comprehensive example for an Angular + Nx monorepo:
-
-```javascript
-import { configBuilder } from '@chris.araneo/eslint-config';
-
-export default configBuilder()
-  .addAngularConfig({
-    prefix: 'app',
-    sources: ['src/**/*.ts', 'apps/**/*.ts', 'libs/**/*.ts'],
-    tests: ['**/*.spec.ts'],
-    templates: ['**/*.html'],
-  })
-  .addNxConfig({
-    sources: ['apps/**/*', 'libs/**/*'],
-  })
-  .addIgnoredConfig({
-    ignored: ['dist/**', 'coverage/**', 'node_modules/**', '.angular/**'],
-  })
-  .build();
-```
 
 ## API Reference
 
