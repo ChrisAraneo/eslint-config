@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.106",
+  "version": "0.0.107",
   "description": "Simple ESLint configuration builder",
   "keywords": [
     "eslint",
@@ -67,6 +67,10 @@
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=11.0.0"
   },
   "publishConfig": {
     "access": "public"

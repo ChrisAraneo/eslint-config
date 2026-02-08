@@ -3,7 +3,7 @@
 <p align="center">
   <img src="https://avatars.githubusercontent.com/u/6019716" alt="Official @eslint GitHub user avatar" width="256px" height="256px"/>
   <br>
-  <a href="https://github.com/ChrisAraneo/eslint-config/blob/master/package.json"><img src="https://img.shields.io/badge/version-v0.0.106-blue" alt="version"></a>
+  <a href="https://github.com/ChrisAraneo/eslint-config/blob/master/package.json"><img src="https://img.shields.io/badge/version-v0.0.107-blue" alt="version"></a>
   <a href="https://github.com/ChrisAraneo/eslint-config/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="@chris.araneo/eslint-config is released under the MIT license."></a>
   <a href="https://github.com/ChrisAraneo/eslint-config/actions/workflows/ci.yml"><img alt="GitHub CI Status" src="https://img.shields.io/github/actions/workflow/status/ChrisAraneo/eslint-config/ci.yml?label=CI&logo=GitHub"></a>
   <br>
