@@ -39,13 +39,13 @@ export default configBuilder()
 
 This configuration includes the following ESLint plugins:
 
-- `**typescript-eslint**`: TypeScript-specific linting rules
-- `**angular-eslint**`: Angular-specific linting rules
-- `**@nx/eslint-plugin**`: Nx workspace linting rules
-- `**eslint-plugin-jsonc**`: JSON and JSONC linting
-- `**eslint-plugin-perfectionist**`: Sorting and organizing imports, objects, etc.
-- `**eslint-plugin-simple-import-sort**`: Simple import sorting
-- `**eslint-plugin-unicorn**`: Various awesome ESLint rules
+- `typescript-eslint`: TypeScript-specific linting rules
+- `angular-eslint`: Angular-specific linting rules
+- `@nx/eslint-plugin`: Nx workspace linting rules
+- `eslint-plugin-jsonc`: JSON and JSONC linting
+- `eslint-plugin-perfectionist`: Sorting and organizing imports, objects, etc.
+- `eslint-plugin-simple-import-sort`: Simple import sorting
+- `eslint-plugin-unicorn`: Various awesome ESLint rules
 
 ## Usage
 
