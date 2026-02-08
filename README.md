@@ -43,9 +43,9 @@ This configuration includes the following ESLint plugins:
 - `angular-eslint`: Angular-specific linting rules
 - `@nx/eslint-plugin`: Nx workspace linting rules
 - `eslint-plugin-jsonc`: JSON and JSONC linting
-- `eslint-plugin-perfectionist`: Sorting and organizing imports, objects, etc.
-- `eslint-plugin-simple-import-sort`: Simple import sorting
-- `eslint-plugin-unicorn`: Various awesome ESLint rules
+- `eslint-plugin-perfectionist`: sorting and organizing imports, objects, etc.
+- `eslint-plugin-simple-import-sort`: import sorting
+- `eslint-plugin-unicorn`: various awesome ESLint rules
 
 ## Usage
 
@@ -63,9 +63,9 @@ configBuilder()
   .build();
 ```
 
-- `sources` (optional): Array of glob patterns for TypeScript files (default: `[]`)
-- `tsconfigRootDir` (optional): Root directory for TypeScript configuration
-- `shouldResolveAppRootDir` (optional): Whether to resolve the app root directory (default: `false`)
+- `sources` (*optional*) - array of glob patterns for TypeScript files (default: `[]`)
+- `tsconfigRootDir` (*optional*) - root directory for TypeScript configuration
+- `shouldResolveAppRootDir` (*optional*) - whether to resolve the app root directory (default: `false`)
 
 ### TypeScript Tests Configuration
 
@@ -80,8 +80,8 @@ configBuilder()
   .build();
 ```
 
-- `sources` (optional): Array of glob patterns for test files (default: `[]`)
-- `tsconfigRootDir` (optional): Root directory for TypeScript configuration
+- `sources` (*optional*) - array of glob patterns for test files (default: `[]`)
+- `tsconfigRootDir` (*optional*) - root directory for TypeScript configuration
 
 ### Angular Configuration
 
@@ -100,12 +100,12 @@ configBuilder()
   .build();
 ```
 
-- `prefix` (optional): Angular component selector prefix (default: `'app'`)
-- `sources` (optional): Array of glob patterns for Angular TypeScript files (default: `[]`)
-- `tests` (optional): Array of glob patterns for Angular test files (default: `[]`)
-- `templates` (optional): Array of glob patterns for Angular HTML templates (default: `[]`)
-- `jsons` (optional): Array of glob patterns for JSON files (default: `[]`)
-- `ignored` (optional): Array of glob patterns for files to ignore (default: `[]`)
+- `prefix` (*optional*) - Angular component selector prefix (default: `'app'`)
+- `sources` (*optional*) - array of glob patterns for Angular TypeScript files (default: `[]`)
+- `tests` (*optional*) - array of glob patterns for Angular test files (default: `[]`)
+- `templates` (*optional*) - array of glob patterns for Angular HTML templates (default: `[]`)
+- `jsons` (*optional*) - array of glob patterns for JSON files (default: `[]`)
+- `ignored` (*optional*) - array of glob patterns for files to ignore (default: `[]`)
 
 ### JSON Configuration
 
@@ -119,7 +119,7 @@ configBuilder()
   .build();
 ```
 
-- `jsons` (optional): Array of glob patterns for JSON files (default: `[]`)
+- `jsons` (*optional*) - array of glob patterns for JSON files (default: `[]`)
 
 ### Nx Configuration
 
@@ -133,7 +133,7 @@ configBuilder()
   .build();
 ```
 
-- `sources` (optional): Array of glob patterns for Nx workspace files (default: `[]`)
+- `sources` (*optional*) - array of glob patterns for Nx workspace files (default: `[]`)
 
 ### Ignored Files
 
@@ -147,7 +147,7 @@ configBuilder()
   .build();
 ```
 
-- `ignored` (optional): Array of glob patterns for files to ignore (default: `[]`)
+- `ignored` (*optional*) - array of glob patterns for files to ignore (default: `[]`)
 
 ## API Reference
 
@@ -159,14 +159,14 @@ Creates a new instance of the `ESLintConfigBuilder`.
 
 #### Methods
 
-- `addTypeScript(options)`: Add TypeScript configuration
-- `addTypeScriptTests(options)`: Add TypeScript test configuration
-- `addAngularConfigs(options)`: Add Angular configuration
-- `addJson(options)`: Add JSON configuration
-- `addNx(options)`: Add Nx configuration
-- `addIgnored(options)`: Add ignored files configuration
-- `build(options?)`: Build and return the final ESLint configuration
-- `reset()`: Reset the builder to its initial state
+- `addTypeScript(options)`: add TypeScript configuration
+- `addTypeScriptTests(options)`: add TypeScript test configuration
+- `addAngularConfigs(options)`: add Angular configuration
+- `addJson(options)`: add JSON configuration
+- `addNx(options)`: add Nx configuration
+- `addIgnored(options)`: add ignored files configuration
+- `build(options?)`: build and return the final ESLint configuration
+- `reset()`: reset the builder to its initial state
 
 All `add*` methods return `this` for method chaining.
 
