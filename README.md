@@ -63,9 +63,9 @@ configBuilder()
   .build();
 ```
 
-- `sources` (*optional*) - array of glob patterns for TypeScript files (default: `[]`)
-- `tsconfigRootDir` (*optional*) - root directory for TypeScript configuration
-- `shouldResolveAppRootDir` (*optional*) - whether to resolve the app root directory (default: `false`)
+- `sources` (_optional_) - array of glob patterns for TypeScript files (default: `[]`)
+- `tsconfigRootDir` (_optional_) - root directory for TypeScript configuration
+- `shouldResolveAppRootDir` (_optional_) - whether to resolve the app root directory (default: `false`)
 
 ### TypeScript Tests Configuration
 
@@ -80,8 +80,8 @@ configBuilder()
   .build();
 ```
 
-- `sources` (*optional*) - array of glob patterns for test files (default: `[]`)
-- `tsconfigRootDir` (*optional*) - root directory for TypeScript configuration
+- `sources` (_optional_) - array of glob patterns for test files (default: `[]`)
+- `tsconfigRootDir` (_optional_) - root directory for TypeScript configuration
 
 ### Angular Configuration
 
@@ -100,12 +100,12 @@ configBuilder()
   .build();
 ```
 
-- `prefix` (*optional*) - Angular component selector prefix (default: `'app'`)
-- `sources` (*optional*) - array of glob patterns for Angular TypeScript files (default: `[]`)
-- `tests` (*optional*) - array of glob patterns for Angular test files (default: `[]`)
-- `templates` (*optional*) - array of glob patterns for Angular HTML templates (default: `[]`)
-- `jsons` (*optional*) - array of glob patterns for JSON files (default: `[]`)
-- `ignored` (*optional*) - array of glob patterns for files to ignore (default: `[]`)
+- `prefix` (_optional_) - Angular component selector prefix (default: `'app'`)
+- `sources` (_optional_) - array of glob patterns for Angular TypeScript files (default: `[]`)
+- `tests` (_optional_) - array of glob patterns for Angular test files (default: `[]`)
+- `templates` (_optional_) - array of glob patterns for Angular HTML templates (default: `[]`)
+- `jsons` (_optional_) - array of glob patterns for JSON files (default: `[]`)
+- `ignored` (_optional_) - array of glob patterns for files to ignore (default: `[]`)
 
 ### JSON Configuration
 
@@ -119,7 +119,7 @@ configBuilder()
   .build();
 ```
 
-- `jsons` (*optional*) - array of glob patterns for JSON files (default: `[]`)
+- `jsons` (_optional_) - array of glob patterns for JSON files (default: `[]`)
 
 ### Nx Configuration
 
@@ -133,7 +133,7 @@ configBuilder()
   .build();
 ```
 
-- `sources` (*optional*) - array of glob patterns for Nx workspace files (default: `[]`)
+- `sources` (_optional_) - array of glob patterns for Nx workspace files (default: `[]`)
 
 ### Ignored Files
 
@@ -147,7 +147,7 @@ configBuilder()
   .build();
 ```
 
-- `ignored` (*optional*) - array of glob patterns for files to ignore (default: `[]`)
+- `ignored` (_optional_) - array of glob patterns for files to ignore (default: `[]`)
 
 ## API Reference
 
