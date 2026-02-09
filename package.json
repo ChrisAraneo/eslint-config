@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.107",
+  "version": "0.0.108",
   "description": "Simple ESLint configuration builder",
   "keywords": [
     "eslint",
@@ -37,6 +37,7 @@
     "@eslint/json": "^1.0.0",
     "@humanwhocodes/momoa": "^3.3.10",
     "@nx/eslint-plugin": "^22.4.4",
+    "@stylistic/eslint-plugin": "^5.8.0",
     "@types/lodash-es": "^4.17.12",
     "angular-eslint": "^21.2.0",
     "app-root-dir": "^1.0.2",
