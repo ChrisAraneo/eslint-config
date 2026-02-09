@@ -6,6 +6,7 @@ import { isEmpty } from 'lodash-es';
 import { ConfigBlock, SOURCES, TESTS } from '../interfaces.js';
 import { getEslintConfigs } from './eslint.js';
 import { getSimpleImportSortConfigs } from './simple-import-sort.js';
+import { getStylisticConfigs } from './stylistic.js';
 import { getTypescriptEslintConfigs } from './typescript-eslint.js';
 import { getUnicornConfigs } from './unicorn.js';
 
@@ -33,6 +34,7 @@ const createConfigs = (
         ),
         ...getUnicornConfigs(sources),
         ...getSimpleImportSortConfigs(sources),
+        ...getStylisticConfigs(sources, isTests),
       ]);
 
 export const createTypeScriptConfigBlock = (
