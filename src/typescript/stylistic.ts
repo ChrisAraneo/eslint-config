@@ -12,10 +12,10 @@ export const getStylisticConfigs = (
     ? []
     : [
         {
-          ...stylistic.configs.all,
+          ...stylistic.configs['all'],
           files: sources,
           rules: {
-            ...stylistic.configs.all.rules,
+            ...stylistic.configs['all'].rules,
             '@stylistic/array-bracket-newline': 'off',
             '@stylistic/array-bracket-spacing': errorWhenNotTests,
             '@stylistic/array-element-newline': 'off',
