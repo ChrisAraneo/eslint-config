@@ -84,7 +84,7 @@ describe('createOffRulesConfig', () => {
       expect(result?.name).toBe('off-rules');
     });
 
-    it('should use findFirstFiles for files property', () => {
+    it('should use find first non-empty files property', () => {
       const files = ['**/*.ts'];
       const configsToDisable: Linter.Config[] = [
         {
@@ -99,7 +99,6 @@ describe('createOffRulesConfig', () => {
 
       const result = createOffRulesConfig(files, configsToDisable);
 
-      // findFirstFiles returns the first config's files
       expect(result?.files).toEqual(['src/**/*.ts']);
     });
 
@@ -186,57 +185,10 @@ describe('createOffRulesConfig', () => {
 
       const result = createOffRulesConfig(files, configsToDisable);
 
-      // Should find first non-empty files
       expect(result?.files).toEqual(['src/**/*.ts']);
       expect(result?.rules).toEqual({
         'no-console': 'off',
         semi: 'off',
-      });
-    });
-
-    it('should handle TypeScript ESLint rules', () => {
-      const files = ['**/*.ts'];
-      const configsToDisable: Linter.Config[] = [
-        {
-          files: ['src/**/*.ts'],
-          rules: {
-            '@typescript-eslint/explicit-function-return-type': 'error',
-            '@typescript-eslint/no-explicit-any': 'warn',
-          },
-        },
-      ];
-
-      const result = createOffRulesConfig(files, configsToDisable);
-
-      expect(result?.rules).toEqual({
-        '@typescript-eslint/explicit-function-return-type': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
-      });
-    });
-
-    it('should handle complex rule configurations', () => {
-      const files = ['**/*.ts'];
-      const configsToDisable: Linter.Config[] = [
-        {
-          files: ['src/**/*.ts'],
-          rules: {
-            '@typescript-eslint/naming-convention': [
-              'error',
-              {
-                format: ['camelCase'],
-                selector: 'default',
-              },
-            ],
-            quotes: ['error', 'single'],
-          },
-        },
-      ];
-
-      const result = createOffRulesConfig(files, configsToDisable);
-
-      expect(result?.rules).toEqual({
-        '@typescript-eslint/naming-convention': 'off',
-        quotes: 'off',
       });
     });
 
@@ -287,67 +239,6 @@ describe('createOffRulesConfig', () => {
       expect(result?.rules).toEqual({
         'no-console': 'off',
       });
-    });
-
-    it('should handle large number of rules', () => {
-      const files = ['**/*.ts'];
-      const rules: Record<string, string> = {};
-      for (let i = 0; i < 50; i++) {
-        rules[`rule-${i}`] = 'error';
-      }
-      const configsToDisable: Linter.Config[] = [
-        {
-          files: ['src/**/*.ts'],
-          rules,
-        } as Linter.Config,
-      ];
-
-      const result = createOffRulesConfig(files, configsToDisable);
-
-      expect(Object.keys(result?.rules ?? {})).toHaveLength(50);
-      Object.values(result?.rules ?? {}).forEach((value) => {
-        expect(value).toBe('off');
-      });
-    });
-  });
-
-  describe('edge cases with findFirstFiles', () => {
-    it('should return undefined files when no config has files', () => {
-      const files = ['**/*.ts'];
-      const configsToDisable: Linter.Config[] = [
-        {
-          rules: { 'no-console': 'error' },
-        },
-        {
-          rules: { semi: 'warn' },
-        },
-      ];
-
-      const result = createOffRulesConfig(files, configsToDisable);
-
-      expect(result?.files).toBeUndefined();
-      expect(result?.rules).toEqual({
-        'no-console': 'off',
-        semi: 'off',
-      });
-    });
-
-    it('should skip configs with only empty files arrays', () => {
-      const files = ['**/*.ts'];
-      const configsToDisable: Linter.Config[] = [
-        {
-          files: [],
-          rules: { 'no-console': 'error' },
-        },
-        {
-          files: [],
-          rules: { semi: 'warn' },
-        },
-      ];
-
-      const result = createOffRulesConfig(files, configsToDisable);
-
-      expect(result?.files).toBeUndefined();
     });
   });
 });

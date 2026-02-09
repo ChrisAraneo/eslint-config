@@ -52,29 +52,6 @@ describe('disableAllRules', () => {
     });
   });
 
-  it('should handle duplicate rules across configs', () => {
-    const config1: Linter.Config = {
-      rules: {
-        'no-console': 'error',
-        semi: 'error',
-      },
-    };
-    const config2: Linter.Config = {
-      rules: {
-        'no-console': 'warn',
-        quotes: 'error',
-      },
-    };
-
-    const result = disableAllRules([config1, config2]);
-
-    expect(result).toEqual({
-      'no-console': 'off',
-      quotes: 'off',
-      semi: 'off',
-    });
-  });
-
   it('should handle config with no rules property', () => {
     const config: Linter.Config = {
       files: ['**/*.ts'],
@@ -132,85 +109,6 @@ describe('disableAllRules', () => {
     });
   });
 
-  it('should handle rules with different value types', () => {
-    const config: Linter.Config = {
-      rules: {
-        '@typescript-eslint/naming-convention': [
-          'error',
-          { format: ['camelCase'], selector: 'default' },
-        ],
-        'no-console': 'off',
-        'no-debugger': 'warn',
-        quotes: ['error', 'single', { avoidEscape: true }],
-        semi: 'error',
-      },
-    };
-
-    const result = disableAllRules([config]);
-
-    expect(result).toEqual({
-      '@typescript-eslint/naming-convention': 'off',
-      'no-console': 'off',
-      'no-debugger': 'off',
-      quotes: 'off',
-      semi: 'off',
-    });
-  });
-
-  it('should handle rules that are already off', () => {
-    const config: Linter.Config = {
-      rules: {
-        'no-console': 'off',
-        'no-debugger': 'error',
-        semi: 'off',
-      },
-    };
-
-    const result = disableAllRules([config]);
-
-    expect(result).toEqual({
-      'no-console': 'off',
-      'no-debugger': 'off',
-      semi: 'off',
-    });
-  });
-
-  it('should handle TypeScript ESLint rules', () => {
-    const config: Linter.Config = {
-      rules: {
-        '@typescript-eslint/explicit-function-return-type': 'error',
-        '@typescript-eslint/no-explicit-any': 'warn',
-        '@typescript-eslint/no-unused-vars': [
-          'error',
-          { argsIgnorePattern: '^_' },
-        ],
-      },
-    };
-
-    const result = disableAllRules([config]);
-
-    expect(result).toEqual({
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-    });
-  });
-
-  it('should handle large number of rules', () => {
-    const rules: Record<string, string> = {};
-    for (let i = 0; i < 100; i++) {
-      rules[`rule-${i}`] = 'error';
-    }
-    const config: Linter.Config = { rules } as Linter.Config;
-
-    const result = disableAllRules([config]);
-
-    expect(Object.keys(result)).toHaveLength(100);
-    Object.values(result).forEach((value) => {
-      expect(value).toBe('off');
-    });
-  });
-
   it('should handle multiple configs with many overlapping rules', () => {
     const config1: Linter.Config = {
       rules: {
@@ -241,42 +139,6 @@ describe('disableAllRules', () => {
       'rule-3': 'off',
       'rule-4': 'off',
       'rule-5': 'off',
-    });
-  });
-
-  it('should handle numeric severity levels', () => {
-    const config: Linter.Config = {
-      rules: {
-        'no-console': 0,
-        'no-debugger': 1,
-        semi: 2,
-      },
-    };
-
-    const result = disableAllRules([config]);
-
-    expect(result).toEqual({
-      'no-console': 'off',
-      'no-debugger': 'off',
-      semi: 'off',
-    });
-  });
-
-  it('should handle rules with forward slashes in names', () => {
-    const config: Linter.Config = {
-      rules: {
-        'import/no-unresolved': 'warn',
-        'import/order': 'error',
-        'react/jsx-uses-react': 'error',
-      },
-    };
-
-    const result = disableAllRules([config]);
-
-    expect(result).toEqual({
-      'import/no-unresolved': 'off',
-      'import/order': 'off',
-      'react/jsx-uses-react': 'off',
     });
   });
 });

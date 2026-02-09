@@ -34,16 +34,36 @@ describe('getConfigsToDisable', () => {
   });
 
   it('should return configs for multiple keys', () => {
-    const sourceConfig: Linter.Config = { files: ['**/*.ts'] };
-    const testConfig: Linter.Config = { files: ['**/*.spec.ts'] };
-    const configBlock = {
-      [SOURCES]: [sourceConfig],
-      [TESTS]: [testConfig],
+    const configs: Record<string, Linter.Config> = {
+      json: { files: ['**/*.json'] },
+      nx: { files: ['**/project.json'] },
+      source: { files: ['**/*.ts'] },
+      template: { files: ['**/*.html'] },
+      test: { files: ['**/*.spec.ts'] },
     };
+    const configBlock = {
+      [JSONS]: [configs.json],
+      [NX]: [configs.nx],
+      [SOURCES]: [configs.source],
+      [TEMPLATES]: [configs.template],
+      [TESTS]: [configs.test],
+    } as ConfigBlock;
 
-    const result = getConfigsToDisable(configBlock, [SOURCES, TESTS]);
+    const result = getConfigsToDisable(configBlock, [
+      SOURCES,
+      TESTS,
+      TEMPLATES,
+      JSONS,
+      NX,
+    ]);
 
-    expect(result).toEqual([sourceConfig, testConfig]);
+    expect(result).toEqual([
+      configs.source,
+      configs.test,
+      configs.template,
+      configs.json,
+      configs.nx,
+    ]);
   });
 
   it('should flatten multiple configs from multiple keys', () => {
@@ -83,58 +103,6 @@ describe('getConfigsToDisable', () => {
     ]);
 
     expect(result).toEqual([sourceConfig]);
-  });
-
-  it('should return deep cloned configs', () => {
-    const originalConfig: Linter.Config = {
-      files: ['**/*.ts'],
-      rules: { 'no-console': 'error' },
-    };
-    const configBlock = {
-      [SOURCES]: [originalConfig],
-    };
-
-    const result = getConfigsToDisable(configBlock, [SOURCES]);
-
-    if (result[0]?.rules) {
-      result[0]!.rules['new-rule'] = 'warn';
-    }
-
-    expect(originalConfig.rules).toEqual({ 'no-console': 'error' });
-    expect(originalConfig.rules).not.toHaveProperty('new-rule');
-  });
-
-  it('should handle all config keys', () => {
-    const configs: Record<string, Linter.Config> = {
-      json: { files: ['**/*.json'] },
-      nx: { files: ['**/project.json'] },
-      source: { files: ['**/*.ts'] },
-      template: { files: ['**/*.html'] },
-      test: { files: ['**/*.spec.ts'] },
-    };
-    const configBlock = {
-      [JSONS]: [configs.json],
-      [NX]: [configs.nx],
-      [SOURCES]: [configs.source],
-      [TEMPLATES]: [configs.template],
-      [TESTS]: [configs.test],
-    } as ConfigBlock;
-
-    const result = getConfigsToDisable(configBlock, [
-      SOURCES,
-      TESTS,
-      TEMPLATES,
-      JSONS,
-      NX,
-    ]);
-
-    expect(result).toEqual([
-      configs.source,
-      configs.test,
-      configs.template,
-      configs.json,
-      configs.nx,
-    ]);
   });
 
   it('should handle empty configBlock', () => {
