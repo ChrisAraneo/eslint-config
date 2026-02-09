@@ -62,7 +62,7 @@ describe('appendConfigWhenDefined', () => {
     const result = appendConfigWhenDefined(configs, {});
 
     expect(result).toHaveLength(1);
-    expect(result[0]).toEqual(configs);
+    expect(result).toEqual(configs);
   });
 
   it('should not append when config is an array', () => {
@@ -78,7 +78,7 @@ describe('appendConfigWhenDefined', () => {
     ]);
 
     expect(result).toHaveLength(1);
-    expect(result[0]).toEqual(configs);
+    expect(result).toEqual(configs);
   });
 
   it('should return new array instance', () => {

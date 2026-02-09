@@ -8,6 +8,7 @@ describe('addCrossConfigOffRules', () => {
   describe('basic functionality', () => {
     it('should return empty config block when input is empty', () => {
       const result = addCrossConfigOffRules({});
+
       expect(result).toEqual({
         [JSONS]: [],
         [SOURCES]: [],
@@ -27,6 +28,7 @@ describe('addCrossConfigOffRules', () => {
       };
 
       const result = addCrossConfigOffRules(configBlock);
+
       expect(result[SOURCES]?.[0]?.rules).toEqual({ 'no-console': 'error' });
     });
 
@@ -42,6 +44,7 @@ describe('addCrossConfigOffRules', () => {
 
       const originalLength = configBlock[SOURCES]?.length ?? 0;
       addCrossConfigOffRules(configBlock);
+
       expect(configBlock[SOURCES]?.length).toBe(originalLength);
     });
   });
@@ -191,6 +194,7 @@ describe('addCrossConfigOffRules', () => {
       };
 
       const result = addCrossConfigOffRules(configBlock);
+
       expect(result[SOURCES]).toBeDefined();
     });
 
@@ -212,6 +216,7 @@ describe('addCrossConfigOffRules', () => {
       const offRulesConfig = result[SOURCES]?.find(
         (c) => c.name === 'off-rules',
       );
+
       expect(offRulesConfig?.rules).toEqual({});
     });
 
@@ -224,6 +229,7 @@ describe('addCrossConfigOffRules', () => {
       };
 
       const result = addCrossConfigOffRules(configBlock);
+
       expect(result[SOURCES]).toEqual([]);
       expect(result[TESTS]).toEqual([]);
       expect(result[TEMPLATES]).toEqual([]);
@@ -251,7 +257,8 @@ describe('addCrossConfigOffRules', () => {
       };
 
       const result = addCrossConfigOffRules(configBlock);
-      expect(result[SOURCES]?.length).toBe(3); // 2 original + 1 off-rules
+
+      expect(result[SOURCES]?.length).toBe(3);
     });
 
     it('should merge duplicate rule names', () => {
@@ -366,6 +373,7 @@ describe('addCrossConfigOffRules', () => {
       };
 
       const result = addCrossConfigOffRules(configBlock);
+
       expect(result).not.toBe(configBlock);
       expect(result[SOURCES]).not.toBe(configBlock[SOURCES]);
     });
