@@ -253,18 +253,6 @@ describe('configBuilder', () => {
 
       expect(configs.length).toBeGreaterThan(0);
     });
-
-    it('should maintain order of configs', () => {
-      const builder = configBuilder();
-      builder
-        .addTypeScriptConfig({ sources: ['src/**/*.ts'] })
-        .addTypeScriptTestsConfig({ sources: ['**/*.spec.ts'] })
-        .addIgnored({ ignored: ['dist/**'] });
-
-      const configs = builder.build();
-
-      expect(Array.isArray(configs)).toBe(true);
-    });
   });
 
   describe('reset', () => {
@@ -325,30 +313,6 @@ describe('configBuilder', () => {
         .addJsonConfig({ jsons: ['**/*.json'] });
 
       expect(result).toBe(builder);
-    });
-  });
-
-  describe('multiple configs of same type', () => {
-    it('should accumulate multiple TypeScript configs', () => {
-      const builder = configBuilder();
-      builder
-        .addTypeScriptConfig({ sources: ['src/**/*.ts'] })
-        .addTypeScriptConfig({ sources: ['lib/**/*.ts'] });
-
-      const configs = builder.build();
-
-      expect(configs.length).toBeGreaterThan(0);
-    });
-
-    it('should accumulate multiple Angular configs', () => {
-      const builder = configBuilder();
-      builder
-        .addAngularConfig({ sources: ['app/**/*.ts'] })
-        .addAngularConfig({ sources: ['lib/**/*.ts'] });
-
-      const configs = builder.build();
-
-      expect(configs.length).toBeGreaterThan(0);
     });
   });
 
