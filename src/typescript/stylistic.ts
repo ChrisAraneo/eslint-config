@@ -23,7 +23,7 @@ export const getStylisticConfigs = (
             '@stylistic/arrow-spacing': 'off',
             '@stylistic/block-spacing': 'off',
             '@stylistic/brace-style': 'error',
-            '@stylistic/comma-dangle': ['error', 'always'],
+            '@stylistic/comma-dangle': 'off',
             '@stylistic/comma-spacing': 'error',
             '@stylistic/comma-style': 'off',
             '@stylistic/computed-property-spacing': ['error', 'never'],

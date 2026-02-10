@@ -24,7 +24,6 @@ import {
   createTypeScriptTestsConfigBlock,
 } from '../typescript/index.js';
 import { addCrossConfigOffRules } from './add-cross-config-off-rules.js';
-import { deduplicatePlugins } from './deduplicate-plugins.js';
 
 class ESLintConfigBuilder {
   private configBlocks: ConfigBlock = {};
@@ -97,16 +96,14 @@ class ESLintConfigBuilder {
   build(): Linter.Config[] {
     this.configBlocks = addCrossConfigOffRules(this.configBlocks);
 
-    return defineConfig(
-      deduplicatePlugins([
-        ...(this.configBlocks[SOURCES] ?? []),
-        ...(this.configBlocks[TESTS] ?? []),
-        ...(this.configBlocks[TEMPLATES] ?? []),
-        ...(this.configBlocks[JSONS] ?? []),
-        ...(this.configBlocks[NX] ?? []),
-        ...(this.configBlocks[IGNORED] ?? []),
-      ]),
-    );
+    return defineConfig([
+      ...(this.configBlocks[SOURCES] ?? []),
+      ...(this.configBlocks[TESTS] ?? []),
+      ...(this.configBlocks[TEMPLATES] ?? []),
+      ...(this.configBlocks[JSONS] ?? []),
+      ...(this.configBlocks[NX] ?? []),
+      ...(this.configBlocks[IGNORED] ?? []),
+    ]);
   }
 
   reset(): this {
