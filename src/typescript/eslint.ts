@@ -19,7 +19,7 @@ export const getEslintConfigs = (
             'init-declarations': errorWhenNotTests,
             'max-lines-per-function': errorWhenNotTests,
             'max-params': ['error', 6],
-            'max-statements': ['error', 15],
+            'max-statements': isTests ? 'off' : ['error', 15],
             'new-cap': 'off',
             'no-await-in-loop': 'off',
             'no-duplicate-imports': 'off',

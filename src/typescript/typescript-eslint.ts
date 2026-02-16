@@ -194,6 +194,7 @@ export const getTypescriptEslintConfigs = (
               },
             ],
             '@typescript-eslint/no-non-null-assertion': errorWhenNotTests,
+            '@typescript-eslint/no-unsafe-argument': errorWhenNotTests,
             '@typescript-eslint/no-unsafe-assignment': errorWhenNotTests,
             '@typescript-eslint/no-unsafe-call': errorWhenNotTests,
             '@typescript-eslint/no-unsafe-function-type': errorWhenNotTests,
