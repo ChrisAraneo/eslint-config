@@ -32,7 +32,7 @@ const createConfigs = (
           },
           isTests,
         ),
-        ...getUnicornConfigs(sources),
+        ...getUnicornConfigs(sources, isTests),
         ...getSimpleImportSortConfigs(sources),
         ...getStylisticConfigs(sources, isTests),
       ]);
