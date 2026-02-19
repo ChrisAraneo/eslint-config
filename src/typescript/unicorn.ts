@@ -20,6 +20,7 @@ export const getUnicornConfigs = (
             },
             rules: {
               ...unicorn.configs.all.rules,
+              'unicorn/consistent-function-scoping': errorWhenNotTests,
               'unicorn/import-style': 'off',
               'unicorn/new-for-builtins': 'off',
               'unicorn/no-array-for-each': 'off',
@@ -32,7 +33,6 @@ export const getUnicornConfigs = (
               'unicorn/prevent-abbreviations': 'off',
               'unicorn/template-indent': 'off',
               'unicorn/text-encoding-identifier-case': 'off',
-              'unicorn/consistent-function-scoping': errorWhenNotTests,
             },
           }))
           .value() as Linter.Config,
