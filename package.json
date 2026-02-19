@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.113",
+  "version": "0.0.114",
   "description": "Simple ESLint configuration builder",
   "keywords": [
     "eslint",
