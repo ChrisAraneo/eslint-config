@@ -12,10 +12,10 @@ export const getTypescriptEslintConfigs = (
     ? []
     : [
         chain({
-          warnWhenNotTests: !isTests ? 'warn' : 'off',
           errorWhenNotTests: !isTests ? 'error' : 'off',
+          warnWhenNotTests: !isTests ? 'warn' : 'off',
         })
-          .thru(({ warnWhenNotTests, errorWhenNotTests }) => ({
+          .thru(({ errorWhenNotTests, warnWhenNotTests }) => ({
             files: sources,
             languageOptions: {
               parser: tseslint.parser,
