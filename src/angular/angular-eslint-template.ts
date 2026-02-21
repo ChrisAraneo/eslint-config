@@ -16,6 +16,7 @@ export const getAngularTemplatesConfigs = (
               rules: {
                 ...config.rules,
                 '@angular-eslint/template/i18n': 'off',
+                '@angular-eslint/template/no-call-expression': 'off',
                 '@angular-eslint/template/prefer-control-flow': 'off',
               },
             }) as Linter.Config,
