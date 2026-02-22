@@ -1,3 +1,4 @@
-node_modules
-dist
+.nx/cache
 coverage
+dist
+node_modules
