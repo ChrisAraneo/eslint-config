@@ -1,7 +1,7 @@
 import { get as getAppRootDir } from 'app-root-dir';
 import type { Linter } from 'eslint';
 import { defineConfig } from 'eslint/config';
-import { isEmpty } from 'lodash-es';
+import { match } from 'ts-pattern';
 
 import { ConfigBlock, SOURCES, TESTS } from '../interfaces.js';
 import { getEslintConfigs } from './eslint.js';
@@ -16,9 +16,10 @@ const createConfigs = (
   tsconfigRootDir?: string,
   shouldResolveAppRootDir?: boolean,
 ): Linter.Config[] =>
-  isEmpty(sources)
-    ? []
-    : defineConfig([
+  match(sources?.length ?? 0)
+    .with(0, () => [])
+    .otherwise(() =>
+      defineConfig([
         ...getEslintConfigs(sources, isTests),
         ...getTypescriptEslintConfigs(
           sources,
@@ -35,7 +36,8 @@ const createConfigs = (
         ...getUnicornConfigs(sources, isTests),
         ...getSimpleImportSortConfigs(sources),
         ...getStylisticConfigs(sources, isTests),
-      ]);
+      ]),
+    );
 
 export const createTypeScriptConfigBlock = (
   sources: string[] = [],

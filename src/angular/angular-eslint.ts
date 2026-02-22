@@ -1,14 +1,15 @@
 import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
-import { isEmpty } from 'lodash-es';
+import { match } from 'ts-pattern';
 
 export const getAngularSourcesConfigs = (
   prefix?: string,
   sources?: string[],
 ): Linter.Config[] =>
-  isEmpty(sources)
-    ? []
-    : angular.configs.tsAll.map(
+  match(sources?.length ?? 0)
+    .with(0, () => [])
+    .otherwise(() =>
+      angular.configs.tsAll.map(
         (config) =>
           ({
             ...config,
@@ -38,4 +39,5 @@ export const getAngularSourcesConfigs = (
               '@angular-eslint/prefer-signals': 'off',
             },
           }) as Linter.Config,
-      );
+      ),
+    );
