@@ -14,7 +14,7 @@ export const getTypescriptEslintConfigs = (
     .otherwise(() => [
       chain({
         errorWhenNotTests: !isTests ? 'error' : 'off',
-          warnWhenNotTests: !isTests ? 'warn' : 'off',
+        warnWhenNotTests: !isTests ? 'warn' : 'off',
       })
         .thru(({ errorWhenNotTests, warnWhenNotTests }) => ({
           files: sources,
