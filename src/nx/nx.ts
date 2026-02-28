@@ -1,32 +1,34 @@
 import nx from '@nx/eslint-plugin';
 import type { Linter } from 'eslint';
+import { isEmpty } from 'lodash';
+import { NxConfigRulesConfig } from 'src/interfaces.js';
 import { match } from 'ts-pattern';
 
-export const getNxConfigs = (sources?: string[]): Linter.Config[] =>
+const getRuleConfig = (option: unknown) =>
+  isEmpty(option) ? 'off' : ['error', option];
+
+export const getNxConfigs = (
+  sources?: string[],
+  rulesConfig?: NxConfigRulesConfig,
+): Linter.Config[] =>
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(
       () =>
         [
           ...nx.configs['flat/base'],
-          ...nx.configs['flat/typescript'],
-          ...nx.configs['flat/javascript'],
           {
             files: sources,
             rules: {
-              '@nx/enforce-module-boundaries': [
-                'error',
-                {
-                  allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
-                  depConstraints: [
-                    {
-                      onlyDependOnLibsWithTags: ['*'],
-                      sourceTag: '*',
-                    },
-                  ],
-                  enforceBuildableLibDependency: true,
-                },
-              ],
+              '@nx/dependency-checks': getRuleConfig(
+                rulesConfig?.dependencyChecks,
+              ),
+              '@nx/enforce-module-boundaries': getRuleConfig(
+                rulesConfig?.enforceModuleBoundaries,
+              ),
+              '@nx/nx-plugin-checks': getRuleConfig(
+                rulesConfig?.nxPluginChecks,
+              ),
             },
           },
         ] as Linter.Config[],

@@ -1,3 +1,4 @@
+import { DepConstraint } from '@nx/eslint-plugin/src/utils/runtime-lint-utils.js';
 import type { Linter } from 'eslint';
 
 export const SOURCES = Symbol('sources');
@@ -49,8 +50,49 @@ export interface JsonConfigOptions {
 
 export interface NxConfigOptions {
   sources?: string[];
+  rulesConfig?: NxConfigRulesConfig;
+}
+
+export interface NxConfigRulesConfig {
+  dependencyChecks?: DependencyChecksRuleConfig;
+  enforceModuleBoundaries?: EnforceModuleBoundariesRuleConfig;
+  nxPluginChecks?: NxPluginChecksRuleConfig;
 }
 
 export interface IgnoredOptions {
   ignored?: string[];
+}
+
+export interface EnforceModuleBoundariesRuleConfig {
+  allow: string[];
+  buildTargets: string[];
+  depConstraints: DepConstraint[];
+  enforceBuildableLibDependency: boolean;
+  allowCircularSelfDependency: boolean;
+  ignoredCircularDependencies: [string, string][];
+  checkDynamicDependenciesExceptions: string[];
+  banTransitiveDependencies: boolean;
+  checkNestedExternalImports: boolean;
+}
+
+export interface DependencyChecksRuleConfig {
+  buildTargets?: string[];
+  checkMissingDependencies?: boolean;
+  checkObsoleteDependencies?: boolean;
+  checkVersionMismatches?: boolean;
+  ignoredDependencies?: string[];
+  ignoredFiles?: string[];
+  includeTransitiveDependencies?: boolean;
+  useLocalPathsForWorkspaceDependencies?: boolean;
+  peerDepsVersionStrategy?: 'installed' | 'workspace';
+  runtimeHelpers?: string[];
+}
+
+export interface NxPluginChecksRuleConfig {
+  generatorsJson?: string;
+  executorsJson?: string;
+  migrationsJson?: string;
+  packageJson?: string;
+  allowedVersionStrings?: string[];
+  tsConfig?: string;
 }

@@ -1,7 +1,7 @@
 import json from '@eslint/json';
 import type { Linter } from 'eslint';
 import jsonc from 'eslint-plugin-jsonc';
-import jsoncParser from 'jsonc-eslint-parser';
+import * as jsoncParser from 'jsonc-eslint-parser';
 import { match } from 'ts-pattern';
 
 export const getJsoncConfigs = (jsons?: string[]): Linter.Config[] =>

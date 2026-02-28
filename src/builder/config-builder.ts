@@ -77,9 +77,9 @@ class ESLintConfigBuilder {
   }
 
   addNxConfig(options: NxConfigOptions): this {
-    const { sources = [] } = options;
+    const { rulesConfig = {}, sources = [] } = options;
 
-    return this.addConfigBlock(createNxConfigBlock(sources));
+    return this.addConfigBlock(createNxConfigBlock(sources, rulesConfig));
   }
 
   addIgnored(options: IgnoredOptions): this {
