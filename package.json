@@ -36,7 +36,7 @@
   "dependencies": {
     "@eslint/json": "^1.0.1",
     "@humanwhocodes/momoa": "^3.3.10",
-    "@nx/eslint-plugin": "^22.5.2",
+    "@nx/eslint-plugin": "^22.3.3",
     "@stylistic/eslint-plugin": "^5.9.0",
     "@types/lodash-es": "^4.17.12",
     "angular-eslint": "^21.2.0",
