@@ -134,6 +134,7 @@ configBuilder()
 ```
 
 - `sources` (_optional_) - array of glob patterns for Nx workspace files (default: `[]`)
+- `rulesConfig` (_optional_) - object to configure individual Nx rule behaviour (e.g. `dependencyChecks`, `enforceModuleBoundaries`, `nxPluginChecks`)
 
 ### Ignored Files
 
@@ -159,13 +160,13 @@ Creates a new instance of the `ESLintConfigBuilder`.
 
 #### Methods
 
-- `addTypeScript(options)`: add TypeScript configuration
-- `addTypeScriptTests(options)`: add TypeScript test configuration
-- `addAngularConfigs(options)`: add Angular configuration
-- `addJson(options)`: add JSON configuration
-- `addNx(options)`: add Nx configuration
+- `addTypeScriptConfig(options)`: add TypeScript configuration
+- `addTypeScriptTestsConfig(options)`: add TypeScript test configuration
+- `addAngularConfig(options)`: add Angular configuration
+- `addJsonConfig(options)`: add JSON configuration
+- `addNxConfig(options)`: add Nx configuration
 - `addIgnored(options)`: add ignored files configuration
-- `build(options?)`: build and return the final ESLint configuration
+- `build()`: build and return the final ESLint configuration
 - `reset()`: reset the builder to its initial state
 
 All `add*` methods return `this` for method chaining.
