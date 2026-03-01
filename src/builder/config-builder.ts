@@ -23,7 +23,7 @@ import {
   createTypeScriptConfigBlock,
   createTypeScriptTestsConfigBlock,
 } from '../typescript/index.js';
-import { addCrossConfigOffRules } from './add-cross-config-off-rules.js';
+import { addCrossConfigIgnores } from './add-cross-config-ignores.js';
 
 class ESLintConfigBuilder {
   private configBlocks: ConfigBlock = {};
@@ -86,7 +86,7 @@ class ESLintConfigBuilder {
   }
 
   build(): Linter.Config[] {
-    this.configBlocks = addCrossConfigOffRules(this.configBlocks);
+    this.configBlocks = addCrossConfigIgnores(this.configBlocks);
 
     return defineConfig([
       ...(this.configBlocks[SOURCES] ?? []),
