@@ -1,6 +1,6 @@
 import nx from '@nx/eslint-plugin';
 import type { Linter } from 'eslint';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { NxConfigRulesConfig } from 'src/interfaces.js';
 import { match } from 'ts-pattern';
 
