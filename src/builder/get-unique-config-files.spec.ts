@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, expect, it } from '@jest/globals';
 
-import { ConfigBlock, JSONS, SOURCES, TEMPLATES, TESTS } from '../interfaces.js';
+import {
+  ConfigBlock,
+  JSONS,
+  SOURCES,
+  TEMPLATES,
+  TESTS,
+} from '../interfaces.js';
 import { getUniqueConfigFiles } from './get-unique-config-files.js';
 
 describe('getUniqueConfigFiles', () => {
@@ -89,7 +95,10 @@ describe('getUniqueConfigFiles', () => {
 
   it('should skip configs that have no files property', () => {
     const configBlock = {
-      [SOURCES]: [{ rules: { 'no-console': 'error' } }, { files: ['src/**/*.ts'] }],
+      [SOURCES]: [
+        { rules: { 'no-console': 'error' } },
+        { files: ['src/**/*.ts'] },
+      ],
     } as ConfigBlock;
 
     const result = getUniqueConfigFiles(configBlock, [SOURCES]);
