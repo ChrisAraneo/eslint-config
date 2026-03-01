@@ -1,4 +1,4 @@
-import { chain } from 'lodash-es';
+import { chain, uniq } from 'lodash-es';
 
 import {
   type ConfigBlock,
@@ -12,48 +12,61 @@ import {
 import { appendConfigWhenDefined } from './append-config-when-defined.js';
 import { getConfigValue } from './get-config-value.js';
 
+const isConfigKey = (value: unknown): value is ConfigKey =>
+  value === SOURCES ||
+  value === TESTS ||
+  value === TEMPLATES ||
+  value === JSONS ||
+  value === NX;
+
 export const addCrossConfigIgnores = (configBlock: ConfigBlock): ConfigBlock =>
   chain(
     ((configBlock) => [
       {
         configs: getConfigValue(configBlock, SOURCES),
-        ignoreFrom: [TEMPLATES, JSONS],
+        ignores: [TEMPLATES, JSONS],
         key: SOURCES,
       },
       {
         configs: getConfigValue(configBlock, TESTS),
-        ignoreFrom: [TEMPLATES, JSONS],
+        ignores: [TEMPLATES, JSONS],
         key: TESTS,
       },
       {
         configs: getConfigValue(configBlock, TEMPLATES),
-        ignoreFrom: [SOURCES, TESTS, JSONS, NX],
+        ignores: [SOURCES, TESTS, JSONS, NX],
         key: TEMPLATES,
       },
       {
         configs: getConfigValue(configBlock, JSONS),
-        ignoreFrom: [SOURCES, TESTS, TEMPLATES, NX],
+        ignores: [SOURCES, TESTS, TEMPLATES, NX] as ConfigKey[],
         key: JSONS,
       },
     ])(configBlock),
   )
-    .map((mapping) => [
-      mapping.key,
+    .map(({ configs, key }) => [
+      key,
       appendConfigWhenDefined(
-        mapping.configs,
+        configs,
         (() => {
-          return mapping.configs.map((config) => {
-            return {
-              ...config,
-              ignores: [
-                ...(config.ignores ?? []),
-                ...((
-                  mapping.ignoreFrom.flatMap((ignoreKey) =>
-                    getConfigValue(configBlock, ignoreKey as ConfigKey),
-                  ) as unknown as { files?: string[] }
-                )?.files ?? []),
-              ],
-            };
+          return configs.map((config) => {
+            const result = uniq([
+              ...(config.ignores ?? []),
+              ...(config.ignores ?? [])
+                .flatMap((key) =>
+                  isConfigKey(key)
+                    ? getConfigValue(configBlock, key as ConfigKey)
+                    : [],
+                )
+                .flatMap((config) => config?.files ?? [])
+                .flat(),
+            ]);
+
+            if (result.length > 0) {
+              config.ignores = result;
+            }
+
+            return config;
           });
         })(),
       ),
