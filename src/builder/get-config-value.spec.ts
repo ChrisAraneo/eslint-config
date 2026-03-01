@@ -158,6 +158,17 @@ describe('getConfigValue', () => {
     expect(result2[0]!.rules).toEqual({ 'no-console': 'error' });
   });
 
+  it('should return empty array for a non-ConfigKey symbol', () => {
+    const unrelated = Symbol('unrelated');
+    const configBlock = {
+      [SOURCES]: [{ files: ['**/*.ts'] }],
+    };
+
+    const result = getConfigValue(configBlock, unrelated);
+
+    expect(result).toEqual([]);
+  });
+
   it('should handle config with complex rule values', () => {
     const complexConfig: Linter.Config = {
       files: ['**/*.ts'],

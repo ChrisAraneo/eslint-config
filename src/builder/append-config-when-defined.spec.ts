@@ -142,4 +142,19 @@ describe('appendConfigWhenDefined', () => {
 
     expect(configs).toHaveLength(originalLength);
   });
+
+  it('should append config when configs is undefined', () => {
+    const newConfig: Linter.Config = { files: ['src/**/*.ts'] };
+
+    const result = appendConfigWhenDefined(undefined, newConfig);
+
+    expect(result).toHaveLength(1);
+    expect(result[0]).toEqual(newConfig);
+  });
+
+  it('should return empty array when configs is undefined and config is not appendable', () => {
+    const result = appendConfigWhenDefined(undefined, null);
+
+    expect(result).toEqual([]);
+  });
 });
