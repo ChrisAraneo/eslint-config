@@ -1,7 +1,7 @@
 {
   "name": "@chris.araneo/eslint-config",
   "version": "0.0.118",
-  "description": "Simple ESLint configuration builder",
+  "description": "ESLint shareable configuration",
   "keywords": [
     "eslint",
     "typescript",
