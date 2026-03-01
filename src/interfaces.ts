@@ -13,7 +13,8 @@ export type ConfigKey =
   | typeof TESTS
   | typeof TEMPLATES
   | typeof JSONS
-  | typeof NX;
+  | typeof NX
+  | typeof IGNORED;
 
 export interface ConfigBlock {
   [SOURCES]?: Linter.Config[];
