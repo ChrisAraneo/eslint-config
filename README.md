@@ -8,7 +8,7 @@
   <a href="https://github.com/ChrisAraneo/eslint-config/actions/workflows/ci.yml"><img alt="GitHub CI Status" src="https://img.shields.io/github/actions/workflow/status/ChrisAraneo/eslint-config/ci.yml?label=CI&logo=GitHub"></a>
   <br>
   <br>
-  <em>Simple ESLint configuration builder for TypeScript, Angular, JSON, and Nx</em>
+  <em>ESLint shareable configuration for TypeScript, Angular, JSON, and Nx</em>
   <br>
 </p>
 
