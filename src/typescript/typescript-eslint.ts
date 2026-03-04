@@ -219,6 +219,7 @@ export const getTypescriptEslintConfigs = (
             '@typescript-eslint/prefer-destructuring': errorWhenNotTests,
             '@typescript-eslint/prefer-readonly-parameter-types': 'off',
             '@typescript-eslint/require-await': 'off',
+            '@typescript-eslint/restrict-template-expressions': 'off',
             '@typescript-eslint/strict-boolean-expressions': 'off',
             '@typescript-eslint/unbound-method': errorWhenNotTests,
           },

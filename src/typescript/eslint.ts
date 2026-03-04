@@ -21,6 +21,7 @@ export const getEslintConfigs = (
             ...eslint.configs.all.rules,
             'id-length': 'off',
             'init-declarations': errorWhenNotTests,
+            'max-lines': errorWhenNotTests,
             'max-lines-per-function': errorWhenNotTests,
             'max-params': ['error', 6],
             'max-statements': isTests ? 'off' : ['error', 15],
