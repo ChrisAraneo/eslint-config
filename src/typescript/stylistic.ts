@@ -64,7 +64,7 @@ export const getStylisticConfigs = (
             '@stylistic/line-comment-position': 'off',
             '@stylistic/linebreak-style': 'off',
             '@stylistic/lines-around-comment': 'off',
-            '@stylistic/lines-between-class-members': ['error', 'always'],
+            '@stylistic/lines-between-class-members': 'off',
             '@stylistic/list-style': 'off',
             '@stylistic/max-len': 'off',
             '@stylistic/max-statements-per-line': 'off',
