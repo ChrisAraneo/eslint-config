@@ -36,6 +36,7 @@ export const getEslintConfigs = (
             'no-void': 'off',
             'no-warning-comments': 'off',
             'one-var': 'off',
+            'require-atomic-updates': errorWhenNotTests,
             'sort-imports': 'off',
             'sort-keys': 'off',
             'sort-vars': 'off',
