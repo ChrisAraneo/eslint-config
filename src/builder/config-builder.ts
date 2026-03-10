@@ -23,6 +23,10 @@ import {
   createTypeScriptConfigBlock,
   createTypeScriptTestsConfigBlock,
 } from '../typescript/index.js';
+import { getOptionalArrayOrThrow } from '../utils/get-optional-array-or-throw.js';
+import { getOptionalBooleanOrThrow } from '../utils/get-optional-boolean-or-throw.js';
+import { getOptionalObjectOrThrow } from '../utils/get-optional-object-or-throw.js';
+import { getOptionalStringOrThrow } from '../utils/get-optional-string-or-throw.js';
 import { appendCrossConfigFilesToIgnores } from './append-cross-config-files-to-ignores.js';
 
 class ESLintConfigBuilder {
@@ -31,12 +35,12 @@ class ESLintConfigBuilder {
   addTypeScriptConfig(options: TypeScriptConfigOptions): this {
     return this.addConfigBlock({
       block: createTypeScriptConfigBlock({
-        shouldResolveAppRootDir: this.getOptionalBooleanOrThrow({
+        shouldResolveAppRootDir: getOptionalBooleanOrThrow({
           key: 'shouldResolveAppRootDir',
           obj: options,
         }),
-        sources: this.getOptionalArrayOrThrow({ key: 'sources', obj: options }),
-        tsconfigRootDir: this.getOptionalStringOrThrow({
+        sources: getOptionalArrayOrThrow({ key: 'sources', obj: options }),
+        tsconfigRootDir: getOptionalStringOrThrow({
           key: 'tsconfigRootDir',
           obj: options,
         }),
@@ -47,12 +51,12 @@ class ESLintConfigBuilder {
   addTypeScriptTestsConfig(options: TypeScriptTestConfigOptions): this {
     return this.addConfigBlock({
       block: createTypeScriptTestsConfigBlock({
-        shouldResolveAppRootDir: this.getOptionalBooleanOrThrow({
+        shouldResolveAppRootDir: getOptionalBooleanOrThrow({
           key: 'shouldResolveAppRootDir',
           obj: options,
         }),
-        sources: this.getOptionalArrayOrThrow({ key: 'sources', obj: options }),
-        tsconfigRootDir: this.getOptionalStringOrThrow({
+        sources: getOptionalArrayOrThrow({ key: 'sources', obj: options }),
+        tsconfigRootDir: getOptionalStringOrThrow({
           key: 'tsconfigRootDir',
           obj: options,
         }),
@@ -63,20 +67,20 @@ class ESLintConfigBuilder {
   addAngularConfig(options: AngularConfigOptions): this {
     return this.addConfigBlock({
       block: createAngularConfigBlock({
-        ignored: this.getOptionalArrayOrThrow({ key: 'ignored', obj: options }),
-        jsons: this.getOptionalArrayOrThrow({ key: 'jsons', obj: options }),
-        prefix: this.getOptionalStringOrThrow({ key: 'prefix', obj: options }),
-        shouldResolveAppRootDir: this.getOptionalBooleanOrThrow({
+        ignored: getOptionalArrayOrThrow({ key: 'ignored', obj: options }),
+        jsons: getOptionalArrayOrThrow({ key: 'jsons', obj: options }),
+        prefix: getOptionalStringOrThrow({ key: 'prefix', obj: options }),
+        shouldResolveAppRootDir: getOptionalBooleanOrThrow({
           key: 'shouldResolveAppRootDir',
           obj: options,
         }),
-        sources: this.getOptionalArrayOrThrow({ key: 'sources', obj: options }),
-        templates: this.getOptionalArrayOrThrow({
+        sources: getOptionalArrayOrThrow({ key: 'sources', obj: options }),
+        templates: getOptionalArrayOrThrow({
           key: 'templates',
           obj: options,
         }),
-        tests: this.getOptionalArrayOrThrow({ key: 'tests', obj: options }),
-        tsconfigRootDir: this.getOptionalStringOrThrow({
+        tests: getOptionalArrayOrThrow({ key: 'tests', obj: options }),
+        tsconfigRootDir: getOptionalStringOrThrow({
           key: 'tsconfigRootDir',
           obj: options,
         }),
@@ -87,7 +91,7 @@ class ESLintConfigBuilder {
   addJsonConfig(options: JsonConfigOptions): this {
     return this.addConfigBlock({
       block: createJsonConfigBlock({
-        jsons: this.getOptionalArrayOrThrow({ key: 'jsons', obj: options }),
+        jsons: getOptionalArrayOrThrow({ key: 'jsons', obj: options }),
       }),
     });
   }
@@ -95,11 +99,11 @@ class ESLintConfigBuilder {
   addNxConfig(options: NxConfigOptions): this {
     return this.addConfigBlock({
       block: createNxConfigBlock({
-        rulesConfig: this.getOptionalObjectOrThrow({
+        rulesConfig: getOptionalObjectOrThrow({
           key: 'rulesConfig',
           obj: options,
         }) as NxConfigOptions['rulesConfig'],
-        sources: this.getOptionalArrayOrThrow({ key: 'sources', obj: options }),
+        sources: getOptionalArrayOrThrow({ key: 'sources', obj: options }),
       }),
     });
   }
@@ -109,7 +113,7 @@ class ESLintConfigBuilder {
       block: {
         [IGNORED]: [
           {
-            ignores: this.getOptionalArrayOrThrow({
+            ignores: getOptionalArrayOrThrow({
               key: 'ignored',
               obj: options,
             }),
@@ -166,89 +170,6 @@ class ESLintConfigBuilder {
     ];
 
     return this;
-  }
-
-  private getOptionalArrayOrThrow<T extends object>({
-    key,
-    obj,
-  }: {
-    obj: T;
-    key: keyof T;
-  }): string[] | undefined {
-    if (!obj) {
-      throw new Error(`Expected an object`);
-    }
-
-    const value = obj[key];
-
-    if (value !== undefined && (value === null || !Array.isArray(value))) {
-      throw new Error(`${String(key)} must be an array or undefined`);
-    }
-
-    return value as string[] | undefined;
-  }
-
-  private getOptionalStringOrThrow<T extends object>({
-    key,
-    obj,
-  }: {
-    obj: T;
-    key: keyof T;
-  }): string | undefined {
-    if (!obj) {
-      throw new Error(`Expected an object`);
-    }
-
-    const value = obj[key];
-
-    if (value !== undefined && typeof value !== 'string') {
-      throw new Error(`${String(key)} must be a string or undefined`);
-    }
-
-    return value as string | undefined;
-  }
-
-  private getOptionalBooleanOrThrow<T extends object>({
-    key,
-    obj,
-  }: {
-    obj: T;
-    key: keyof T;
-  }): boolean | undefined {
-    if (!obj) {
-      throw new Error(`Expected an object`);
-    }
-
-    const value = obj[key];
-
-    if (value !== undefined && (value === null || typeof value !== 'boolean')) {
-      throw new Error(`${String(key)} must be a boolean or undefined`);
-    }
-
-    return value as boolean | undefined;
-  }
-
-  private getOptionalObjectOrThrow<T extends object>({
-    key,
-    obj,
-  }: {
-    obj: T;
-    key: keyof T;
-  }): Record<string, unknown> | undefined {
-    if (!obj) {
-      throw new Error(`Expected an object`);
-    }
-
-    const value = obj[key];
-
-    if (
-      value !== undefined &&
-      (value === null || typeof value !== 'object' || Array.isArray(value))
-    ) {
-      throw new Error(`${String(key)} must be an object or undefined`);
-    }
-
-    return value as Record<string, unknown> | undefined;
   }
 }
 

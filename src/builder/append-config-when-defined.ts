@@ -4,13 +4,15 @@ import { match } from 'ts-pattern';
 
 import { getKeys } from './get-keys.js';
 
+interface AppendConfigWhenDefinedInput {
+  config: Linter.Config | unknown;
+  configs: Linter.Config[] | undefined;
+}
+
 export const appendConfigWhenDefined = ({
   config,
   configs,
-}: {
-  configs: Linter.Config[] | undefined;
-  config: Linter.Config | unknown;
-}): Linter.Config[] =>
+}: AppendConfigWhenDefinedInput): Linter.Config[] =>
   match(
     isObject(config) &&
       !!getKeys({ obj: config as object }).length &&
