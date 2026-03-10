@@ -29,67 +29,100 @@ class ESLintConfigBuilder {
   private configBlocks: ConfigBlock = {};
 
   addTypeScriptConfig(options: TypeScriptConfigOptions): this {
-    return this.addConfigBlock(
-      createTypeScriptConfigBlock(
-        this.getOptionalArrayOrThrow(options, 'sources'),
-        this.getOptionalStringOrThrow(options, 'tsconfigRootDir'),
-        this.getOptionalBooleanOrThrow(options, 'shouldResolveAppRootDir'),
-      ),
-    );
+    return this.addConfigBlock({
+      block: createTypeScriptConfigBlock({
+        shouldResolveAppRootDir: this.getOptionalBooleanOrThrow({
+          key: 'shouldResolveAppRootDir',
+          obj: options,
+        }),
+        sources: this.getOptionalArrayOrThrow({ key: 'sources', obj: options }),
+        tsconfigRootDir: this.getOptionalStringOrThrow({
+          key: 'tsconfigRootDir',
+          obj: options,
+        }),
+      }),
+    });
   }
 
   addTypeScriptTestsConfig(options: TypeScriptTestConfigOptions): this {
-    return this.addConfigBlock(
-      createTypeScriptTestsConfigBlock(
-        this.getOptionalArrayOrThrow(options, 'sources'),
-        this.getOptionalStringOrThrow(options, 'tsconfigRootDir'),
-        this.getOptionalBooleanOrThrow(options, 'shouldResolveAppRootDir'),
-      ),
-    );
+    return this.addConfigBlock({
+      block: createTypeScriptTestsConfigBlock({
+        shouldResolveAppRootDir: this.getOptionalBooleanOrThrow({
+          key: 'shouldResolveAppRootDir',
+          obj: options,
+        }),
+        sources: this.getOptionalArrayOrThrow({ key: 'sources', obj: options }),
+        tsconfigRootDir: this.getOptionalStringOrThrow({
+          key: 'tsconfigRootDir',
+          obj: options,
+        }),
+      }),
+    });
   }
 
   addAngularConfig(options: AngularConfigOptions): this {
-    return this.addConfigBlock(
-      createAngularConfigBlock(
-        this.getOptionalStringOrThrow(options, 'prefix'),
-        this.getOptionalArrayOrThrow(options, 'sources'),
-        this.getOptionalArrayOrThrow(options, 'tests'),
-        this.getOptionalArrayOrThrow(options, 'templates'),
-        this.getOptionalArrayOrThrow(options, 'jsons'),
-        this.getOptionalArrayOrThrow(options, 'ignored'),
-        this.getOptionalStringOrThrow(options, 'tsconfigRootDir'),
-        this.getOptionalBooleanOrThrow(options, 'shouldResolveAppRootDir'),
-      ),
-    );
+    return this.addConfigBlock({
+      block: createAngularConfigBlock({
+        ignored: this.getOptionalArrayOrThrow({ key: 'ignored', obj: options }),
+        jsons: this.getOptionalArrayOrThrow({ key: 'jsons', obj: options }),
+        prefix: this.getOptionalStringOrThrow({ key: 'prefix', obj: options }),
+        shouldResolveAppRootDir: this.getOptionalBooleanOrThrow({
+          key: 'shouldResolveAppRootDir',
+          obj: options,
+        }),
+        sources: this.getOptionalArrayOrThrow({ key: 'sources', obj: options }),
+        templates: this.getOptionalArrayOrThrow({
+          key: 'templates',
+          obj: options,
+        }),
+        tests: this.getOptionalArrayOrThrow({ key: 'tests', obj: options }),
+        tsconfigRootDir: this.getOptionalStringOrThrow({
+          key: 'tsconfigRootDir',
+          obj: options,
+        }),
+      }),
+    });
   }
 
   addJsonConfig(options: JsonConfigOptions): this {
-    return this.addConfigBlock(
-      createJsonConfigBlock(this.getOptionalArrayOrThrow(options, 'jsons')),
-    );
+    return this.addConfigBlock({
+      block: createJsonConfigBlock({
+        jsons: this.getOptionalArrayOrThrow({ key: 'jsons', obj: options }),
+      }),
+    });
   }
 
   addNxConfig(options: NxConfigOptions): this {
-    return this.addConfigBlock(
-      createNxConfigBlock(
-        this.getOptionalArrayOrThrow(options, 'sources'),
-        this.getOptionalObjectOrThrow(options, 'rulesConfig'),
-      ),
-    );
+    return this.addConfigBlock({
+      block: createNxConfigBlock({
+        rulesConfig: this.getOptionalObjectOrThrow({
+          key: 'rulesConfig',
+          obj: options,
+        }) as NxConfigOptions['rulesConfig'],
+        sources: this.getOptionalArrayOrThrow({ key: 'sources', obj: options }),
+      }),
+    });
   }
 
   addIgnored(options: IgnoredOptions): this {
     return this.addConfigBlock({
-      [IGNORED]: [
-        {
-          ignores: this.getOptionalArrayOrThrow(options, 'ignored'),
-        },
-      ],
+      block: {
+        [IGNORED]: [
+          {
+            ignores: this.getOptionalArrayOrThrow({
+              key: 'ignored',
+              obj: options,
+            }),
+          },
+        ],
+      },
     });
   }
 
   build(): Linter.Config[] {
-    this.configBlocks = appendCrossConfigFilesToIgnores(this.configBlocks);
+    this.configBlocks = appendCrossConfigFilesToIgnores({
+      configBlock: this.configBlocks,
+    });
 
     return defineConfig([
       ...(this.configBlocks[SOURCES] ?? []),
@@ -106,7 +139,7 @@ class ESLintConfigBuilder {
     return this;
   }
 
-  private addConfigBlock(block: ConfigBlock): this {
+  private addConfigBlock({ block }: { block: ConfigBlock }): this {
     this.configBlocks[SOURCES] = [
       ...(this.configBlocks[SOURCES] ?? []),
       ...(block[SOURCES] ?? []),
@@ -135,10 +168,13 @@ class ESLintConfigBuilder {
     return this;
   }
 
-  private getOptionalArrayOrThrow<T extends object>(
-    obj: T,
-    key: keyof T,
-  ): string[] | undefined {
+  private getOptionalArrayOrThrow<T extends object>({
+    key,
+    obj,
+  }: {
+    obj: T;
+    key: keyof T;
+  }): string[] | undefined {
     if (!obj) {
       throw new Error(`Expected an object`);
     }
@@ -152,10 +188,13 @@ class ESLintConfigBuilder {
     return value as string[] | undefined;
   }
 
-  private getOptionalStringOrThrow<T extends object>(
-    obj: T,
-    key: keyof T,
-  ): string | undefined {
+  private getOptionalStringOrThrow<T extends object>({
+    key,
+    obj,
+  }: {
+    obj: T;
+    key: keyof T;
+  }): string | undefined {
     if (!obj) {
       throw new Error(`Expected an object`);
     }
@@ -169,10 +208,13 @@ class ESLintConfigBuilder {
     return value as string | undefined;
   }
 
-  private getOptionalBooleanOrThrow<T extends object>(
-    obj: T,
-    key: keyof T,
-  ): boolean | undefined {
+  private getOptionalBooleanOrThrow<T extends object>({
+    key,
+    obj,
+  }: {
+    obj: T;
+    key: keyof T;
+  }): boolean | undefined {
     if (!obj) {
       throw new Error(`Expected an object`);
     }
@@ -186,10 +228,13 @@ class ESLintConfigBuilder {
     return value as boolean | undefined;
   }
 
-  private getOptionalObjectOrThrow<T extends object>(
-    obj: T,
-    key: keyof T,
-  ): Record<string, unknown> | undefined {
+  private getOptionalObjectOrThrow<T extends object>({
+    key,
+    obj,
+  }: {
+    obj: T;
+    key: keyof T;
+  }): Record<string, unknown> | undefined {
     if (!obj) {
       throw new Error(`Expected an object`);
     }

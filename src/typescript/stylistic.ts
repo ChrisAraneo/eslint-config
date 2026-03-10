@@ -3,10 +3,13 @@ import type { Linter } from 'eslint';
 import { chain } from 'lodash-es';
 import { match } from 'ts-pattern';
 
-export const getStylisticConfigs = (
-  sources?: string[],
-  isTests?: boolean,
-): Linter.Config[] =>
+export const getStylisticConfigs = ({
+  isTests,
+  sources,
+}: {
+  sources?: string[];
+  isTests?: boolean;
+} = {}): Linter.Config[] =>
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(() => [

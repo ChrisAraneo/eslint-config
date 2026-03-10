@@ -4,13 +4,16 @@ import { isEmpty } from 'lodash-es';
 import { NxConfigRulesConfig } from 'src/interfaces.js';
 import { match } from 'ts-pattern';
 
-const getRuleConfig = (option: unknown) =>
+const getRuleConfig = ({ option }: { option: unknown }) =>
   isEmpty(option) ? 'off' : ['error', option];
 
-export const getNxConfigs = (
-  sources?: string[],
-  rulesConfig?: NxConfigRulesConfig,
-): Linter.Config[] =>
+export const getNxConfigs = ({
+  rulesConfig,
+  sources,
+}: {
+  sources?: string[];
+  rulesConfig?: NxConfigRulesConfig;
+} = {}): Linter.Config[] =>
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(
@@ -20,15 +23,15 @@ export const getNxConfigs = (
           {
             files: sources,
             rules: {
-              '@nx/dependency-checks': getRuleConfig(
-                rulesConfig?.dependencyChecks,
-              ),
-              '@nx/enforce-module-boundaries': getRuleConfig(
-                rulesConfig?.enforceModuleBoundaries,
-              ),
-              '@nx/nx-plugin-checks': getRuleConfig(
-                rulesConfig?.nxPluginChecks,
-              ),
+              '@nx/dependency-checks': getRuleConfig({
+                option: rulesConfig?.dependencyChecks,
+              }),
+              '@nx/enforce-module-boundaries': getRuleConfig({
+                option: rulesConfig?.enforceModuleBoundaries,
+              }),
+              '@nx/nx-plugin-checks': getRuleConfig({
+                option: rulesConfig?.nxPluginChecks,
+              }),
             },
           },
         ] as Linter.Config[],

@@ -11,7 +11,7 @@ describe('getConfigValue', () => {
       [SOURCES]: [config],
     };
 
-    const result = getConfigValue(configBlock, SOURCES);
+    const result = getConfigValue({ configBlock, key: SOURCES });
 
     expect(result).toEqual([config]);
   });
@@ -21,7 +21,7 @@ describe('getConfigValue', () => {
       [SOURCES]: [{ files: ['**/*.ts'] }],
     };
 
-    const result = getConfigValue(configBlock, TESTS);
+    const result = getConfigValue({ configBlock, key: TESTS });
 
     expect(result).toEqual([]);
   });
@@ -31,7 +31,7 @@ describe('getConfigValue', () => {
       [SOURCES]: undefined,
     };
 
-    const result = getConfigValue(configBlock, SOURCES);
+    const result = getConfigValue({ configBlock, key: SOURCES });
 
     expect(result).toEqual([]);
   });
@@ -45,7 +45,7 @@ describe('getConfigValue', () => {
       [SOURCES]: [originalConfig],
     };
 
-    const result = getConfigValue(configBlock, SOURCES);
+    const result = getConfigValue({ configBlock, key: SOURCES });
 
     if (result[0]!.rules) {
       result[0]!.rules['new-rule'] = 'warn';
@@ -71,7 +71,7 @@ describe('getConfigValue', () => {
       [SOURCES]: [nestedConfig],
     };
 
-    const result = getConfigValue(configBlock, SOURCES);
+    const result = getConfigValue({ configBlock, key: SOURCES });
 
     if (result[0]!.languageOptions?.parserOptions) {
       (
@@ -92,7 +92,7 @@ describe('getConfigValue', () => {
       [SOURCES]: [config1, config2],
     };
 
-    const result = getConfigValue(configBlock, SOURCES);
+    const result = getConfigValue({ configBlock, key: SOURCES });
 
     expect(result).toEqual([config1, config2]);
     expect(result).toHaveLength(2);
@@ -113,11 +113,15 @@ describe('getConfigValue', () => {
       [TESTS]: [testConfig],
     };
 
-    expect(getConfigValue(configBlock, SOURCES)).toEqual([sourceConfig]);
-    expect(getConfigValue(configBlock, TESTS)).toEqual([testConfig]);
-    expect(getConfigValue(configBlock, TEMPLATES)).toEqual([templateConfig]);
-    expect(getConfigValue(configBlock, JSONS)).toEqual([jsonConfig]);
-    expect(getConfigValue(configBlock, NX)).toEqual([nxConfig]);
+    expect(getConfigValue({ configBlock, key: SOURCES })).toEqual([
+      sourceConfig,
+    ]);
+    expect(getConfigValue({ configBlock, key: TESTS })).toEqual([testConfig]);
+    expect(getConfigValue({ configBlock, key: TEMPLATES })).toEqual([
+      templateConfig,
+    ]);
+    expect(getConfigValue({ configBlock, key: JSONS })).toEqual([jsonConfig]);
+    expect(getConfigValue({ configBlock, key: NX })).toEqual([nxConfig]);
   });
 
   it('should handle empty config array', () => {
@@ -125,7 +129,7 @@ describe('getConfigValue', () => {
       [SOURCES]: [],
     };
 
-    const result = getConfigValue(configBlock, SOURCES);
+    const result = getConfigValue({ configBlock, key: SOURCES });
 
     expect(result).toEqual([]);
   });
@@ -133,7 +137,7 @@ describe('getConfigValue', () => {
   it('should handle empty configBlock', () => {
     const configBlock = {};
 
-    const result = getConfigValue(configBlock, SOURCES);
+    const result = getConfigValue({ configBlock, key: SOURCES });
 
     expect(result).toEqual([]);
   });
@@ -147,8 +151,8 @@ describe('getConfigValue', () => {
       [SOURCES]: [originalConfig],
     };
 
-    const result1 = getConfigValue(configBlock, SOURCES);
-    const result2 = getConfigValue(configBlock, SOURCES);
+    const result1 = getConfigValue({ configBlock, key: SOURCES });
+    const result2 = getConfigValue({ configBlock, key: SOURCES });
 
     if (result1[0]!.rules) {
       result1[0]!.rules['rule-1'] = 'warn';
@@ -164,7 +168,7 @@ describe('getConfigValue', () => {
       [SOURCES]: [{ files: ['**/*.ts'] }],
     };
 
-    const result = getConfigValue(configBlock, unrelated);
+    const result = getConfigValue({ configBlock, key: unrelated });
 
     expect(result).toEqual([]);
   });
@@ -187,7 +191,7 @@ describe('getConfigValue', () => {
       [SOURCES]: [complexConfig],
     };
 
-    const result = getConfigValue(configBlock, SOURCES);
+    const result = getConfigValue({ configBlock, key: SOURCES });
 
     expect(result[0]!.rules).toEqual(complexConfig.rules);
   });

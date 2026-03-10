@@ -16,7 +16,7 @@ describe('appendConfigWhenDefined', () => {
       rules: { 'no-unused-vars': 'error' },
     };
 
-    const result = appendConfigWhenDefined(configs, newConfig);
+    const result = appendConfigWhenDefined({ config: newConfig, configs });
 
     expect(result).toHaveLength(2);
     expect(result[0]).toEqual(configs[0]);
@@ -31,7 +31,7 @@ describe('appendConfigWhenDefined', () => {
       },
     ];
 
-    const result = appendConfigWhenDefined(configs, null);
+    const result = appendConfigWhenDefined({ config: null, configs });
 
     expect(result).toHaveLength(1);
     expect(result).toEqual(configs);
@@ -45,7 +45,7 @@ describe('appendConfigWhenDefined', () => {
       },
     ];
 
-    const result = appendConfigWhenDefined(configs, undefined);
+    const result = appendConfigWhenDefined({ config: undefined, configs });
 
     expect(result).toHaveLength(1);
     expect(result).toEqual(configs);
@@ -59,7 +59,7 @@ describe('appendConfigWhenDefined', () => {
       },
     ];
 
-    const result = appendConfigWhenDefined(configs, {});
+    const result = appendConfigWhenDefined({ config: {}, configs });
 
     expect(result).toHaveLength(1);
     expect(result).toEqual(configs);
@@ -73,9 +73,12 @@ describe('appendConfigWhenDefined', () => {
       },
     ];
 
-    const result = appendConfigWhenDefined(configs, [
-      { files: ['lib/**/*.ts'], rules: { 'no-unused-vars': 'error' } },
-    ]);
+    const result = appendConfigWhenDefined({
+      config: [
+        { files: ['lib/**/*.ts'], rules: { 'no-unused-vars': 'error' } },
+      ],
+      configs,
+    });
 
     expect(result).toHaveLength(1);
     expect(result).toEqual(configs);
@@ -93,7 +96,7 @@ describe('appendConfigWhenDefined', () => {
       rules: { 'no-unused-vars': 'error' },
     };
 
-    const result = appendConfigWhenDefined(configs, newConfig);
+    const result = appendConfigWhenDefined({ config: newConfig, configs });
 
     expect(result).not.toBe(configs);
   });
@@ -105,7 +108,7 @@ describe('appendConfigWhenDefined', () => {
       rules: { 'no-console': 'error' },
     };
 
-    const result = appendConfigWhenDefined(configs, newConfig);
+    const result = appendConfigWhenDefined({ config: newConfig, configs });
 
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual(newConfig);
@@ -124,7 +127,7 @@ describe('appendConfigWhenDefined', () => {
       rules: { 'no-unused-vars': 'error' },
     };
 
-    appendConfigWhenDefined(configs, newConfig);
+    appendConfigWhenDefined({ config: newConfig, configs });
 
     expect(configs).toHaveLength(originalLength);
   });
@@ -138,7 +141,7 @@ describe('appendConfigWhenDefined', () => {
     ];
     const originalLength = configs.length;
 
-    appendConfigWhenDefined(configs, null);
+    appendConfigWhenDefined({ config: null, configs });
 
     expect(configs).toHaveLength(originalLength);
   });
@@ -146,14 +149,20 @@ describe('appendConfigWhenDefined', () => {
   it('should append config when configs is undefined', () => {
     const newConfig: Linter.Config = { files: ['src/**/*.ts'] };
 
-    const result = appendConfigWhenDefined(undefined, newConfig);
+    const result = appendConfigWhenDefined({
+      config: newConfig,
+      configs: undefined,
+    });
 
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual(newConfig);
   });
 
   it('should return empty array when configs is undefined and config is not appendable', () => {
-    const result = appendConfigWhenDefined(undefined, null);
+    const result = appendConfigWhenDefined({
+      config: null,
+      configs: undefined,
+    });
 
     expect(result).toEqual([]);
   });

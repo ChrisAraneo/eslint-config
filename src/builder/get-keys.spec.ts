@@ -16,7 +16,7 @@ describe('getKeys', () => {
       string: 'string',
       symbol: Symbol('symbol value'),
     };
-    const keys = getKeys(object);
+    const keys = getKeys({ obj: object });
 
     expect(keys).toContain('array');
     expect(keys).toContain('boolean');
@@ -31,7 +31,7 @@ describe('getKeys', () => {
 
   it('should return empty array for empty object', () => {
     const object = {};
-    const keys = getKeys(object);
+    const keys = getKeys({ obj: object });
 
     expect(keys).toEqual([]);
   });
@@ -39,28 +39,28 @@ describe('getKeys', () => {
   it('should return keys including symbol keys', () => {
     const symbol = Symbol('test');
     const object = { [symbol]: 'symbol value' };
-    const keys = getKeys(object);
+    const keys = getKeys({ obj: object });
 
     expect(keys).toContain(symbol);
   });
 
   it('should return keys including numeric keys as strings', () => {
     const object = { [10101]: 'value' };
-    const keys = getKeys(object);
+    const keys = getKeys({ obj: object });
 
     expect(keys).toEqual(['10101']);
   });
 
   it('should return keys including numeric keys as strings', () => {
     const object = { [10101]: 'value' };
-    const keys = getKeys(object);
+    const keys = getKeys({ obj: object });
 
     expect(keys).toEqual(['10101']);
   });
 
   it('should return keys including undefined-valued properties', () => {
     const object = { undefined: undefined };
-    const keys = getKeys(object);
+    const keys = getKeys({ obj: object });
 
     expect(keys).toEqual(['undefined']);
   });
@@ -69,7 +69,7 @@ describe('getKeys', () => {
     const parent = { inherited: 'value' };
     const child = Object.create(parent);
     child.own = 'own value';
-    const keys = getKeys(child);
+    const keys = getKeys({ obj: child });
 
     expect(keys).toContain('own');
     expect(keys).not.toContain('inherited');

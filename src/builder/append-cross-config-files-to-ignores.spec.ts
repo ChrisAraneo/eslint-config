@@ -20,7 +20,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [TEMPLATES]: [{ files: ['src/**/*.html'] }],
       };
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[SOURCES]?.[0]?.ignores).toEqual([
         'src/**/*.html',
@@ -35,7 +35,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [TESTS]: [{ files: ['src/**/*.spec.ts'] }],
       };
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[SOURCES]?.[0]?.ignores).toBeUndefined();
     });
@@ -49,7 +49,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [TESTS]: [{ files: ['src/**/*.spec.ts'] }],
       };
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[TESTS]?.[0]?.ignores).toEqual([
         'src/**/*.html',
@@ -64,7 +64,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [TESTS]: [{ files: ['src/**/*.spec.ts'] }],
       };
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[TESTS]?.[0]?.ignores).toBeUndefined();
     });
@@ -80,7 +80,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [TESTS]: [{ files: ['src/**/*.spec.ts'] }],
       };
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[TEMPLATES]?.[0]?.ignores).toEqual([
         'src/**/*.ts',
@@ -101,7 +101,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [TESTS]: [{ files: ['src/**/*.spec.ts'] }],
       };
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[JSONS]?.[0]?.ignores).toEqual([
         'src/**/*.ts',
@@ -122,7 +122,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [SOURCES]: [{ files: ['src/**/*.ts'] }],
       } as ConfigBlock;
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[NX]).toEqual(nxConfigs);
     });
@@ -134,7 +134,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [SOURCES]: [{ files: ['src/**/*.ts'] }],
       } as ConfigBlock;
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[IGNORED]).toEqual(ignoredConfigs);
     });
@@ -147,7 +147,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [TEMPLATES]: [{ files: ['src/**/*.html'] }],
       } as ConfigBlock;
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[SOURCES]?.[0]?.ignores).toEqual([
         'src/legacy/**',
@@ -162,13 +162,13 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [SOURCES]: [{ files: ['src/**/*.ts'] }],
       } as ConfigBlock;
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[SOURCES]?.[0]?.ignores).toBeUndefined();
     });
 
     it('should handle an empty configBlock', () => {
-      const result = appendCrossConfigFilesToIgnores({});
+      const result = appendCrossConfigFilesToIgnores({ configBlock: {} });
 
       expect(result[SOURCES]).toEqual([]);
       expect(result[TESTS]).toEqual([]);
@@ -182,7 +182,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         [TEMPLATES]: [{ rules: { 'no-console': 'error' } }],
       } as ConfigBlock;
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[SOURCES]?.[0]?.ignores).toBeUndefined();
     });
@@ -196,7 +196,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
       } as ConfigBlock;
       const originalSource = configBlock[SOURCES]![0];
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result).not.toBe(configBlock);
       expect(result[SOURCES]![0]).not.toBe(originalSource);
@@ -214,7 +214,7 @@ describe('appendCrossConfigFilesToIgnores', () => {
         ],
       };
 
-      const result = appendCrossConfigFilesToIgnores(configBlock);
+      const result = appendCrossConfigFilesToIgnores({ configBlock });
 
       expect(result[SOURCES]?.[0]?.ignores).toEqual(['src/**/*.json']);
       expect(result[SOURCES]?.[1]?.ignores).toEqual([

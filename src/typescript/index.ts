@@ -2,7 +2,13 @@ import type { Linter } from 'eslint';
 import { defineConfig } from 'eslint/config';
 import { match } from 'ts-pattern';
 
-import { ConfigBlock, SOURCES, TESTS } from '../interfaces.js';
+import {
+  ConfigBlock,
+  SOURCES,
+  TESTS,
+  TypeScriptConfigOptions,
+  TypeScriptTestConfigOptions,
+} from '../interfaces.js';
 import { setTsconfigRootDir } from '../utils/set-tsconfig-root-dir.js';
 import { getEslintConfigs } from './eslint.js';
 import { getSimpleImportSortConfigs } from './simple-import-sort.js';
@@ -10,48 +16,58 @@ import { getStylisticConfigs } from './stylistic.js';
 import { getTypescriptEslintConfigs } from './typescript-eslint.js';
 import { getUnicornConfigs } from './unicorn.js';
 
-const createConfigs = (
-  files: string[] = [],
+const createConfigs = ({
+  files = [],
   isTests = false,
-  tsconfigRootDir?: string,
   shouldResolveAppRootDir = false,
-): Linter.Config[] =>
+  tsconfigRootDir,
+}: {
+  files?: string[];
+  isTests?: boolean;
+  tsconfigRootDir?: string;
+  shouldResolveAppRootDir?: boolean;
+} = {}): Linter.Config[] =>
   match(files?.length ?? 0)
     .with(0, () => [])
     .otherwise(() =>
       defineConfig([
-        ...getEslintConfigs(files, isTests),
-        ...getTypescriptEslintConfigs(files, isTests),
-        ...getUnicornConfigs(files, isTests),
-        ...getSimpleImportSortConfigs(files),
-        ...getStylisticConfigs(files, isTests),
+        ...getEslintConfigs({ isTests, sources: files }),
+        ...getTypescriptEslintConfigs({ isTests, sources: files }),
+        ...getUnicornConfigs({ isTests, sources: files }),
+        ...getSimpleImportSortConfigs({ sources: files }),
+        ...getStylisticConfigs({ isTests, sources: files }),
       ]).map((config) =>
-        setTsconfigRootDir(
+        setTsconfigRootDir({
           config,
-          files,
-          tsconfigRootDir,
           shouldResolveAppRootDir,
-        ),
+          sources: files,
+          tsconfigRootDir,
+        }),
       ),
     );
 
-export const createTypeScriptConfigBlock = (
-  sources: string[] = [],
-  tsconfigRootDir?: string,
+export const createTypeScriptConfigBlock = ({
   shouldResolveAppRootDir = false,
-): ConfigBlock => ({
-  [SOURCES]: createConfigs(
-    sources,
-    false,
-    tsconfigRootDir,
+  sources = [],
+  tsconfigRootDir,
+}: TypeScriptConfigOptions = {}): ConfigBlock => ({
+  [SOURCES]: createConfigs({
+    files: sources,
+    isTests: false,
     shouldResolveAppRootDir,
-  ),
+    tsconfigRootDir,
+  }),
 });
 
-export const createTypeScriptTestsConfigBlock = (
-  tests?: string[],
-  tsconfigRootDir?: string,
+export const createTypeScriptTestsConfigBlock = ({
   shouldResolveAppRootDir = false,
-): ConfigBlock => ({
-  [TESTS]: createConfigs(tests, true, tsconfigRootDir, shouldResolveAppRootDir),
+  sources: tests,
+  tsconfigRootDir,
+}: TypeScriptTestConfigOptions = {}): ConfigBlock => ({
+  [TESTS]: createConfigs({
+    files: tests,
+    isTests: true,
+    shouldResolveAppRootDir,
+    tsconfigRootDir,
+  }),
 });

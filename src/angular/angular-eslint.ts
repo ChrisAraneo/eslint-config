@@ -2,10 +2,10 @@ import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
 import { match } from 'ts-pattern';
 
-export const getAngularSourcesConfigs = (
-  prefix?: string,
-  sources?: string[],
-): Linter.Config[] =>
+export const getAngularSourcesConfigs = ({
+  prefix,
+  sources,
+}: { prefix?: string; sources?: string[] } = {}): Linter.Config[] =>
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(() =>

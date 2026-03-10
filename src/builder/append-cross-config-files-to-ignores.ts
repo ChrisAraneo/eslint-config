@@ -12,9 +12,11 @@ import {
 import { getConfigValue } from './get-config-value.js';
 import { getUniqueConfigFiles } from './get-unique-config-files.js';
 
-export const appendCrossConfigFilesToIgnores = (
-  configBlock: ConfigBlock,
-): ConfigBlock =>
+export const appendCrossConfigFilesToIgnores = ({
+  configBlock,
+}: {
+  configBlock: ConfigBlock;
+}): ConfigBlock =>
   chain([
     {
       ignores: [TEMPLATES, JSONS],
@@ -35,19 +37,21 @@ export const appendCrossConfigFilesToIgnores = (
   ])
     .map(({ ignores, key }) => [
       key,
-      (getConfigValue(configBlock, key as ConfigKey) ?? []).map((config) => {
-        const currentIgnores: string[] = config.ignores ?? [];
-        const updatedIgnores = [
-          ...currentIgnores,
-          ...getUniqueConfigFiles(configBlock, ignores),
-        ];
+      (getConfigValue({ configBlock, key: key as ConfigKey }) ?? []).map(
+        (config) => {
+          const currentIgnores: string[] = config.ignores ?? [];
+          const updatedIgnores = [
+            ...currentIgnores,
+            ...getUniqueConfigFiles({ configBlock, keys: ignores }),
+          ];
 
-        return cloneDeep(
-          isEmpty(updatedIgnores)
-            ? config
-            : { ...config, ignores: updatedIgnores },
-        );
-      }),
+          return cloneDeep(
+            isEmpty(updatedIgnores)
+              ? config
+              : { ...config, ignores: updatedIgnores },
+          );
+        },
+      ),
     ])
     .reduce(
       (acc, [key, configs]) => ({ ...acc, [key as ConfigKey]: configs }),

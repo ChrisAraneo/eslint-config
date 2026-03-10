@@ -1,5 +1,4 @@
 import {
-  ConfigKey,
   IGNORED,
   JSONS,
   NX,
@@ -8,7 +7,7 @@ import {
   TESTS,
 } from '../interfaces.js';
 
-export const isConfigKey = (value: unknown): value is ConfigKey =>
+export const isConfigKey = ({ value }: { value: unknown }): boolean =>
   typeof value === 'symbol' &&
   (value === SOURCES ||
     value === TESTS ||

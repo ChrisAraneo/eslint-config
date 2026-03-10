@@ -2,9 +2,9 @@ import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
 import { match } from 'ts-pattern';
 
-export const getAngularTemplatesConfigs = (
-  templates?: string[],
-): Linter.Config[] =>
+export const getAngularTemplatesConfigs = ({
+  templates,
+}: { templates?: string[] } = {}): Linter.Config[] =>
   match(templates?.length ?? 0)
     .with(0, () => [])
     .otherwise(() => [

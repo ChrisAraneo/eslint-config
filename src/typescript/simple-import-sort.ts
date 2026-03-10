@@ -2,9 +2,9 @@ import type { Linter } from 'eslint';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import { match } from 'ts-pattern';
 
-export const getSimpleImportSortConfigs = (
-  sources?: string[],
-): Linter.Config[] =>
+export const getSimpleImportSortConfigs = ({
+  sources,
+}: { sources?: string[] } = {}): Linter.Config[] =>
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(() => [

@@ -19,7 +19,7 @@ describe('isConfigKey', () => {
     [NX, NX],
     [IGNORED, IGNORED],
   ])('should return true for %s', (_, value) => {
-    expect(isConfigKey(value)).toBe(true);
+    expect(isConfigKey({ value })).toBe(true);
   });
 
   it.each([
@@ -32,6 +32,6 @@ describe('isConfigKey', () => {
     ['an array', []],
     ['a boolean', true],
   ])('should return false for %s', (_, value) => {
-    expect(isConfigKey(value)).toBe(false);
+    expect(isConfigKey({ value })).toBe(false);
   });
 });

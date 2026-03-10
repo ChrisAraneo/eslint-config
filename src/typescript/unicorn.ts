@@ -4,10 +4,13 @@ import globals from 'globals';
 import { chain } from 'lodash-es';
 import { match } from 'ts-pattern';
 
-export const getUnicornConfigs = (
-  sources?: string[],
-  isTests?: boolean,
-): Linter.Config[] =>
+export const getUnicornConfigs = ({
+  isTests,
+  sources,
+}: {
+  sources?: string[];
+  isTests?: boolean;
+} = {}): Linter.Config[] =>
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(() => [

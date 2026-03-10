@@ -4,10 +4,13 @@ import { CompatibleConfig } from 'node_modules/typescript-eslint/dist/compatibil
 import { match } from 'ts-pattern';
 import tseslint from 'typescript-eslint';
 
-export const getTypescriptEslintConfigs = (
-  sources?: string[],
-  isTests?: boolean,
-): Linter.Config[] =>
+export const getTypescriptEslintConfigs = ({
+  isTests,
+  sources,
+}: {
+  sources?: string[];
+  isTests?: boolean;
+} = {}): Linter.Config[] =>
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(() => [

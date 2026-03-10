@@ -16,7 +16,7 @@ describe('getUniqueConfigFiles', () => {
       [SOURCES]: [{ files: ['src/**/*.ts'] }],
     };
 
-    const result = getUniqueConfigFiles(configBlock, [SOURCES]);
+    const result = getUniqueConfigFiles({ configBlock, keys: [SOURCES] });
 
     expect(result).toEqual(['src/**/*.ts']);
   });
@@ -27,7 +27,10 @@ describe('getUniqueConfigFiles', () => {
       [TEMPLATES]: [{ files: ['src/**/*.html'] }],
     };
 
-    const result = getUniqueConfigFiles(configBlock, [SOURCES, TEMPLATES]);
+    const result = getUniqueConfigFiles({
+      configBlock,
+      keys: [SOURCES, TEMPLATES],
+    });
 
     expect(result).toEqual(['src/**/*.ts', 'src/**/*.html']);
   });
@@ -38,7 +41,10 @@ describe('getUniqueConfigFiles', () => {
       [TESTS]: [{ files: ['src/**/*.ts', 'src/**/*.spec.ts'] }],
     };
 
-    const result = getUniqueConfigFiles(configBlock, [SOURCES, TESTS]);
+    const result = getUniqueConfigFiles({
+      configBlock,
+      keys: [SOURCES, TESTS],
+    });
 
     expect(result).toEqual(['src/**/*.ts', 'src/**/*.spec.ts']);
   });
@@ -51,7 +57,7 @@ describe('getUniqueConfigFiles', () => {
       ],
     };
 
-    const result = getUniqueConfigFiles(configBlock, [SOURCES]);
+    const result = getUniqueConfigFiles({ configBlock, keys: [SOURCES] });
 
     expect(result).toEqual(['src/**/*.ts', 'lib/**/*.ts']);
   });
@@ -62,7 +68,7 @@ describe('getUniqueConfigFiles', () => {
       [SOURCES]: [{ files: ['src/**/*.ts'] }],
     };
 
-    const result = getUniqueConfigFiles(configBlock, [unrelated]);
+    const result = getUniqueConfigFiles({ configBlock, keys: [unrelated] });
 
     expect(result).toEqual([]);
   });
@@ -72,7 +78,7 @@ describe('getUniqueConfigFiles', () => {
       [SOURCES]: [{ files: ['src/**/*.ts'] }],
     };
 
-    const result = getUniqueConfigFiles(configBlock, []);
+    const result = getUniqueConfigFiles({ configBlock, keys: [] });
 
     expect(result).toEqual([]);
   });
@@ -82,13 +88,16 @@ describe('getUniqueConfigFiles', () => {
       [SOURCES]: [{ files: ['src/**/*.ts'] }],
     };
 
-    const result = getUniqueConfigFiles(configBlock, null as any);
+    const result = getUniqueConfigFiles({ configBlock, keys: null as any });
 
     expect(result).toEqual([]);
   });
 
   it('should return empty array when the config key is absent from the configBlock', () => {
-    const result = getUniqueConfigFiles({}, [SOURCES, JSONS]);
+    const result = getUniqueConfigFiles({
+      configBlock: {},
+      keys: [SOURCES, JSONS],
+    });
 
     expect(result).toEqual([]);
   });
@@ -101,7 +110,7 @@ describe('getUniqueConfigFiles', () => {
       ],
     } as ConfigBlock;
 
-    const result = getUniqueConfigFiles(configBlock, [SOURCES]);
+    const result = getUniqueConfigFiles({ configBlock, keys: [SOURCES] });
 
     expect(result).toEqual(['src/**/*.ts']);
   });
