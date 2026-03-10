@@ -1,3 +1,5 @@
+import { setTsconfigRootDir } from 'src/utils/set-tsconfig-root-dir.js';
+
 import {
   ConfigBlock,
   IGNORED,
@@ -21,6 +23,8 @@ export const createAngularConfigBlock = (
   templates: string[] = [],
   jsons: string[] = [],
   ignored?: string[],
+  tsconfigRootDir?: string,
+  shouldResolveAppRootDir = false,
 ): ConfigBlock => ({
   [IGNORED]: [
     {
@@ -31,7 +35,22 @@ export const createAngularConfigBlock = (
   [SOURCES]: [
     ...(createTypeScriptConfigBlock(sources)[SOURCES] || []),
     ...getAngularSourcesConfigs(prefix, sources),
-  ],
+  ].map((config) =>
+    setTsconfigRootDir(
+      config,
+      sources,
+      tsconfigRootDir,
+      shouldResolveAppRootDir,
+    ),
+  ),
   [TEMPLATES]: getAngularTemplatesConfigs(templates),
-  [TESTS]: [...(createTypeScriptTestsConfigBlock(tests)[TESTS] || [])],
+  [TESTS]: [...(createTypeScriptTestsConfigBlock(tests)[TESTS] || [])].map(
+    (config) =>
+      setTsconfigRootDir(
+        config,
+        tests,
+        tsconfigRootDir,
+        shouldResolveAppRootDir,
+      ),
+  ),
 });

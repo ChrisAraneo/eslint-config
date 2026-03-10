@@ -43,6 +43,7 @@ class ESLintConfigBuilder {
       createTypeScriptTestsConfigBlock(
         this.getOptionalArrayOrThrow(options, 'sources'),
         this.getOptionalStringOrThrow(options, 'tsconfigRootDir'),
+        this.getOptionalBooleanOrThrow(options, 'shouldResolveAppRootDir'),
       ),
     );
   }
@@ -56,6 +57,8 @@ class ESLintConfigBuilder {
         this.getOptionalArrayOrThrow(options, 'templates'),
         this.getOptionalArrayOrThrow(options, 'jsons'),
         this.getOptionalArrayOrThrow(options, 'ignored'),
+        this.getOptionalStringOrThrow(options, 'tsconfigRootDir'),
+        this.getOptionalBooleanOrThrow(options, 'shouldResolveAppRootDir'),
       ),
     );
   }

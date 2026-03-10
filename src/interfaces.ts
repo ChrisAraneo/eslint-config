@@ -34,6 +34,7 @@ export interface TypeScriptConfigOptions {
 export interface TypeScriptTestConfigOptions {
   sources?: string[];
   tsconfigRootDir?: string;
+  shouldResolveAppRootDir?: boolean;
 }
 
 export interface AngularConfigOptions {
@@ -43,6 +44,8 @@ export interface AngularConfigOptions {
   templates?: string[];
   jsons?: string[];
   ignored?: string[];
+  tsconfigRootDir?: string;
+  shouldResolveAppRootDir?: boolean;
 }
 
 export interface JsonConfigOptions {

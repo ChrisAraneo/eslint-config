@@ -6,7 +6,6 @@ import tseslint from 'typescript-eslint';
 
 export const getTypescriptEslintConfigs = (
   sources?: string[],
-  parserOptions?: Record<string, unknown>,
   isTests?: boolean,
 ): Linter.Config[] =>
   match(sources?.length ?? 0)
@@ -21,7 +20,6 @@ export const getTypescriptEslintConfigs = (
           languageOptions: {
             parser: tseslint.parser,
             parserOptions: {
-              ...(parserOptions ?? {}),
               allowAutomaticSingleRunInference: true,
               projectService: true,
             },
