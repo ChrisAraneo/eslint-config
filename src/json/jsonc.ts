@@ -20,7 +20,6 @@ export const getJsoncConfigs = ({
           jsonc,
         } as unknown as Linter.Config['plugins'],
         rules: {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ...(jsonc.configs['flat/recommended-with-jsonc'] as any).rules,
           'jsonc/array-bracket-newline': 'off',
           'jsonc/array-bracket-spacing': 'off',
