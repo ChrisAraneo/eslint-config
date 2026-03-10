@@ -1,5 +1,3 @@
-import { setTsconfigRootDir } from 'src/utils/set-tsconfig-root-dir.js';
-
 import {
   ConfigBlock,
   IGNORED,
@@ -13,6 +11,7 @@ import {
   createTypeScriptConfigBlock,
   createTypeScriptTestsConfigBlock,
 } from '../typescript/index.js';
+import { setTsconfigRootDir } from '../utils/set-tsconfig-root-dir.js';
 import { getAngularSourcesConfigs } from './angular-eslint.js';
 import { getAngularTemplatesConfigs } from './angular-eslint-template.js';
 
