@@ -2,7 +2,7 @@ import type { Linter } from 'eslint';
 import { isArray, isObject } from 'lodash-es';
 import { match } from 'ts-pattern';
 
-import { getKeys } from './get-keys.js';
+import { getKeys } from '../utils/get-keys.js';
 
 interface AppendConfigWhenDefinedInput {
   config: Linter.Config | unknown;

@@ -1,14 +1,15 @@
 import { match } from 'ts-pattern';
 
-interface GetOptionalObjectOrThrowInput<T extends object> {
+interface Input<T extends object> {
   obj: T;
   key: keyof T;
 }
 
-export const getOptionalObjectOrThrow = <T extends object>(
-  input: GetOptionalObjectOrThrowInput<T>,
-): Record<string, unknown> | undefined =>
-  match(input.obj)
+export const getOptionalObjectOrThrow = <T extends object>({
+  key,
+  obj,
+}: Input<T>): Record<string, unknown> | undefined =>
+  match(obj)
     .when(
       (obj) => !obj,
       () => {
@@ -16,7 +17,7 @@ export const getOptionalObjectOrThrow = <T extends object>(
       },
     )
     .otherwise((obj) =>
-      match(obj[input.key])
+      match(obj[key])
         .when(
           (value) =>
             value !== undefined &&
@@ -24,9 +25,7 @@ export const getOptionalObjectOrThrow = <T extends object>(
               typeof value !== 'object' ||
               Array.isArray(value)),
           () => {
-            throw new Error(
-              `${String(input.key)} must be an object or undefined`,
-            );
+            throw new Error(`${String(key)} must be an object or undefined`);
           },
         )
         .otherwise((value) => value as Record<string, unknown> | undefined),

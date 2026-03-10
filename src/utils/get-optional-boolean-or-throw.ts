@@ -1,14 +1,15 @@
 import { match } from 'ts-pattern';
 
-interface GetOptionalBooleanOrThrowInput<T extends object> {
+interface Input<T extends object> {
   obj: T;
   key: keyof T;
 }
 
-export const getOptionalBooleanOrThrow = <T extends object>(
-  input: GetOptionalBooleanOrThrowInput<T>,
-): boolean | undefined =>
-  match(input.obj)
+export const getOptionalBooleanOrThrow = <T extends object>({
+  key,
+  obj,
+}: Input<T>): boolean | undefined =>
+  match(obj)
     .when(
       (obj) => !obj,
       () => {
@@ -16,15 +17,13 @@ export const getOptionalBooleanOrThrow = <T extends object>(
       },
     )
     .otherwise((obj) =>
-      match(obj[input.key])
+      match(obj[key])
         .when(
           (value) =>
             value !== undefined &&
             (value === null || typeof value !== 'boolean'),
           () => {
-            throw new Error(
-              `${String(input.key)} must be a boolean or undefined`,
-            );
+            throw new Error(`${String(key)} must be a boolean or undefined`);
           },
         )
         .otherwise((value) => value as boolean | undefined),
