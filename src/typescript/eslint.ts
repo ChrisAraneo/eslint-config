@@ -14,9 +14,7 @@ export const getEslintConfigs = ({
     .with(0, () => [])
     .otherwise(() => [
       chain({
-        errorWhenNotTests: match(isTests)
-          .with(true, () => 'off' as const)
-          .otherwise(() => 'error' as const),
+        errorWhenNotTests: isTests ? 'off' : 'error',
       })
         .thru(({ errorWhenNotTests }) => ({
           files: sources,

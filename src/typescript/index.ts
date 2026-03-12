@@ -27,7 +27,7 @@ const createConfigs = ({
   tsconfigRootDir?: string;
   shouldResolveAppRootDir?: boolean;
 } = {}): Linter.Config[] =>
-  match(files?.length ?? 0)
+  match(files.length ?? 0)
     .with(0, () => [])
     .otherwise(() =>
       defineConfig([
@@ -61,7 +61,7 @@ export const createTypeScriptConfigBlock = ({
 
 export const createTypeScriptTestsConfigBlock = ({
   shouldResolveAppRootDir = false,
-  sources: tests,
+  sources: tests = [],
   tsconfigRootDir,
 }: TypeScriptTestConfigOptions = {}): ConfigBlock => ({
   [TESTS]: createConfigs({
