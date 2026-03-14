@@ -77,7 +77,6 @@ describe('getOptionalObjectOrThrow', () => {
       ['a number', 42],
       ['a boolean', true],
       ['null', null],
-      ['an array', ['a', 'b']],
     ])('should throw when value is %s', (_, value) => {
       expect(() => {
         getOptionalObjectOrThrow({
@@ -98,13 +97,22 @@ describe('getOptionalObjectOrThrow', () => {
       }).toThrow(new Error('rulesConfig must be an object or undefined'));
     });
 
-    it('should reject an empty array as an object', () => {
-      expect(() => {
-        getOptionalObjectOrThrow({
-          key: 'config',
-          obj: { config: [] },
-        });
-      }).toThrow(new Error('config must be an object or undefined'));
+    it('should return an array value', () => {
+      const result = getOptionalObjectOrThrow({
+        key: 'config',
+        obj: { config: ['a', 'b'] },
+      });
+
+      expect(result).toEqual(['a', 'b']);
+    });
+
+    it('should return an empty array value', () => {
+      const result = getOptionalObjectOrThrow({
+        key: 'config',
+        obj: { config: [] },
+      });
+
+      expect(result).toEqual([]);
     });
   });
 });

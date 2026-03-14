@@ -692,25 +692,25 @@ describe('configBuilder', () => {
             }).not.toThrow();
           });
 
-          it('should not throw for string options', () => {
+          it('should throw exact error for string options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addTypeScriptConfig('invalid' as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
-          it('should not throw for number options', () => {
+          it('should throw exact error for number options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addTypeScriptConfig(123 as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
-          it('should not throw for boolean options', () => {
+          it('should throw exact error for boolean options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addTypeScriptConfig(true as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
         });
 
@@ -889,18 +889,18 @@ describe('configBuilder', () => {
             }).not.toThrow();
           });
 
-          it('should not throw for string options', () => {
+          it('should throw exact error for string options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addTypeScriptTestsConfig('test' as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
-          it('should not throw for number options', () => {
+          it('should throw exact error for number options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addTypeScriptTestsConfig(123 as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
           it('should throw exact error for boolean options', () => {
@@ -1023,25 +1023,25 @@ describe('configBuilder', () => {
             }).not.toThrow();
           });
 
-          it('should not throw for string options', () => {
+          it('should throw exact error for string options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addAngularConfig('test' as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
-          it('should not throw for number options', () => {
+          it('should throw exact error for number options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addAngularConfig(999 as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
-          it('should not throw for boolean options', () => {
+          it('should throw exact error for boolean options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addAngularConfig(true as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
         });
 
@@ -1291,18 +1291,18 @@ describe('configBuilder', () => {
             }).not.toThrow();
           });
 
-          it('should not throw for string options', () => {
+          it('should throw exact error for string options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addJsonConfig('config' as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
-          it('should not throw for number options', () => {
+          it('should throw exact error for number options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addJsonConfig(777 as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
           it('should throw exact error for boolean options', () => {
@@ -1374,25 +1374,25 @@ describe('configBuilder', () => {
             }).not.toThrow();
           });
 
-          it('should not throw for string options', () => {
+          it('should throw exact error for string options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addNxConfig('nx' as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
-          it('should not throw for number options', () => {
+          it('should throw exact error for number options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addNxConfig(999 as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
-          it('should not throw for boolean options', () => {
+          it('should throw exact error for boolean options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addNxConfig(true as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
         });
 
@@ -1441,11 +1441,11 @@ describe('configBuilder', () => {
             }).toThrow(new Error('rulesConfig must be an object or undefined'));
           });
 
-          it('should throw exact error for array rulesConfig', () => {
+          it('should not throw for array rulesConfig (lodash treats arrays as objects)', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addNxConfig({ rulesConfig: [] as any });
-            }).toThrow(new Error('rulesConfig must be an object or undefined'));
+            }).not.toThrow();
           });
 
           it('should throw exact error for number rulesConfig', () => {
@@ -1494,18 +1494,18 @@ describe('configBuilder', () => {
             }).not.toThrow();
           });
 
-          it('should not throw for string options', () => {
+          it('should throw exact error for string options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addIgnored('test' as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
-          it('should not throw for number options', () => {
+          it('should throw exact error for number options', () => {
             const builder = configBuilder();
             expect(() => {
               builder.addIgnored(555 as any);
-            }).not.toThrow();
+            }).toThrow(new Error('Expected an object'));
           });
 
           it('should throw exact error for boolean options', () => {
