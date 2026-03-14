@@ -1,4 +1,8 @@
+import { isBoolean, isUndefined } from 'lodash-es';
 import { match } from 'ts-pattern';
+
+import { isNotObject } from './is-not-object.js';
+import { throwError } from './throw-error.js';
 
 interface Input<T extends object> {
   obj: T;
@@ -10,21 +14,12 @@ export const getOptionalBooleanOrThrow = <T extends object>({
   obj,
 }: Input<T>): boolean | undefined =>
   match(obj)
-    .when(
-      (obj) => !obj,
-      () => {
-        throw new Error(`Expected an object`);
-      },
-    )
+    .when(isNotObject, throwError(`Expected an object`))
     .otherwise((obj) =>
       match(obj[key])
         .when(
-          (value) =>
-            value !== undefined &&
-            (value === null || typeof value !== 'boolean'),
-          () => {
-            throw new Error(`${String(key)} must be a boolean or undefined`);
-          },
+          (value) => !isUndefined(value) && !isBoolean(value),
+          throwError(`${String(key)} must be a boolean or undefined`),
         )
         .otherwise((value) => value as boolean | undefined),
     );

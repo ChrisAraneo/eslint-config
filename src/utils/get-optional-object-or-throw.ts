@@ -1,4 +1,8 @@
+import { isObject, isUndefined } from 'lodash-es';
 import { match } from 'ts-pattern';
+
+import { isNotObject } from './is-not-object.js';
+import { throwError } from './throw-error.js';
 
 interface Input<T extends object> {
   obj: T;
@@ -10,23 +14,12 @@ export const getOptionalObjectOrThrow = <T extends object>({
   obj,
 }: Input<T>): Record<string, unknown> | undefined =>
   match(obj)
-    .when(
-      (obj) => !obj,
-      () => {
-        throw new Error(`Expected an object`);
-      },
-    )
+    .when(isNotObject, throwError(`Expected an object`))
     .otherwise((obj) =>
       match(obj[key])
         .when(
-          (value) =>
-            value !== undefined &&
-            (value === null ||
-              typeof value !== 'object' ||
-              Array.isArray(value)),
-          () => {
-            throw new Error(`${String(key)} must be an object or undefined`);
-          },
+          (value) => !isUndefined(value) && !isObject(value),
+          throwError(`${String(key)} must be an object or undefined`),
         )
         .otherwise((value) => value as Record<string, unknown> | undefined),
     );

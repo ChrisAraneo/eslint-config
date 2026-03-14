@@ -1,4 +1,8 @@
+import { isString, isUndefined } from 'lodash-es';
 import { match } from 'ts-pattern';
+
+import { isNotObject } from './is-not-object.js';
+import { throwError } from './throw-error.js';
 
 interface Input<T extends object> {
   obj: T;
@@ -10,19 +14,12 @@ export const getOptionalStringOrThrow = <T extends object>({
   obj,
 }: Input<T>): string | undefined =>
   match(obj)
-    .when(
-      (obj) => !obj,
-      () => {
-        throw new Error(`Expected an object`);
-      },
-    )
+    .when(isNotObject, throwError(`Expected an object`))
     .otherwise((obj) =>
       match(obj[key])
         .when(
-          (value) => value !== undefined && typeof value !== 'string',
-          () => {
-            throw new Error(`${String(key)} must be a string or undefined`);
-          },
+          (value) => !isUndefined(value) && !isString(value),
+          throwError(`${String(key)} must be a string or undefined`),
         )
         .otherwise((value) => value as string | undefined),
     );
