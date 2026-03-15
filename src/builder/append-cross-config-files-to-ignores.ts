@@ -12,13 +12,13 @@ import {
 import { getConfigValue } from './get-config-value.js';
 import { getUniqueConfigFiles } from './get-unique-config-files.js';
 
-interface AppendCrossConfigFilesToIgnoresInput {
+interface Input {
   configBlock: ConfigBlock;
 }
 
 export const appendCrossConfigFilesToIgnores = ({
   configBlock,
-}: AppendCrossConfigFilesToIgnoresInput): ConfigBlock =>
+}: Input): ConfigBlock =>
   chain([
     {
       ignores: [TEMPLATES, JSONS],

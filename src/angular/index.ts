@@ -17,14 +17,14 @@ import { getAngularSourcesConfigs } from './angular-eslint.js';
 import { getAngularTemplatesConfigs } from './angular-eslint-template.js';
 
 export const createAngularConfigBlock = ({
-  ignored,
+  ignored = [],
   jsons = [],
   prefix = 'app',
   shouldResolveAppRootDir = false,
   sources = [],
   templates = [],
   tests = [],
-  tsconfigRootDir,
+  tsconfigRootDir = undefined,
 }: AngularConfigOptions = {}): ConfigBlock => ({
   [IGNORED]: [
     {

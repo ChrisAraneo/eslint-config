@@ -4,15 +4,12 @@ import { type ConfigBlock, ConfigKey } from '../interfaces.js';
 import { getConfigValue } from './get-config-value.js';
 import { isConfigKey } from './is-config-key.js';
 
-interface GetUniqueConfigFilesInput {
+interface Input {
   configBlock: ConfigBlock;
   keys: symbol[];
 }
 
-export const getUniqueConfigFiles = ({
-  configBlock,
-  keys,
-}: GetUniqueConfigFilesInput): string[] =>
+export const getUniqueConfigFiles = ({ configBlock, keys }: Input): string[] =>
   uniq([
     ...(keys ?? [])
       .flatMap((key) =>

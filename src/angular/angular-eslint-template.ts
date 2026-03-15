@@ -2,13 +2,13 @@ import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
 import { match } from 'ts-pattern';
 
-interface GetAngularTemplatesConfigsInput {
+interface Input {
   templates?: string[];
 }
 
 export const getAngularTemplatesConfigs = ({
   templates,
-}: GetAngularTemplatesConfigsInput = {}): Linter.Config[] =>
+}: Input = {}): Linter.Config[] =>
   match(templates?.length ?? 0)
     .with(0, () => [])
     .otherwise(() => [

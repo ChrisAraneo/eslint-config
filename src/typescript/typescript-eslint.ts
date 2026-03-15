@@ -4,13 +4,15 @@ import { CompatibleConfig } from 'node_modules/typescript-eslint/dist/compatibil
 import { match } from 'ts-pattern';
 import tseslint from 'typescript-eslint';
 
-export const getTypescriptEslintConfigs = ({
-  isTests,
-  sources,
-}: {
+interface Input {
   sources?: string[];
   isTests?: boolean;
-} = {}): Linter.Config[] =>
+}
+
+export const getTypescriptEslintConfigs = ({
+  isTests = false,
+  sources = [],
+}: Input = {}): Linter.Config[] =>
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(() => [
@@ -131,8 +133,48 @@ export const getTypescriptEslintConfigs = ({
                 {
                   filter: {
                     match: false,
-                    regex:
-                      '^(allowfullscreen|allowFullScreen|async|autofocus|autoFocus|autoplay|autoPlay|checked|defaultChecked|contenteditable|contentEditable|controls|default|defer|disabled|draggable|formnovalidate|formNoValidate|hidden|inert|ismap|itemscope|itemScope|loop|multiple|muted|nomodule|noModule|novalidate|noValidate|open|playsinline|playsInline|readonly|readOnly|required|reversed|selected|spellcheck|spellCheck)$',
+                    regex: `^(${[
+                      'allowfullscreen',
+                      'allowFullScreen',
+                      'async',
+                      'autofocus',
+                      'autoFocus',
+                      'autoplay',
+                      'autoPlay',
+                      'checked',
+                      'defaultChecked',
+                      'contenteditable',
+                      'contentEditable',
+                      'controls',
+                      'default',
+                      'defer',
+                      'disabled',
+                      'draggable',
+                      'formnovalidate',
+                      'formNoValidate',
+                      'hidden',
+                      'inert',
+                      'ismap',
+                      'itemscope',
+                      'itemScope',
+                      'loop',
+                      'multiple',
+                      'muted',
+                      'nomodule',
+                      'noModule',
+                      'novalidate',
+                      'noValidate',
+                      'open',
+                      'playsinline',
+                      'playsInline',
+                      'readonly',
+                      'readOnly',
+                      'required',
+                      'reversed',
+                      'selected',
+                      'spellcheck',
+                      'spellCheck',
+                    ].join('|')})$`,
                   },
                   format: ['PascalCase'],
                   prefix: [

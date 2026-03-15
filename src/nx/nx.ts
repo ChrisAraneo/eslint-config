@@ -4,16 +4,18 @@ import { isEmpty } from 'lodash-es';
 import { NxConfigRulesConfig } from 'src/interfaces.js';
 import { match } from 'ts-pattern';
 
+interface Input {
+  sources?: string[];
+  rulesConfig?: NxConfigRulesConfig;
+}
+
 const getRuleConfig = ({ option }: { option: unknown }) =>
   isEmpty(option) ? 'off' : ['error', option];
 
 export const getNxConfigs = ({
-  rulesConfig,
-  sources,
-}: {
-  sources?: string[];
-  rulesConfig?: NxConfigRulesConfig;
-} = {}): Linter.Config[] =>
+  rulesConfig = {},
+  sources = [],
+}: Input = {}): Linter.Config[] =>
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(

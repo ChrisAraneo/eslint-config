@@ -4,9 +4,11 @@ import jsonc from 'eslint-plugin-jsonc';
 import * as jsoncParser from 'jsonc-eslint-parser';
 import { match } from 'ts-pattern';
 
-export const getJsoncConfigs = ({
-  jsons,
-}: { jsons?: string[] } = {}): Linter.Config[] =>
+interface Input {
+  jsons?: string[];
+}
+
+export const getJsoncConfigs = ({ jsons = [] }: Input = {}): Linter.Config[] =>
   match(jsons?.length ?? 0)
     .with(0, () => [])
     .otherwise(() => [
