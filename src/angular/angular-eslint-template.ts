@@ -46,7 +46,6 @@ export const getAngularTemplatesConfigs = ({
                 'error',
               '@angular-eslint/template/no-negated-async': 'error',
               '@angular-eslint/template/no-nested-tags': 'error',
-              '@angular-eslint/template/no-non-null-assertion': 'error',
               '@angular-eslint/template/no-positive-tabindex': 'error',
               '@angular-eslint/template/prefer-at-else': 'error',
               '@angular-eslint/template/prefer-at-empty': 'error',
