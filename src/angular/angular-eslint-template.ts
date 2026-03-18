@@ -25,7 +25,10 @@ export const getAngularTemplatesConfigs = ({
               '@angular-eslint/template/button-has-type': 'error',
               '@angular-eslint/template/click-events-have-key-events': 'error',
               '@angular-eslint/template/conditional-complexity': 'error',
-              '@angular-eslint/template/cyclomatic-complexity': ['error', { maxComplexity: 6 }],
+              '@angular-eslint/template/cyclomatic-complexity': [
+                'error',
+                { maxComplexity: 6 },
+              ],
               '@angular-eslint/template/elements-content': 'error',
               '@angular-eslint/template/eqeqeq': 'error',
               '@angular-eslint/template/i18n': 'off',
@@ -39,7 +42,8 @@ export const getAngularTemplatesConfigs = ({
               '@angular-eslint/template/no-duplicate-attributes': 'error',
               '@angular-eslint/template/no-empty-control-flow': 'error',
               '@angular-eslint/template/no-inline-styles': 'error',
-              '@angular-eslint/template/no-interpolation-in-attributes': 'error',
+              '@angular-eslint/template/no-interpolation-in-attributes':
+                'error',
               '@angular-eslint/template/no-negated-async': 'error',
               '@angular-eslint/template/no-nested-tags': 'error',
               '@angular-eslint/template/no-non-null-assertion': 'error',
@@ -48,11 +52,13 @@ export const getAngularTemplatesConfigs = ({
               '@angular-eslint/template/prefer-at-empty': 'error',
               '@angular-eslint/template/prefer-built-in-pipes': 'error',
               '@angular-eslint/template/prefer-class-binding': 'error',
-              '@angular-eslint/template/prefer-contextual-for-variables': 'error',
+              '@angular-eslint/template/prefer-contextual-for-variables':
+                'error',
               '@angular-eslint/template/prefer-control-flow': 'error',
               '@angular-eslint/template/prefer-ngsrc': 'error',
               '@angular-eslint/template/prefer-self-closing-tags': 'error',
-              '@angular-eslint/template/prefer-static-string-properties': 'error',
+              '@angular-eslint/template/prefer-static-string-properties':
+                'error',
               '@angular-eslint/template/prefer-template-literal': 'error',
               '@angular-eslint/template/role-has-required-aria': 'error',
               '@angular-eslint/template/table-scope': 'error',
