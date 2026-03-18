@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.125",
+  "version": "0.0.126",
   "description": "ESLint shareable configuration",
   "keywords": [
     "eslint",
