@@ -1,6 +1,6 @@
 {
   "name": "@chris.araneo/eslint-config",
-  "version": "0.0.129",
+  "version": "0.0.131",
   "description": "ESLint shareable configuration",
   "keywords": [
     "eslint",
@@ -34,6 +34,7 @@
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "dependencies": {
+    "@chris.araneo/eslint-plugin-ng-perfectionist": "0.0.2",
     "@eslint/json": "^1.0.1",
     "@humanwhocodes/momoa": "^3.3.10",
     "@nx/eslint-plugin": "^22.3.3",
@@ -57,7 +58,6 @@
     "typescript-eslint": "^8.56.0"
   },
   "devDependencies": {
-    "@chris.araneo/eslint-plugin-ng-perfectionist": "^0.0.1",
     "@jest/globals": "^30.2.0",
     "@types/app-root-dir": "^0.1.4",
     "@types/jest": "^30.0.0",
