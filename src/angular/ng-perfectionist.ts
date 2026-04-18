@@ -1,4 +1,5 @@
 import ngPerfectionist from '@chris.araneo/eslint-plugin-ng-perfectionist';
+import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
 import { match } from 'ts-pattern';
 
@@ -17,6 +18,7 @@ export const getNgPerfectionistConfigs = ({
         plugins: {
           '@chris.araneo/ng-perfectionist': ngPerfectionist,
         },
+        processor: angular.processInlineTemplates,
         rules: {
           '@chris.araneo/ng-perfectionist/sort-component-imports': 'error',
           '@chris.araneo/ng-perfectionist/sort-component-style-urls': 'error',
