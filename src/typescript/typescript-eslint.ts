@@ -1,6 +1,5 @@
 import type { Linter } from 'eslint';
 import { chain } from 'lodash-es';
-import { CompatibleConfig } from 'node_modules/typescript-eslint/dist/compatibility-types.js';
 import { match } from 'ts-pattern';
 import tseslint from 'typescript-eslint';
 
@@ -34,7 +33,7 @@ export const getTypescriptEslintConfigs = ({
           },
           rules: {
             ...tseslint.configs.strictTypeChecked
-              .map((config: CompatibleConfig) => config.rules)
+              .map((config) => config.rules)
               .reduce((a, b) => ({ ...a, ...b }), {}),
             '@typescript-eslint/class-methods-use-this': 'off',
             '@typescript-eslint/consistent-type-imports': 'off',
