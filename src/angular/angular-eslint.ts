@@ -14,35 +14,35 @@ export const getAngularSourcesConfigs = ({
   match(sources?.length ?? 0)
     .with(0, () => [])
     .otherwise(() =>
-      angular.configs.tsAll.map((config, index) => {
-        const { plugins: _plugins, ...rest } = config;
-
-        return {
-          ...(index === 0 ? config : rest),
-          files: sources,
-          rules: {
-            ...config.rules,
-            '@angular-eslint/component-selector': [
-              'error',
-              {
-                prefix: prefix ?? 'app',
-                style: 'kebab-case',
-                type: 'element',
-              },
-            ],
-            '@angular-eslint/directive-selector': [
-              'error',
-              {
-                prefix: prefix ?? 'app',
-                style: 'camelCase',
-                type: 'attribute',
-              },
-            ],
-            '@angular-eslint/no-forward-ref': 'off',
-            '@angular-eslint/prefer-on-push-component-change-detection': 'off',
-            '@angular-eslint/prefer-output-emitter-ref': 'off',
-            '@angular-eslint/prefer-signals': 'off',
-          },
-        } as Linter.Config;
-      }),
+      angular.configs.tsAll.map(
+        (config) =>
+          ({
+            ...config,
+            files: sources,
+            rules: {
+              ...config.rules,
+              '@angular-eslint/component-selector': [
+                'error',
+                {
+                  prefix: prefix ?? 'app',
+                  style: 'kebab-case',
+                  type: 'element',
+                },
+              ],
+              '@angular-eslint/directive-selector': [
+                'error',
+                {
+                  prefix: prefix ?? 'app',
+                  style: 'camelCase',
+                  type: 'attribute',
+                },
+              ],
+              '@angular-eslint/no-forward-ref': 'off',
+              '@angular-eslint/prefer-on-push-component-change-detection':
+                'off',
+              '@angular-eslint/prefer-output-emitter-ref': 'off',
+              '@angular-eslint/prefer-signals': 'off',
+            },
+          }) as Linter.Config,
+      ),
     );
