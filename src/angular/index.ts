@@ -15,7 +15,6 @@ import {
 import { setTsconfigRootDir } from '../utils/set-tsconfig-root-dir.js';
 import { getAngularSourcesConfigs } from './angular-eslint.js';
 import { getAngularTemplatesConfigs } from './angular-eslint-template.js';
-import { getNgPerfectionistConfigs } from './ng-perfectionist.js';
 
 export const createAngularConfigBlock = ({
   ignored = [],
@@ -36,7 +35,6 @@ export const createAngularConfigBlock = ({
   [SOURCES]: [
     ...(createTypeScriptConfigBlock({ sources })[SOURCES] || []),
     ...getAngularSourcesConfigs({ prefix, sources }),
-    ...getNgPerfectionistConfigs({ sources }),
   ].map((config) =>
     setTsconfigRootDir({
       config,
