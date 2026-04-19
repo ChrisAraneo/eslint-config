@@ -14,12 +14,11 @@ export const getNgPerfectionistConfigs = ({
     .with(0, () => [])
     .otherwise(() =>
       angular.configs.tsAll.map(
-        (config) =>
+        ({ plugins: _plugins, ...config }) =>
           ({
             ...config,
             files: sources,
             plugins: {
-              ...config.plugins,
               '@chris.araneo/ng-perfectionist': ngPerfectionist,
             },
             rules: {

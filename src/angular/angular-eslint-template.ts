@@ -13,9 +13,10 @@ export const getAngularTemplatesConfigs = ({
     .with(0, () => [])
     .otherwise(() => [
       ...angular.configs.templateAll.map(
-        (config) =>
-          ({
-            ...config,
+        (config) => {
+          const { plugins: _plugins, ...rest } = config;
+          return {
+            ...rest,
             files: templates,
             rules: {
               ...config.rules,
@@ -64,6 +65,7 @@ export const getAngularTemplatesConfigs = ({
               '@angular-eslint/template/use-track-by-function': 'error',
               '@angular-eslint/template/valid-aria': 'error',
             },
-          }) as Linter.Config,
+          } as Linter.Config;
+        },
       ),
     ]);
