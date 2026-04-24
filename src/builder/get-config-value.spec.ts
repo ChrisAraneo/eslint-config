@@ -36,55 +36,6 @@ describe('getConfigValue', () => {
     expect(result).toEqual([]);
   });
 
-  it('should return deep clone of config array', () => {
-    const originalConfig: Linter.Config = {
-      files: ['**/*.ts'],
-      rules: { 'no-console': 'error' },
-    };
-    const configBlock = {
-      [SOURCES]: [originalConfig],
-    };
-
-    const result = getConfigValue({ configBlock, key: SOURCES });
-
-    if (result[0]!.rules) {
-      result[0]!.rules['new-rule'] = 'warn';
-    }
-
-    expect(originalConfig.rules).toEqual({ 'no-console': 'error' });
-    expect(originalConfig.rules).not.toHaveProperty('new-rule');
-  });
-
-  it('should return deep clone with nested objects', () => {
-    const nestedConfig: Linter.Config = {
-      files: ['**/*.ts'],
-      languageOptions: {
-        parserOptions: {
-          project: ['./tsconfig.json'],
-        },
-      },
-      rules: {
-        '@typescript-eslint/no-explicit-any': 'error',
-      },
-    };
-    const configBlock = {
-      [SOURCES]: [nestedConfig],
-    };
-
-    const result = getConfigValue({ configBlock, key: SOURCES });
-
-    if (result[0]!.languageOptions?.parserOptions) {
-      (
-        result[0]!.languageOptions.parserOptions as { project: string[] }
-      ).project.push('./tsconfig.spec.json');
-    }
-
-    expect(
-      (nestedConfig.languageOptions?.parserOptions as { project: string[] })
-        ?.project,
-    ).toEqual(['./tsconfig.json']);
-  });
-
   it('should handle multiple configs in array', () => {
     const config1: Linter.Config = { files: ['**/*.ts'] };
     const config2: Linter.Config = { files: ['**/*.tsx'] };

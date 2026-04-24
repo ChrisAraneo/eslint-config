@@ -1,4 +1,4 @@
-import { chain, cloneDeep, isEmpty } from 'lodash-es';
+import { chain, isEmpty } from 'lodash-es';
 
 import {
   type ConfigBlock,
@@ -47,11 +47,9 @@ export const appendCrossConfigFilesToIgnores = ({
             ...getUniqueConfigFiles({ configBlock, keys: ignores }),
           ];
 
-          return cloneDeep(
-            isEmpty(updatedIgnores)
-              ? config
-              : { ...config, ignores: updatedIgnores },
-          );
+          return isEmpty(updatedIgnores)
+            ? config
+            : { ...config, ignores: updatedIgnores };
         },
       ),
     ])
