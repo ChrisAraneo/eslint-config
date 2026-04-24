@@ -93,7 +93,7 @@ describe('getConfigValue', () => {
     expect(result).toEqual([]);
   });
 
-  it('should return independent copies on multiple calls', () => {
+  it('should return same reference on multiple calls', () => {
     const originalConfig: Linter.Config = {
       files: ['**/*.ts'],
       rules: { 'no-console': 'error' },
@@ -105,12 +105,7 @@ describe('getConfigValue', () => {
     const result1 = getConfigValue({ configBlock, key: SOURCES });
     const result2 = getConfigValue({ configBlock, key: SOURCES });
 
-    if (result1[0]!.rules) {
-      result1[0]!.rules['rule-1'] = 'warn';
-    }
-
-    expect(result2[0]!.rules).not.toHaveProperty('rule-1');
-    expect(result2[0]!.rules).toEqual({ 'no-console': 'error' });
+    expect(result1).toBe(result2);
   });
 
   it('should return empty array for a non-ConfigKey symbol', () => {
