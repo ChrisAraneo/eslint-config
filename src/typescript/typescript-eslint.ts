@@ -231,6 +231,7 @@ export const getTypescriptEslintConfigs = ({
             '@typescript-eslint/no-magic-numbers': [
               errorWhenNotTests,
               {
+                ignoreArrayIndexes: true,
                 ignoreEnums: true,
                 ignoreNumericLiteralTypes: true,
                 ignoreReadonlyClassProperties: true,
@@ -258,7 +259,7 @@ export const getTypescriptEslintConfigs = ({
               },
             ],
             '@typescript-eslint/parameter-properties': 'off',
-            '@typescript-eslint/prefer-destructuring': errorWhenNotTests,
+            '@typescript-eslint/prefer-destructuring': 'off',
             '@typescript-eslint/prefer-readonly-parameter-types': 'off',
             '@typescript-eslint/require-await': 'off',
             '@typescript-eslint/restrict-template-expressions': 'off',
