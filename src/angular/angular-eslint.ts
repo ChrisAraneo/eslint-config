@@ -1,4 +1,3 @@
-import ngPerfectionist from '@chris.araneo/eslint-plugin-ng-perfectionist';
 import angular from 'angular-eslint';
 import type { Linter } from 'eslint';
 import { match } from 'ts-pattern';
@@ -24,9 +23,6 @@ export const getAngularSourcesConfigs = ({
       ),
       {
         files: sources,
-        plugins: {
-          '@chris.araneo/ng-perfectionist': ngPerfectionist,
-        },
         rules: {
           '@angular-eslint/component-selector': [
             'error',
@@ -48,11 +44,6 @@ export const getAngularSourcesConfigs = ({
           '@angular-eslint/prefer-on-push-component-change-detection': 'off',
           '@angular-eslint/prefer-output-emitter-ref': 'off',
           '@angular-eslint/prefer-signals': 'off',
-          '@chris.araneo/ng-perfectionist/sort-component-imports': 'error',
-          '@chris.araneo/ng-perfectionist/sort-component-style-urls': 'error',
-          '@chris.araneo/ng-perfectionist/sort-ng-module-declarations': 'error',
-          '@chris.araneo/ng-perfectionist/sort-ng-module-exports': 'error',
-          '@chris.araneo/ng-perfectionist/sort-ng-module-imports': 'error',
         },
       },
     ]);

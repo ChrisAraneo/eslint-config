@@ -39,7 +39,7 @@ export const getStylisticConfigs = ({
             '@stylistic/function-call-spacing': ['error', 'never'],
             '@stylistic/function-paren-newline': 'off',
             '@stylistic/generator-star-spacing': 'off',
-            '@stylistic/implicit-arrow-linebreak': ['error', 'beside'],
+            '@stylistic/implicit-arrow-linebreak': 'off',
             '@stylistic/indent': 'off',
             '@stylistic/indent-binary-ops': 'off',
             '@stylistic/jsx-child-element-spacing': 'off',
