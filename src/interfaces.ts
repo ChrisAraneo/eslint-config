@@ -1,5 +1,23 @@
-import { DepConstraint } from '@nx/eslint-plugin/src/utils/runtime-lint-utils.js';
 import type { Linter } from 'eslint';
+
+interface SingleSourceTagConstraint {
+  sourceTag: string;
+  onlyDependOnLibsWithTags?: string[];
+  notDependOnLibsWithTags?: string[];
+  allowedExternalImports?: string[];
+  bannedExternalImports?: string[];
+}
+
+interface ComboSourceTagConstraint {
+  allSourceTags: string[];
+  onlyDependOnLibsWithTags?: string[];
+  notDependOnLibsWithTags?: string[];
+  allowedExternalImports?: string[];
+  bannedExternalImports?: string[];
+}
+
+export type DepConstraint =
+  SingleSourceTagConstraint | ComboSourceTagConstraint;
 
 export const SOURCES = Symbol('sources');
 export const TESTS = Symbol('tests');
