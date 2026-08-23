@@ -32,7 +32,7 @@ export const getStylisticConfigs = ({
             '@stylistic/comma-spacing': 'error',
             '@stylistic/comma-style': 'off',
             '@stylistic/computed-property-spacing': ['error', 'never'],
-            '@stylistic/curly-newline': ['error', 'always'],
+            '@stylistic/curly-newline': 'off',
             '@stylistic/dot-location': 'off',
             '@stylistic/eol-last': ['error', 'always'],
             '@stylistic/function-call-argument-newline': 'off',
